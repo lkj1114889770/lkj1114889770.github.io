@@ -331,15 +331,16 @@
         
           
             <hr>
-<h1 id="hexo-github搭建个人博客"><a href="#hexo-github搭建个人博客" class="headerlink" title="hexo+github搭建个人博客"></a>hexo+github搭建个人博客</h1><hr>
-<p>搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。</p>
-<p>##配置准备<br>配置环境是win10，其实在linux和mac环境下的搭建过程也是类似。</p>
+<h2 id="hexo-github搭建个人博客"><a href="#hexo-github搭建个人博客" class="headerlink" title="hexo-github搭建个人博客"></a>hexo-github搭建个人博客</h2><p>搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。</p>
+<p>##配置准备</p>
+<p>配置环境是win10，其实在linux和mac环境下的搭建过程也是类似。</p>
 <ol>
 <li>安装node。一种静态博客框架，到<a href="https://nodejs.org/en/" title="Node.js官网" target="_blank" rel="external">Node.js官网</a>上下载，根据自己电脑版本下载对应文件，按照安装提示一路安装即可。</li>
 <li>GitHub账号申请，已有可以跳过。<a href="github.com">GitHub</a>用来做博客的远程仓库，后期需要配置域名，以及和本地的hexo创建连接。没有账号需要在GitHub官网进行申请，以及SSH key的配置，网上可以搜到很多教程。</li>
 <li>git的安装。把本地的hexo上传到GitHub上去，安装过程可以参考<a href="https://git-scm.com/book/zh/v1/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git" target="_blank" rel="external">官方教程</a>。</li>
 </ol>
-<p>##安装hexo<br>Node.js和Git安装好之后就可以正式安装了，首先创建一个空文件夹比如hexo，在cmd窗口下进入到这个文件夹，此后的命令都是在这个文件夹下进行。</p>
+<p>##安装hexo</p>
+<p>Node.js和Git安装好之后就可以正式安装了，首先创建一个空文件夹比如hexo，在cmd窗口下进入到这个文件夹，此后的命令都是在这个文件夹下进行。</p>
 <p>执行如下命令安装hexo：</p>
 <pre><code>sudo npm install -g hexo
 </code></pre><p>而后初始化hexo：</p>
@@ -363,7 +364,8 @@
 </code></pre><p>再执行配置命令：</p>
 <pre><code>hexo deploy
 </code></pre><p>命令时终端会提示你输入Github的用户名和密码，输入配置好后，本地文件就会上传至你的github仓库。</p>
-<p>##域名绑定<br>笔者是在阿里云上后买的<a href="lkj666.top">lkj666.top</a>域名，然后需要与github page进行绑定。<br>在域名解析管理的页面下，添加以下几条：<br><img src="http://i.imgur.com/609hZBT.png" alt=""><br>其中：</p>
+<p>##域名绑定</p>
+<p>笔者是在阿里云上后买的<a href="lkj666.top">lkj666.top</a>域名，然后需要与github page进行绑定。<br>在域名解析管理的页面下，添加以下几条：<br><img src="http://i.imgur.com/609hZBT.png" alt=""><br>其中：</p>
 <ol>
 <li>CNAME记录类型会将你的域名进行别名指向。可以为一个主机设置别名在这里可以设置自己的域名指向xxx.github.io，以后就可以用自己的域名来代替访问xxx.github.io.</li>
 <li>此外还增加了两条A类型，来指定github.com的IP地址，以及xxx.github.io的IP地址，可以用ping指令的方式来获取。</li>
