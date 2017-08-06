@@ -202,7 +202,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -212,7 +212,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -288,7 +288,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-06T18:37:47+08:00">
                 2017-08-06
@@ -331,15 +331,13 @@
         
           
             <p>搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。</p>
-<p>##配置准备</p>
-<p>配置环境是win10，其实在linux和mac环境下的搭建过程也是类似。</p>
+<h2 id="配置准备"><a href="#配置准备" class="headerlink" title="配置准备"></a>配置准备</h2><p>配置环境是win10，其实在linux和mac环境下的搭建过程也是类似。</p>
 <ol>
 <li>安装node。一种静态博客框架，到<a href="https://nodejs.org/en/" title="Node.js官网" target="_blank" rel="external">Node.js官网</a>上下载，根据自己电脑版本下载对应文件，按照安装提示一路安装即可。</li>
 <li>GitHub账号申请，已有可以跳过。<a href="github.com">GitHub</a>用来做博客的远程仓库，后期需要配置域名，以及和本地的hexo创建连接。没有账号需要在GitHub官网进行申请，以及SSH key的配置，网上可以搜到很多教程。</li>
 <li>git的安装。把本地的hexo上传到GitHub上去，安装过程可以参考<a href="https://git-scm.com/book/zh/v1/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git" target="_blank" rel="external">官方教程</a>。</li>
 </ol>
-<p>##安装hexo</p>
-<p>Node.js和Git安装好之后就可以正式安装了，首先创建一个空文件夹比如hexo，在cmd窗口下进入到这个文件夹，此后的命令都是在这个文件夹下进行。</p>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>Node.js和Git安装好之后就可以正式安装了，首先创建一个空文件夹比如hexo，在cmd窗口下进入到这个文件夹，此后的命令都是在这个文件夹下进行。</p>
 <p>执行如下命令安装hexo：</p>
 <pre><code>sudo npm install -g hexo
 </code></pre><p>而后初始化hexo：</p>
@@ -348,8 +346,7 @@
 <pre><code>hexo generate
 </code></pre><p>这时候在启动本地服务，就能在本地浏览器进行预览：<br>    hexo server</p>
 <p>浏览器输入<a href="http://localhost:4000,这个时候就能在浏览器看到，但是并没有与域名绑定，除了自己的本地电脑，在网络上无法访问。" target="_blank" rel="external">http://localhost:4000,这个时候就能在浏览器看到，但是并没有与域名绑定，除了自己的本地电脑，在网络上无法访问。</a></p>
-<p>##配置GitHub</p>
-<p>首选需要建立仓库（repository),仓库的名字格式必须为：你的GitHub账户名+.github.io,比如说你的github账户名为abc，那么你的仓库名为abc.github.io</p>
+<h2 id="配置GitHub"><a href="#配置GitHub" class="headerlink" title="配置GitHub"></a>配置GitHub</h2><p>首选需要建立仓库（repository),仓库的名字格式必须为：你的GitHub账户名+.github.io,比如说你的github账户名为abc，那么你的仓库名为abc.github.io</p>
 <p>同时，本地的hexo文件夹可以看到以下内容：<br><img src="http://i.imgur.com/NL4v9X7.png" alt=""><br>打开_config.yml文件，下滑到最后进行编辑，修改成下面的样子：</p>
 <pre><code>deploy:
   type: git
@@ -363,8 +360,7 @@
 </code></pre><p>再执行配置命令：</p>
 <pre><code>hexo deploy
 </code></pre><p>命令时终端会提示你输入Github的用户名和密码，输入配置好后，本地文件就会上传至你的github仓库。</p>
-<p>##域名绑定</p>
-<p>笔者是在阿里云上后买的<a href="lkj666.top">lkj666.top</a>域名，然后需要与github page进行绑定。<br>在域名解析管理的页面下，添加以下几条：<br><img src="http://i.imgur.com/609hZBT.png" alt=""><br>其中：</p>
+<h2 id="域名绑定"><a href="#域名绑定" class="headerlink" title="域名绑定"></a>域名绑定</h2><p>笔者是在阿里云上后买的<a href="lkj666.top">lkj666.top</a>域名，然后需要与github page进行绑定。<br>在域名解析管理的页面下，添加以下几条：<br><img src="http://i.imgur.com/609hZBT.png" alt=""><br>其中：</p>
 <ol>
 <li>CNAME记录类型会将你的域名进行别名指向。可以为一个主机设置别名在这里可以设置自己的域名指向xxx.github.io，以后就可以用自己的域名来代替访问xxx.github.io.</li>
 <li>此外还增加了两条A类型，来指定github.com的IP地址，以及xxx.github.io的IP地址，可以用ping指令的方式来获取。</li>
@@ -452,7 +448,7 @@ hexo deploy
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-04T13:05:24+08:00">
                 2017-08-04
@@ -585,7 +581,7 @@ hexo deploy
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -639,7 +635,7 @@ hexo deploy
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
