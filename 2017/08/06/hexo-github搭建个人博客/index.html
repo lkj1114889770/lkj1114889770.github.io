@@ -102,7 +102,7 @@
 <meta property="og:description" content="搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。">
 <meta property="og:image" content="http://i.imgur.com/NL4v9X7.png">
 <meta property="og:image" content="http://i.imgur.com/609hZBT.png">
-<meta property="og:updated_time" content="2017-08-06T11:19:07.311Z">
+<meta property="og:updated_time" content="2017-08-06T11:24:24.281Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo-github搭建个人博客">
 <meta name="twitter:description" content="搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。">
@@ -207,7 +207,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -217,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -291,7 +291,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-06T18:37:47+08:00">
                 2017-08-06
@@ -331,12 +331,11 @@
       
 
       
-        <p>搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。</p>
-<a id="more"></a>
+        <p>搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。<br><a id="more"></a></p>
 <h2 id="配置准备"><a href="#配置准备" class="headerlink" title="配置准备"></a>配置准备</h2><p>配置环境是win10，其实在linux和mac环境下的搭建过程也是类似。</p>
 <ol>
 <li>安装node。一种静态博客框架，到<a href="https://nodejs.org/en/" title="Node.js官网" target="_blank" rel="external">Node.js官网</a>上下载，根据自己电脑版本下载对应文件，按照安装提示一路安装即可。</li>
-<li>GitHub账号申请，已有可以跳过。<a href="github.com">GitHub</a>用来做博客的远程仓库，后期需要配置域名，以及和本地的hexo创建连接。没有账号需要在GitHub官网进行申请，以及SSH key的配置，网上可以搜到很多教程。</li>
+<li>GitHub账号申请，已有可以跳过。<a href="https://github.com" target="_blank" rel="external">GitHub</a>用来做博客的远程仓库，后期需要配置域名，以及和本地的hexo创建连接。没有账号需要在GitHub官网进行申请，以及SSH key的配置，网上可以搜到很多教程。</li>
 <li>git的安装。把本地的hexo上传到GitHub上去，安装过程可以参考<a href="https://git-scm.com/book/zh/v1/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git" target="_blank" rel="external">官方教程</a>。</li>
 </ol>
 <h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>Node.js和Git安装好之后就可以正式安装了，首先创建一个空文件夹比如hexo，在cmd窗口下进入到这个文件夹，此后的命令都是在这个文件夹下进行。</p>
@@ -459,10 +458,10 @@ hexo deploy
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -483,7 +482,7 @@ hexo deploy
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -553,7 +552,7 @@ hexo deploy
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
