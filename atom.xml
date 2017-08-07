@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Kaijian Liu同学</title>
+  <subtitle>好好学习，好好科研</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-08-06T11:29:13.818Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Kaijian Liu</name>
+    <email>kaijianliu@qq.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo-github搭建个人博客</title>
+    <link href="http://yoursite.com/2017/08/06/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://yoursite.com/2017/08/06/hexo-github搭建个人博客/</id>
+    <published>2017-08-06T10:37:47.675Z</published>
+    <updated>2017-08-06T11:29:13.818Z</updated>
+    
+    <content type="html"><![CDATA[<p>搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。<br><a id="more"></a></p>
+<h2 id="配置准备"><a href="#配置准备" class="headerlink" title="配置准备"></a>配置准备</h2><p>配置环境是win10，其实在linux和mac环境下的搭建过程也是类似。</p>
+<ol>
+<li>安装node。一种静态博客框架，到<a href="https://nodejs.org/en/" title="Node.js官网" target="_blank" rel="external">Node.js官网</a>上下载，根据自己电脑版本下载对应文件，按照安装提示一路安装即可。</li>
+<li>GitHub账号申请，已有可以跳过。Github用来做博客的远程仓库，后期需要配置域名，以及和本地的hexo创建连接。没有账号需要在GitHub官网进行申请，以及SSH key的配置，网上可以搜到很多教程。</li>
+<li>git的安装。把本地的hexo上传到GitHub上去，安装过程可以参考<a href="https://git-scm.com/book/zh/v1/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git" target="_blank" rel="external">官方教程</a>。</li>
+</ol>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>Node.js和Git安装好之后就可以正式安装了，首先创建一个空文件夹比如hexo，在cmd窗口下进入到这个文件夹，此后的命令都是在这个文件夹下进行。</p>
+<p>执行如下命令安装hexo：</p>
+<pre><code>sudo npm install -g hexo
+</code></pre><p>而后初始化hexo：</p>
+<pre><code>hexo init
+</code></pre><p>生成静态页面：</p>
+<pre><code>hexo generate
+</code></pre><p>这时候在启动本地服务，就能在本地浏览器进行预览：<br>    hexo server</p>
+<p>浏览器输入<a href="http://localhost:4000,这个时候就能在浏览器看到，但是并没有与域名绑定，除了自己的本地电脑，在网络上无法访问。" target="_blank" rel="external">http://localhost:4000,这个时候就能在浏览器看到，但是并没有与域名绑定，除了自己的本地电脑，在网络上无法访问。</a></p>
+<h2 id="配置GitHub"><a href="#配置GitHub" class="headerlink" title="配置GitHub"></a>配置GitHub</h2><p>首选需要建立仓库（repository),仓库的名字格式必须为：你的GitHub账户名+.github.io,比如说你的github账户名为abc，那么你的仓库名为abc.github.io</p>
+<p>同时，本地的hexo文件夹可以看到以下内容：<br><img src="http://i.imgur.com/NL4v9X7.png" alt=""><br>打开_config.yml文件，下滑到最后进行编辑，修改成下面的样子：</p>
+<pre><code>deploy:
+  type: git
+  repo: https://github.com/xxx/xxx.github.io.git
+  branch: master
+</code></pre><p><strong>注意</strong>：xxx需要改为你自己的github账户名，而且格外注意的是，所有的冒号后面必须加一个空格，否则hexo指令会执行不成功。</p>
+<p>执行hexo generate命令生成静态页面：</p>
+<pre><code>hexo generate
+</code></pre><p>执行命令安装hexo的git上传工具：</p>
+<pre><code>npm install hexo-deployer-git --save
+</code></pre><p>再执行配置命令：</p>
+<pre><code>hexo deploy
+</code></pre><p>命令时终端会提示你输入Github的用户名和密码，输入配置好后，本地文件就会上传至你的github仓库。</p>
+<h2 id="域名绑定"><a href="#域名绑定" class="headerlink" title="域名绑定"></a>域名绑定</h2><p>笔者是在阿里云上后买的<a href="lkj666.top">lkj666.top</a>域名，然后需要与github page进行绑定。<br>在域名解析管理的页面下，添加以下几条：<br><img src="http://i.imgur.com/609hZBT.png" alt=""><br>其中：</p>
+<ol>
+<li>CNAME记录类型会将你的域名进行别名指向。可以为一个主机设置别名在这里可以设置自己的域名指向xxx.github.io，以后就可以用自己的域名来代替访问xxx.github.io.</li>
+<li>此外还增加了两条A类型，来指定github.com的IP地址，以及xxx.github.io的IP地址，可以用ping指令的方式来获取。</li>
+</ol>
+<p>此外，还需要修改本地以及仓库的CNAME文件：<br>在本地hexo的source文件夹下新建一个CNAME文件，将自己的域名写入，比如我将自己的域名lkj666.top写入CNAME文件一定要记住，是所有文件格式，不是txt文件格式。<br>在对应的xxx.github.io仓库根目录下新建一个文件CNAME，同样将自己的域名写入。</p>
+<p>做好上述过程后再执行下列命令:</p>
+<pre><code>hexo clean //每次执行提交之前最好执行这个clean命令来清除缓存
+hexo generate
+hexo deploy
+</code></pre><p>此后就可以通过你的域名访问你自己的博客了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2017/08/04/hello-world/"/>
+    <id>http://yoursite.com/2017/08/04/hello-world/</id>
+    <published>2017-08-04T05:05:24.044Z</published>
+    <updated>2017-08-06T14:15:48.361Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.<br><a id="more"></a></p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
