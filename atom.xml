@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-06T11:29:13.818Z</updated>
+  <updated>2017-08-08T16:08:50.047Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,78 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>也看战狼2：爬取豆瓣影评做词云</title>
+    <link href="http://yoursite.com/2017/08/08/%E4%B9%9F%E7%9C%8B%E6%88%98%E7%8B%BC2%EF%BC%9A%E7%88%AC%E5%8F%96%E8%B1%86%E7%93%A3%E5%BD%B1%E8%AF%84%E5%81%9A%E8%AF%8D%E4%BA%91/"/>
+    <id>http://yoursite.com/2017/08/08/也看战狼2：爬取豆瓣影评做词云/</id>
+    <published>2017-08-08T14:47:02.000Z</published>
+    <updated>2017-08-08T16:08:50.047Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://i.imgur.com/RQMhVc8.jpg" alt=""></p>
+<p>《战狼2》上映的第二天就去看了，当时觉得还不错，不管是打斗场景还是故事情节，看的都很过瘾，个人觉得可以给4星半。但是这段时间一直看到晚上对《战狼2》各种各样的不同的评论。因此闲暇之余，用爬虫获取了截止于2017.8.8号的豆瓣用户的近14万的评论，对其中的关键词做成了词云。<br><a id="more"></a></p>
+<h2 id="python爬虫爬取评论代码"><a href="#python爬虫爬取评论代码" class="headerlink" title="python爬虫爬取评论代码"></a>python爬虫爬取评论代码</h2><pre><code>&apos;&apos;&apos;
+import requests
+from bs4 import BeautifulSoup
+import codecs
+import time
+
+absolute_url = &apos;https://movie.douban.com/subject/26363254/comments&apos;
+url = &apos;https://movie.douban.com/subject/26363254/comments?start={}&amp;limit=20&amp;sort=new_score&amp;status=P&apos;
+header={&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:54.0) Gecko/20100101 Firefox/54.0&apos;,&apos;Connection&apos;:&apos;keep-alive&apos;}
+
+
+
+
+def html_prase(html, struct):
+    soup=BeautifulSoup(html,&apos;lxml&apos;)
+    comment_nodes = []
+    comment_nodes = soup.select(struct)
+    xiangdui_link_nodes= soup.select(&apos;#paginator &gt; a&apos;)[0].get(&apos;href&apos;)
+    return comment_nodes,xiangdui_link_nodes
+
+if __name__ == &apos;__main__&apos;:
+    f_cookies = open(&apos;cookie.txt&apos;, &apos;r&apos;)
+    cookies = {}
+    for line in f_cookies.read().split(&apos;;&apos;):
+        name, value = line.strip().split(&apos;=&apos;, 1)
+        cookies[name] = value
+    f = codecs.open(&quot;comments.txt&quot;, &apos;a&apos;, encoding=&apos;utf-8&apos;)
+    html = requests.get(url, cookies=cookies, headers=header).content
+    comment_nodes=[]
+    xiangdui_links=[]
+    print(&quot;111&quot;)
+    comment_nodes,xiangdui_link_nodes = html_prase(html , &apos;.comment &gt; p&apos;)
+    print(&quot;2222&quot;)
+    soup = BeautifulSoup(html, &apos;lxml&apos;)
+    comment_list = []
+    for node in comment_nodes:
+        comment_list.append(node.get_text().strip().replace(&quot;\n&quot;, &quot;&quot;) + u&apos;\n&apos;)
+    while(xiangdui_link_nodes!=[]):
+        xiangdui_link = soup.select(&apos;#paginator &gt; a&apos;)[0].get(&apos;href&apos;)
+        xiangdui_links.append(xiangdui_link)
+        time.sleep(1)
+        html = requests.get(absolute_url+xiangdui_link_nodes, cookies=cookies, headers=header).content
+        soup = BeautifulSoup(html, &apos;lxml&apos;)
+        comment_nodes, xiangdui_link_nodes = html_prase(html, &apos;.comment &gt; p&apos;)
+        for node in comment_nodes:
+            comment = node.get_text().strip().replace(&quot;\n&quot;, &quot;&quot;) + u&apos;\n&apos;
+            comment_list.append(comment)
+            f.writelines(comment)    
+&apos;&apos;&apos;
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/RQMhVc8.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;《战狼2》上映的第二天就去看了，当时觉得还不错，不管是打斗场景还是故事情节，看的都很过瘾，个人觉得可以给4星半。但是这段时间一直看到晚上对《战狼2》各种各样的不同的评论。因此闲暇之余，用爬虫获取了截止于2017.8.8号的豆瓣用户的近14万的评论，对其中的关键词做成了词云。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="电影，爬虫，python" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1%EF%BC%8C%E7%88%AC%E8%99%AB%EF%BC%8Cpython/"/>
+    
+  </entry>
   
   <entry>
     <title>hexo-github搭建个人博客</title>
