@@ -1,28 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Kaijian Liu同学</title>
-  <subtitle>好好学习，好好科研</subtitle>
-  <link href="/atom.xml" rel="self"/>
+<search> 
   
-  <link href="http://yoursite.com/"/>
-  <updated>2017-08-09T05:06:34.255Z</updated>
-  <id>http://yoursite.com/</id>
-  
-  <author>
-    <name>Kaijian Liu</name>
-    <email>kaijianliu@qq.com</email>
-  </author>
-  
-  <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>也看战狼2：爬取豆瓣影评做词云</title>
-    <link href="http://yoursite.com/2017/08/08/%E4%B9%9F%E7%9C%8B%E6%88%98%E7%8B%BC2%EF%BC%9A%E7%88%AC%E5%8F%96%E8%B1%86%E7%93%A3%E5%BD%B1%E8%AF%84%E5%81%9A%E8%AF%8D%E4%BA%91/"/>
-    <id>http://yoursite.com/2017/08/08/也看战狼2：爬取豆瓣影评做词云/</id>
-    <published>2017-08-08T14:47:02.000Z</published>
-    <updated>2017-08-09T05:06:34.255Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="http://i.imgur.com/x7xGFON.jpg" alt=""></p>
+    <entry>
+      <title><![CDATA[也看战狼2：爬取豆瓣影评做词云]]></title>
+      <url>/2017/08/08/%E4%B9%9F%E7%9C%8B%E6%88%98%E7%8B%BC2%EF%BC%9A%E7%88%AC%E5%8F%96%E8%B1%86%E7%93%A3%E5%BD%B1%E8%AF%84%E5%81%9A%E8%AF%8D%E4%BA%91/</url>
+      <content type="html"><![CDATA[<p><img src="http://i.imgur.com/x7xGFON.jpg" alt=""></p>
 <p>《战狼2》上映的第二天就去看了，当时觉得还不错，不管是打斗场景还是故事情节，看的都很过瘾，个人觉得可以给4星半。但是这段时间一直看到晚上对《战狼2》各种各样的不同的评论，因此闲暇之余，用爬虫获取了截止于2017.8.8号的豆瓣用户的近14万的评论，对其中的关键词做成了词云。<br><a id="more"></a></p>
 <h2 id="python爬虫爬取评论代码"><a href="#python爬虫爬取评论代码" class="headerlink" title="python爬虫爬取评论代码"></a>python爬虫爬取评论代码</h2><pre><code>import requests
 from bs4 import BeautifulSoup
@@ -197,31 +180,24 @@ draw_wordcloud2()
 <p>当然，《战狼2》还是存在很多瑕疵，但是也为国产电影树立了一个新的标杆，相信国产大片也会越来越好，期待有更多像《战狼2》这样优秀的电影。</p>
 <p>最后，很喜欢这部电影的结尾，中华人民共和国的护照。<br><img src="http://i.imgur.com/DG2aone.jpg" alt=""></p>
 ]]></content>
+      
+        
+        <tags>
+            
+            <tag> 电影 </tag>
+            
+            <tag> 爬虫 </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
     
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/x7xGFON.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;《战狼2》上映的第二天就去看了，当时觉得还不错，不管是打斗场景还是故事情节，看的都很过瘾，个人觉得可以给4星半。但是这段时间一直看到晚上对《战狼2》各种各样的不同的评论，因此闲暇之余，用爬虫获取了截止于2017.8.8号的豆瓣用户的近14万的评论，对其中的关键词做成了词云。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="电影" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1/"/>
-    
-      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo-github搭建个人博客</title>
-    <link href="http://yoursite.com/2017/08/06/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://yoursite.com/2017/08/06/hexo-github搭建个人博客/</id>
-    <published>2017-08-06T10:37:47.675Z</published>
-    <updated>2017-08-06T11:29:13.818Z</updated>
-    
-    <content type="html"><![CDATA[<p>搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。<br><a id="more"></a></p>
+    <entry>
+      <title><![CDATA[hexo-github搭建个人博客]]></title>
+      <url>/2017/08/06/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+      <content type="html"><![CDATA[<p>搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。<br><a id="more"></a></p>
 <h2 id="配置准备"><a href="#配置准备" class="headerlink" title="配置准备"></a>配置准备</h2><p>配置环境是win10，其实在linux和mac环境下的搭建过程也是类似。</p>
 <ol>
 <li>安装node。一种静态博客框架，到<a href="https://nodejs.org/en/" title="Node.js官网" target="_blank" rel="external">Node.js官网</a>上下载，根据自己电脑版本下载对应文件，按照安装提示一路安装即可。</li>
@@ -263,14 +239,10 @@ hexo generate
 hexo deploy
 </code></pre><p>此后就可以通过你的域名访问你自己的博客了。</p>
 ]]></content>
+      
+        
+    </entry>
     
-    <summary type="html">
-    
-      &lt;p&gt;搭好个人网站之后纠结于第一篇博客的内容，想想还是首先分享一下自己搭建这个网站的过程，毕竟还是碰到了很多坑，解决了一些问题才成功的。&lt;br&gt;
-    
-    </summary>
-    
-    
-  </entry>
   
-</feed>
+  
+</search>
