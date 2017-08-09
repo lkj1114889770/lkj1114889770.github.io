@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://yoursite.com/404.html</loc>
+    
+    <lastmod>2017-08-09T05:14:05.509Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/08/%E4%B9%9F%E7%9C%8B%E6%88%98%E7%8B%BC2%EF%BC%9A%E7%88%AC%E5%8F%96%E8%B1%86%E7%93%A3%E5%BD%B1%E8%AF%84%E5%81%9A%E8%AF%8D%E4%BA%91/</loc>
+    
+    <lastmod>2017-08-09T05:06:34.255Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2017-08-09T05:00:01.316Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/06/hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</loc>
+    
+    <lastmod>2017-08-06T11:29:13.818Z</lastmod>
+    
+  </url>
+  
+</urlset>
