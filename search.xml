@@ -20,7 +20,9 @@
 <p><img src="http://i.imgur.com/z1tT5ej.gif" alt=""></p>
 <p>其中，Sv为采用特征A分类后的，某一个类别样例数占原有的样例数的比例，H(Sv)该分类后类别的熵，用原来的上减去特征A分类后的每个类别的熵乘于比例权重之后的和。这个时候便得到了选取分类特征的方法，即选取使得熵的增益为最大的特征A作为树枝分裂的特征。ID3其实就是上面介绍的基于熵增益最大的算法。</p>
 <p>下面以一个经典的打网球的例子说明如何构建决策树。例子中打网球（play）主要由天气（outlook)、温度（temperature）、湿度（humidity)、风（windy）来确定，样本数据如下：</p>
-<div align="center"><br>    <img src="http://i.imgur.com/i4FloIa.png" width="600" height="400" alt="样本数据"><br></div>
+<p><div align="center"><br>    <img src="http://i.imgur.com/i4FloIa.png" width="400" height="270" alt="样本数据"><br></div><br>在本例中S有14个样例，目标变量是是否打球，play=yes or no,yes有9个样例，no有5个样例，首先计算从根节点的信息熵：<br>H(S)=-(9/14<em>log(9/14))-(5/14</em>log(5/14))=0.28305<br>从根节点开始，有四个特征（outlook temperature humidity windy)可以用来进行树枝分裂，首先需要计算这四个特征的信息熵增益，以outlook为例进行计算。</p>
+<p>特征A（outlook）有三个不同的取值{sunny,overcast,rainy}，这样将原先的数据集S分为3类，其中<br>sunnny有5个样本，2个play=yes，3个play=no<br>overcast有4个样本，4个play=yes<br>rainy有5个样本，3个play=yes，2个play=no<br>根据上面的公式，按outlook分类后的熵为：<br>H（S,A)=5/14sunny熵+4/14overcast熵+5/14rainy熵<br>&emsp;&emsp;&emsp;&emsp;=5/14<em>（-2/5</em>log(2/5)-3/5<em>log(3/5))+4/14</em>(-1<em>log1)+5/14</em>(-3/5<em>log(3/5)-2/5</em>log(2/5))=0.20878</p>
+<p>所以对于outlook的信息熵增益为G(S,outlook)=H(S)-H(S,A)=0.07427<br>用类似的方法，算出，A取其他三个特征时候的信息熵增益分别为：</p>
 ]]></content>
       
         
