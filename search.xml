@@ -55,17 +55,24 @@ if __name__ == &apos;__main__&apos;:
     data=pd.read_csv(&apos;tennis.csv&apos;)
     tree=Tree_building(data)
     print(tree)
-</code></pre><h2 id="C4-5-和CART算法"><a href="#C4-5-和CART算法" class="headerlink" title="C4.5 和CART算法"></a>C4.5 和CART算法</h2><p>ID3算法有一个弊端，因为是选择信息增益最大的特征来分裂，所以更偏向于具有大量属性的特征进行分裂，这样做其实有时候是没有意义的，针对此，有了C4.5算法，对ID3进行了改进。C4.5采用信息增益率来选择分裂特征即：<br>gr(S,A)=gain(S,A)/H(A),<br>其中，gain(S,A)为ID3算法的熵的增益，H(A)为取特征为A的信息熵<br>取A为outlook即为H（outlook），H(A)=H(outlook)= -(5/14)<em>log(5/14) - (5/14)</em>log(5/14) - (4/14)*log(4/14)</p>
-<p>CART算法的划分基于递归建立二叉树，对于一个变量属性来说，它的划分点是一对连续变量属性值的中点。假设m个样本的集合一个属性有m个连续的值，那么则会有m-1个分裂点，每个分裂点为相邻两个连续值的均值。每个属性的划分按照能减少的杂质的量来进行排序，而杂质的减少量定义为划分前的杂质减去划分后的每个节点的杂质量划分所占比率之和。而杂质度量方法常用Gini指标，假设一个样本共有C类，那么一个节点的Gini不纯度可定义为</p>
+</code></pre><h2 id="C4-5-和CART算法"><a href="#C4-5-和CART算法" class="headerlink" title="C4.5 和CART算法"></a>C4.5 和CART算法</h2><h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p>ID3算法有一个弊端，因为是选择信息增益最大的特征来分裂，所以更偏向于具有大量属性的特征进行分裂，这样做其实有时候是没有意义的，针对此，有了C4.5算法，对ID3进行了改进。C4.5采用信息增益率来选择分裂特征即：<br>gr(S,A)=gain(S,A)/H(S,A),<br>其中，gain(S,A)为ID3算法的熵的增益，H(S,A)为取特征为A进行分类的的信息熵<br>取A为outlook即为H（S,outlook），H(S,A)=H(S,outlook)= -(5/14)<em>log(5/14) - (5/14)</em>log(5/14) - (4/14)*log(4/14)</p>
+<p>C4.5算法采用的熵信息增益率，因为分母采用了基于属性A分裂后的信息熵，从而抵消了如果信息A属性取值数目过大带来的影响。</p>
+<p>C4.5算法还可以应用于处理连续性的属性则按属性A的取值递增排序，将每对相邻值的中点看作可能的分裂点，对每个可能的分裂点，计算：<br><img src="http://i.imgur.com/DWuCTu8.png" alt=""></p>
+<p>SL和SR分别对应A属性分类点划分出的两个子集，取使得划分后信息熵最小的取值作为A属性的最佳分裂点，参与后面的运算，不够感觉这样计算量有点多的orz</p>
+<h3 id="CART算法"><a href="#CART算法" class="headerlink" title="CART算法"></a>CART算法</h3><p>CART算法的划分基于递归建立二叉树，对于一个变量属性来说，它的划分点是一对连续变量属性值的中点。假设m个样本的集合一个属性有m个连续的值，那么则会有m-1个分裂点，每个分裂点为相邻两个连续值的均值。每个属性的划分按照能减少的杂质的量来进行排序，而杂质的减少量定义为划分前的杂质减去划分后的每个节点的杂质量划分所占比率之和。而杂质度量方法常用Gini指标，假设一个样本共有C类，那么一个节点的Gini不纯度可定义为</p>
 <p><img src="http://i.imgur.com/s2AqUO0.png" alt=""></p>
+<p>分别计算属性A不同属性值的Gini值，取最小的作为A的最佳分类点，然后对于S集此时所有的属性进行上述运算之后，取具有最小的Gini作为分裂属性，其最小的Gini值的属性值作为分裂点。</p>
+<p>CART还可以用于作为回归树，但是此时Gini值的算法就不一样，采用的是总方差：</p>
+<p><img src="http://i.imgur.com/FS7qiGE.png" alt=""></p>
+<p>回归树的叶节点所含样本中，其输出变量的平均值就是预测结果。</p>
 ]]></content>
       
         
         <tags>
             
-            <tag> python </tag>
-            
             <tag> 机器学习 </tag>
+            
+            <tag> python </tag>
             
         </tags>
         
@@ -255,11 +262,11 @@ draw_wordcloud2()
         
         <tags>
             
+            <tag> python </tag>
+            
             <tag> 电影 </tag>
             
             <tag> 爬虫 </tag>
-            
-            <tag> python </tag>
             
         </tags>
         
