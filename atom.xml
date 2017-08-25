@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-24T09:59:57.565Z</updated>
+  <updated>2017-08-25T07:40:01.018Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,16 +20,76 @@
     <link href="http://yoursite.com/2017/08/24/%E4%BB%8E%E5%86%B3%E7%AD%96%E6%A0%91%E5%88%B0%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/"/>
     <id>http://yoursite.com/2017/08/24/从决策树到随机森林/</id>
     <published>2017-08-24T09:56:19.000Z</published>
-    <updated>2017-08-24T09:59:57.565Z</updated>
+    <updated>2017-08-25T07:40:01.018Z</updated>
     
-    <content type="html"><![CDATA[<p>学习了决策树算法之后又接触到了随机森林</p>
+    <content type="html"><![CDATA[<p>学习了决策树算法之后又接触到了随机森林，随机森林可以说是决策树算法的集成加强版。从分类上来说，随机森林属于机器学习中的集成学习，所谓集成学习，顾名思义就是集成一些方法一起来学习，随机森林就是集成很多决策树来实现其分类或者回归的功能。</p>
 <a id="more"></a>
-<p>点击去也没东西(๑<em>◡</em>๑)，等我慢慢填坑吧，哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈后</p>
+<h2 id="随机森林之“森林”"><a href="#随机森林之“森林”" class="headerlink" title="随机森林之“森林”"></a>随机森林之“森林”</h2><p>“森林”表示有很多决策树，每棵决策树都是一个分类器，对于一个输入测试样本，经过森林中的每棵树都会有相应的预测值或者标签，而最终的结果就取决于这些树之间的投票结果作为最终预测结果。每棵随机树都是一个弱分类器，但是通过投票选择，最终组成一个强分类器。<br><img src="http://i.imgur.com/Q9qFsle.png" alt=""></p>
+<h2 id="随机森林之“随机”"><a href="#随机森林之“随机”" class="headerlink" title="随机森林之“随机”"></a>随机森林之“随机”</h2><p>随机森林的随机体现在两个地方：一个是构建单棵决策树时的样本选择随机，一个是决策树分裂的时候选择的特征集随机。</p>
+<ol>
+<li>假设有N个样本，那么构建某一棵随机数时，放回抽样选择N个样本，称为bootstrap，这样每棵树的训练集都是不同的，当然也会包括重复样本。</li>
+<li>在决策树分类的时候，假设每个样本含有M个特征，对于每一棵树，随机抽取m&lt;&lt;M(有不同的取法，常见的有log2（M)，sqrt（M）等）个特征，在每一次进行树枝分裂的时候都从这m个特征中选取最优分裂点。</li>
+</ol>
+<h2 id="随机森林python实现"><a href="#随机森林python实现" class="headerlink" title="随机森林python实现"></a>随机森林python实现</h2><p>python的sklearn模块集成了众多的机器学习算法，其中也包括随机森林（RandomTree），再结合pandas模块，就可以实现随机森林算法的分类或者回归。<br>    from sklearn.datasets import load_iris<br>    from sklearn.ensemble import RandomForestClassifier<br>    import pandas as pd<br>    import numpy as np</p>
+<pre><code>iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+df[&apos;is_train&apos;] = np.random.uniform(0, 1, len(df)) &lt;= .75
+df[&apos;species&apos;] = pd.Categorical.from_codes(iris.target, iris.target_names)
+df.head()
+
+train, test = df[df[&apos;is_train&apos;]==True], df[df[&apos;is_train&apos;]==False]
+
+features = df.columns[:4]
+clf = RandomForestClassifier(n_jobs=2)
+y, _ = pd.factorize(train[&apos;species&apos;])
+clf.fit(train[features], y)
+
+preds = iris.target_names[clf.predict(test[features])]
+
+print(pd.crosstab(test[&apos;species&apos;], preds, rownames=[&apos;actual&apos;], colnames=[&apos;preds&apos;]))
+</code></pre><p>最终的预测结果如下图：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">preds</th>
+<th style="text-align:left">setosa</th>
+<th style="text-align:left">versicolor</th>
+<th style="text-align:left">virginica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">actual</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">setosa</td>
+<td style="text-align:left">16</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">0</td>
+</tr>
+<tr>
+<td style="text-align:left">versicolor</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td style="text-align:left">virginca</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">16</td>
+</tr>
+</tbody>
+</table>
+<p>当然，每次运行最终预测结果是不一样的，因为测试集和训练集都是每次随机选取的。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;学习了决策树算法之后又接触到了随机森林&lt;/p&gt;
+      &lt;p&gt;学习了决策树算法之后又接触到了随机森林，随机森林可以说是决策树算法的集成加强版。从分类上来说，随机森林属于机器学习中的集成学习，所谓集成学习，顾名思义就是集成一些方法一起来学习，随机森林就是集成很多决策树来实现其分类或者回归的功能。&lt;/p&gt;
     
     </summary>
     
@@ -114,9 +174,9 @@ if __name__ == &apos;__main__&apos;:
     </summary>
     
     
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
       <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
   </entry>
   
