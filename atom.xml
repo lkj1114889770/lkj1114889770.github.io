@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-30T08:34:03.022Z</updated>
+  <updated>2017-08-30T08:35:41.407Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://yoursite.com/2017/08/30/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E2%80%94Encoding-Categorical-Value/"/>
     <id>http://yoursite.com/2017/08/30/数据处理—Encoding-Categorical-Value/</id>
     <published>2017-08-30T07:41:09.000Z</published>
-    <updated>2017-08-30T08:34:03.022Z</updated>
+    <updated>2017-08-30T08:35:41.407Z</updated>
     
-    <content type="html"><![CDATA[<p>在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。</p>
+    <content type="html"><![CDATA[<p>在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。<br><a id="more"></a></p>
 <h2 id="Data-Set"><a href="#Data-Set" class="headerlink" title="Data Set"></a>Data Set</h2><p>数据集假设为：</p>
 <pre><code>import pandas as pd  
 df = pd.DataFrame([  
@@ -71,8 +71,7 @@ Out[37]:
     
     <summary type="html">
     
-      &lt;p&gt;在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。&lt;/p&gt;
-&lt;h2 id=&quot;Data
+      &lt;p&gt;在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。&lt;br&gt;
     
     </summary>
     
