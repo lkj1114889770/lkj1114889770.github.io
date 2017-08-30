@@ -101,7 +101,53 @@ print(pd.crosstab(test[&apos;species&apos;], preds, rownames=[&apos;actual&apos;
 <p><strong>random_state</strong> : int, RandomState instance or None, optional (default=None)<br>If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random.</p>
 <p><strong>verbose</strong> : int, optional (default=0)<br>Controls the verbosity of the tree building process.<br>warm_start : bool, optional (default=False)<br>When set to True, reuse the solution of the previous call to fit and add more estimators to the ensemble, otherwise, just fit a whole new forest.</p>
 <p><strong>class_weight</strong> : dict, list of dicts, “balanced”,<br>“balanced_subsample” or None, optional (default=None) Weights associated with classes in the form {class_label: weight}. If not given, all classes are supposed to have weight one. For multi-output problems, a list of dicts can be provided in the same order as the columns of y.<br>Note that for multioutput (including multilabel) weights should be defined for each class of every column in its own dict. For example, for four-class multilabel classification weights should be [{0: 1, 1: 1}, {0: 1, 1: 5}, {0: 1, 1: 1}, {0: 1, 1: 1}] instead of [{1:1}, {2:5}, {3:1}, {4:1}].<br>The “balanced” mode uses the values of y to automatically adjust weights inversely proportional to class frequencies in the input data as n_samples / (n_classes * np.bincount(y))<br>The “balanced_subsample” mode is the same as “balanced” except that weights are computed based on the bootstrap sample for every tree grown.<br>For multi-output, the weights of each column of y will be multiplied.<br>Note that these weights will be multiplied with sample_weight (passed through the fit method) if sample_weight is specified.</p>
-<p>其余函数：<br>| function | description |<br>|:—–|:—–|<br>| apply(X) | Apply trees in the forest to X, return leaf indices. |<br>| decision_path(X) | Return the decision path in the forest |<br>| fit(X, y[, sample_weight]) | Build a forest of trees from the training set (X, y). |<br>| get_params([deep]) | Get parameters for this estimator. |<br>| predict(X) | Predict class for X. |<br>| predict_log_proba(X) | Predict class log-probabilities for X. |<br>| predict_proba(X) | Predict class probabilities for X. |<br>| score(X, y[, sample_weight]) | Returns the mean accuracy on the given test data and labels. |<br>| set_params(**params) | Set the parameters of this estimator. |</p>
+<p>其余函数：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">function</th>
+<th style="text-align:left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">apply(X)</td>
+<td style="text-align:left">Apply trees in the forest to X, return leaf indices.</td>
+</tr>
+<tr>
+<td style="text-align:left">decision_path(X)</td>
+<td style="text-align:left">Return the decision path in the forest</td>
+</tr>
+<tr>
+<td style="text-align:left">fit(X, y[, sample_weight])</td>
+<td style="text-align:left">Build a forest of trees from the training set (X, y).</td>
+</tr>
+<tr>
+<td style="text-align:left">get_params([deep])</td>
+<td style="text-align:left">Get parameters for this estimator.</td>
+</tr>
+<tr>
+<td style="text-align:left">predict(X)</td>
+<td style="text-align:left">Predict class for X.</td>
+</tr>
+<tr>
+<td style="text-align:left">predict_log_proba(X)</td>
+<td style="text-align:left">Predict class log-probabilities for X.</td>
+</tr>
+<tr>
+<td style="text-align:left">predict_proba(X)</td>
+<td style="text-align:left">Predict class probabilities for X.</td>
+</tr>
+<tr>
+<td style="text-align:left">score(X, y[, sample_weight])</td>
+<td style="text-align:left">Returns the mean accuracy on the given test data and labels.</td>
+</tr>
+<tr>
+<td style="text-align:left">set_params(**params)</td>
+<td style="text-align:left">Set the parameters of this estimator.</td>
+</tr>
+</tbody>
+</table>
 ]]></content>
       
         
