@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习," />
 
 
 
@@ -96,16 +96,18 @@
 
 
 
-<meta name="description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kaijian Liu同学">
-<meta property="og:url" content="http://yoursite.com/archives/2017/08/index.html">
+<meta name="description" content="在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。 Data Set数据集假设为： import pandas as pd   df = pd.DataFrame([               [&amp;apos;">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据处理—Encoding Categorical Value">
+<meta property="og:url" content="http://yoursite.com/2017/08/30/数据处理—Encoding-Categorical-Value/index.html">
 <meta property="og:site_name" content="Kaijian Liu同学">
-<meta property="og:description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
+<meta property="og:description" content="在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。 Data Set数据集假设为： import pandas as pd   df = pd.DataFrame([               [&amp;apos;">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-30T08:34:03.022Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kaijian Liu同学">
-<meta name="twitter:description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
+<meta name="twitter:title" content="数据处理—Encoding Categorical Value">
+<meta name="twitter:description" content="在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。 Data Set数据集假设为： import pandas as pd   df = pd.DataFrame([               [&amp;apos;">
 
 
 
@@ -134,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/08/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/30/数据处理—Encoding-Categorical-Value/"/>
 
 
 
 
 
-  <title>归档 | Kaijian Liu同学</title>
+  <title>数据处理—Encoding Categorical Value | Kaijian Liu同学</title>
   
 
 
@@ -165,7 +167,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -279,222 +281,191 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/30/数据处理—Encoding-Categorical-Value/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kaijian Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kaijian Liu同学">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">数据处理—Encoding Categorical Value</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-30T15:41:09+08:00">
+                2017-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 5 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/30/数据处理—Encoding-Categorical-Value/" itemprop="url">
-              
-                <span itemprop="name">数据处理—Encoding Categorical Value</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-30T15:41:09+08:00"
-              content="2017-08-30" >
-          08-30
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/24/从决策树到随机森林/" itemprop="url">
-              
-                <span itemprop="name">从决策树到随机森林</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-24T17:56:19+08:00"
-              content="2017-08-24" >
-          08-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/22/决策树算法介绍及python实现/" itemprop="url">
-              
-                <span itemprop="name">决策树算法介绍及python实现</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-22T22:13:14+08:00"
-              content="2017-08-22" >
-          08-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
+        <p>在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。</p>
+<h2 id="Data-Set"><a href="#Data-Set" class="headerlink" title="Data Set"></a>Data Set</h2><p>数据集假设为：</p>
+<pre><code>import pandas as pd  
+df = pd.DataFrame([  
+            [&apos;green&apos;, &apos;M&apos;, 11],   
+            [&apos;red&apos;, &apos;L&apos;, 22],   
+            [&apos;blue&apos;, &apos;XL&apos;, 33]])  
 
-        
-        
-        
+df.columns = [&apos;color&apos;, &apos;size&apos;, &apos;prize&apos;] 
+</code></pre><blockquote>
+<pre><code>  color size  prize 
+0  green    M   11             
+1    red    L   22  
+2   blue   XL   33
+</code></pre></blockquote>
+<h2 id="Replace"><a href="#Replace" class="headerlink" title="Replace"></a>Replace</h2><p>一种方法是使用DataFrame的自带函数功能，替换函数replace。</p>
+<pre><code>encoding_num={&quot;color&quot;:{&quot;green&quot;:0,&quot;red&quot;:1,&quot;blue&quot;:2},&quot;size&quot;:{&quot;M&quot;:0,&quot;L&quot;:1,&quot;XL&quot;:2}}
+df.replace(encoding_num,inplace=True)
 
-        
-        
+df
+Out: 
+   color  size  prize
+0      0     0   10.1
+1      1     1   13.5
+2      2     2   15.3
+</code></pre><h2 id="One-Hot-Encoding"><a href="#One-Hot-Encoding" class="headerlink" title="One Hot Encoding"></a>One Hot Encoding</h2><p>One-hot Encoding，又称为一位有效编码，即对每个状态采取一位进行编码。假设某个特征有N个特征值，则需要N位进行编码，且任意时候只有一位有效。</p>
+<pre><code>pd.get_dummies(df)
+Out[28]: 
+   prize  color_blue  color_green  color_red  size_L  size_M  size_XL
+0     11           0            1          0       0       1        0
+1     22           0            0          1       1       0        0
+2     33           1            0          0       0       0        1
+</code></pre><p>这种编码方式弊端就是，当某个特征对应特征值很多时，就需要很多位进行编码，使得数据列数过大。</p>
+<h2 id="Label-Encoding"><a href="#Label-Encoding" class="headerlink" title="Label Encoding"></a>Label Encoding</h2><p>这种编码方式，主要是基于pandas的Categorical模块，将某一列转换成category类型，然后使用category value来编码。</p>
+<pre><code>df[&quot;color&quot;]=df[&quot;color&quot;].astype(&apos;category&apos;)
+df[&quot;size&quot;]=df[&quot;size&quot;].astype(&apos;category&apos;)
+df[&quot;color&quot;]=df[&quot;color&quot;].cat.codes
+df[&quot;size&quot;]=df[&quot;size&quot;].cat.codes
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/08/也看战狼2：爬取豆瓣影评做词云/" itemprop="url">
-              
-                <span itemprop="name">也看战狼2：爬取豆瓣影评做词云</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-08T22:47:02+08:00"
-              content="2017-08-08" >
-          08-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+df
+Out[37]: 
+   color  size  prize
+0      1     1     11
+1      2     0     22
+2      0     2     33
+</code></pre>
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/06/hexo-github搭建个人博客/" itemprop="url">
-              
-                <span itemprop="name">hexo-github搭建个人博客</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-06T18:37:47+08:00"
-              content="2017-08-06" >
-          08-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/24/从决策树到随机森林/" rel="next" title="从决策树到随机森林">
+                <i class="fa fa-chevron-left"></i> 从决策树到随机森林
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -502,6 +473,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -522,8 +497,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -627,6 +611,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Set"><span class="nav-number">1.</span> <span class="nav-text">Data Set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Replace"><span class="nav-number">2.</span> <span class="nav-text">Replace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#One-Hot-Encoding"><span class="nav-number">3.</span> <span class="nav-text">One Hot Encoding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Label-Encoding"><span class="nav-number">4.</span> <span class="nav-text">Label Encoding</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -747,11 +747,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
 
 
   

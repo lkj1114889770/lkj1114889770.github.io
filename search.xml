@@ -3,6 +3,65 @@
   
     
     <entry>
+      <title><![CDATA[数据处理—Encoding Categorical Value]]></title>
+      <url>/2017/08/30/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E2%80%94Encoding-Categorical-Value/</url>
+      <content type="html"><![CDATA[<p>在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。</p>
+<h2 id="Data-Set"><a href="#Data-Set" class="headerlink" title="Data Set"></a>Data Set</h2><p>数据集假设为：</p>
+<pre><code>import pandas as pd  
+df = pd.DataFrame([  
+            [&apos;green&apos;, &apos;M&apos;, 11],   
+            [&apos;red&apos;, &apos;L&apos;, 22],   
+            [&apos;blue&apos;, &apos;XL&apos;, 33]])  
+
+df.columns = [&apos;color&apos;, &apos;size&apos;, &apos;prize&apos;] 
+</code></pre><blockquote>
+<pre><code>  color size  prize 
+0  green    M   11             
+1    red    L   22  
+2   blue   XL   33
+</code></pre></blockquote>
+<h2 id="Replace"><a href="#Replace" class="headerlink" title="Replace"></a>Replace</h2><p>一种方法是使用DataFrame的自带函数功能，替换函数replace。</p>
+<pre><code>encoding_num={&quot;color&quot;:{&quot;green&quot;:0,&quot;red&quot;:1,&quot;blue&quot;:2},&quot;size&quot;:{&quot;M&quot;:0,&quot;L&quot;:1,&quot;XL&quot;:2}}
+df.replace(encoding_num,inplace=True)
+
+df
+Out: 
+   color  size  prize
+0      0     0   10.1
+1      1     1   13.5
+2      2     2   15.3
+</code></pre><h2 id="One-Hot-Encoding"><a href="#One-Hot-Encoding" class="headerlink" title="One Hot Encoding"></a>One Hot Encoding</h2><p>One-hot Encoding，又称为一位有效编码，即对每个状态采取一位进行编码。假设某个特征有N个特征值，则需要N位进行编码，且任意时候只有一位有效。</p>
+<pre><code>pd.get_dummies(df)
+Out[28]: 
+   prize  color_blue  color_green  color_red  size_L  size_M  size_XL
+0     11           0            1          0       0       1        0
+1     22           0            0          1       1       0        0
+2     33           1            0          0       0       0        1
+</code></pre><p>这种编码方式弊端就是，当某个特征对应特征值很多时，就需要很多位进行编码，使得数据列数过大。</p>
+<h2 id="Label-Encoding"><a href="#Label-Encoding" class="headerlink" title="Label Encoding"></a>Label Encoding</h2><p>这种编码方式，主要是基于pandas的Categorical模块，将某一列转换成category类型，然后使用category value来编码。</p>
+<pre><code>df[&quot;color&quot;]=df[&quot;color&quot;].astype(&apos;category&apos;)
+df[&quot;size&quot;]=df[&quot;size&quot;].astype(&apos;category&apos;)
+df[&quot;color&quot;]=df[&quot;color&quot;].cat.codes
+df[&quot;size&quot;]=df[&quot;size&quot;].cat.codes
+
+df
+Out[37]: 
+   color  size  prize
+0      1     1     11
+1      2     0     22
+2      0     2     33
+</code></pre>]]></content>
+      
+        
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[从决策树到随机森林]]></title>
       <url>/2017/08/24/%E4%BB%8E%E5%86%B3%E7%AD%96%E6%A0%91%E5%88%B0%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/</url>
       <content type="html"><![CDATA[<p>学习了决策树算法之后又接触到了随机森林，随机森林可以说是决策树算法的集成加强版。从分类上来说，随机森林属于机器学习中的集成学习，所谓集成学习，顾名思义就是集成一些方法一起来学习，随机森林就是集成很多决策树来实现其分类或者回归的功能。</p>
@@ -227,9 +286,9 @@ if __name__ == &apos;__main__&apos;:
         
         <tags>
             
-            <tag> 机器学习 </tag>
-            
             <tag> python </tag>
+            
+            <tag> 机器学习 </tag>
             
         </tags>
         
@@ -419,11 +478,11 @@ draw_wordcloud2()
         
         <tags>
             
-            <tag> python </tag>
-            
             <tag> 电影 </tag>
             
             <tag> 爬虫 </tag>
+            
+            <tag> python </tag>
             
         </tags>
         
