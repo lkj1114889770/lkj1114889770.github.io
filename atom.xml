@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-08-25T08:09:45.511Z</updated>
+  <updated>2017-08-30T07:33:16.431Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/08/24/%E4%BB%8E%E5%86%B3%E7%AD%96%E6%A0%91%E5%88%B0%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/"/>
     <id>http://yoursite.com/2017/08/24/从决策树到随机森林/</id>
     <published>2017-08-24T09:56:19.000Z</published>
-    <updated>2017-08-25T08:09:45.511Z</updated>
+    <updated>2017-08-30T07:33:16.431Z</updated>
     
     <content type="html"><![CDATA[<p>学习了决策树算法之后又接触到了随机森林，随机森林可以说是决策树算法的集成加强版。从分类上来说，随机森林属于机器学习中的集成学习，所谓集成学习，顾名思义就是集成一些方法一起来学习，随机森林就是集成很多决策树来实现其分类或者回归的功能。</p>
 <a id="more"></a>
@@ -91,7 +91,34 @@ print(pd.crosstab(test[&apos;species&apos;], preds, rownames=[&apos;actual&apos;
 <p>当然，每次运行最终预测结果是不一样的，因为测试集和训练集都是每次随机选取的。</p>
 <pre><code>iris = load_iris() #导入鸢尾植物数据集
 </code></pre><p>sklearn模块含有一些机器学习经典的数据集，这里导入了鸢尾植物数据集，导入后iris为字典数据类型，存储了其萼片和花瓣的长宽，一共4个属性，鸢尾植物又分三类。与之相对，iris里有两个属性iris.data，iris.target，data里是一个矩阵，每一列代表了萼片或花瓣的长宽，一共4列，每一列代表某个被测量的鸢尾植物，一共采样了150条记录。</p>
-<p>然后又碰到了pandas的一个模块，pandas.Categorical。</p>
+<p>然后又碰到了pandas的一个模块，pandas.Categorical，将一些label转变成categorical variable（分类变量）</p>
+<pre><code>Categorical.from_codes(codes, categories, ordered=False)
+</code></pre><p>这个函数产生一个categorical type根据codes和categories。</p>
+<p>pandas.factorizes 则与之相反，Encode input values as an enumerated type or categorical variable。</p>
+<p>返回的结果中：<br>labels : the indexer to the original array<br>uniques : ndarray (1-d) or Index</p>
+<p>python机器学习模块sklearn中的RandomForestClassifier</p>
+<p><strong>sklearn.ensemble</strong>.<strong>RandomForestClassifier</strong>(n_estimators=10, criterion=’gini’, max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features=’auto’, max_leaf_nodes=None, min_impurity_decrease=0.0, min_impurity_split=None, bootstrap=True, oob_score=False, n_jobs=1, random_state=None, verbose=0, warm_start=False, class_weight=None)</p>
+<p><strong>n_estimators</strong> : integer, optional (default=10)<br>&emsp;&emsp;森林中树木数目</p>
+<p><strong>criterion</strong> : string, optional (default=”gini”)<br>&emsp;&emsp;树枝分裂算法，gini和entropy</p>
+<p><strong>max_features</strong> : int, float, string or None, optional (default=”auto”)<br>&emsp;&emsp;寻找最优分裂点计算采用的特征数目<br>If int, then consider max_features features at each split.<br>If float, then max_features is a percentage and int(max_features * n_features) features are considered at each split.<br>If “auto”, then max_features=sqrt(n_features).<br>If “sqrt”, then max_features=sqrt(n_features) (same as “auto”).<br>If “log2”, then max_features=log2(n_features).<br>If None, then max_features=n_features.<br>Note: the search for a split does not stop until at least one valid partition of the node samples is found, even if it requires to effectively inspect more than max_features features.</p>
+<p><strong>max_depth</strong> : integer or None, optional (default=None)<br>&emsp;&emsp;树的最大深度<br>The maximum depth of the tree. If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples.</p>
+<p><strong>min_samples_split</strong> : int, float, optional (default=2)<br>The minimum number of samples required to split an internal node:<br>If int, then consider min_samples_split as the minimum number.<br>If float, then min_samples_split is a percentage and ceil(min_samples_split * n_samples) are the minimum number of samples for each split.<br>Changed in version 0.18: Added float values for percentages.</p>
+<p><strong>min_samples_leaf</strong> : int, float, optional (default=1)<br>The minimum number of samples required to be at a leaf node:<br>If int, then consider min_samples_leaf as the minimum number.<br>If float, then min_samples_leaf is a percentage and ceil(min_samples_leaf * n_samples) are the minimum number of samples for each node.<br>Changed in version 0.18: Added float values for percentages.</p>
+<p><strong>min_weight_fraction_leaf</strong> : float, optional (default=0.)<br>The minimum weighted fraction of the sum total of weights (of all the input samples) required to be at a leaf node. Samples have equal weight when sample_weight is not provided.</p>
+<p><strong>max_leaf_nodes</strong> : int or None, optional (default=None)<br>Grow trees with max_leaf_nodes in best-first fashion. Best nodes are defined as relative reduction in impurity. If None then unlimited number of leaf nodes.</p>
+<p><strong>min_impurity_split</strong> : float,<br>Threshold for early stopping in tree growth. A node will split if its impurity is above the threshold, otherwise it is a leaf.<br>Deprecated since version 0.19: min_impurity_split has been deprecated in favor of min_impurity_decrease in 0.19 and will be removed in 0.21. Use min_impurity_decrease instead. </p>
+<p><strong>min_impurity_decrease</strong> : float, optional (default=0.)<br>A node will be split if this split induces a decrease of the impurity greater than or equal to this value.<br>The weighted impurity decrease equation is the following:</p>
+<blockquote>
+<p>N_t / N <em> (impurity - N_t_R / N_t </em> right_impurity</p>
+<pre><code>- N_t_L / N_t * left_impurity)
+</code></pre></blockquote>
+<p>where N is the total number of samples, N_t is the number of samples at the current node, N_t_L is the number of samples in the left child, and N_t_R is the number of samples in the right child.<br>N, N_t, N_t_R and N_t_L all refer to the weighted sum, if sample_weight is passed.<br>New in version 0.19.</p>
+<p><strong>bootstrap</strong> : boolean, optional (default=True)<br>Whether bootstrap samples are used when building trees.<br>oob_score : bool (default=False)<br>Whether to use out-of-bag samples to estimate the generalization accuracy.</p>
+<p><strong>n_jobs</strong> : integer, optional (default=1)<br>The number of jobs to run in parallel for both fit and predict. If -1, then the number of jobs is set to the number of cores.</p>
+<p><strong>random_state</strong> : int, RandomState instance or None, optional (default=None)<br>If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random.</p>
+<p><strong>verbose</strong> : int, optional (default=0)<br>Controls the verbosity of the tree building process.<br>warm_start : bool, optional (default=False)<br>When set to True, reuse the solution of the previous call to fit and add more estimators to the ensemble, otherwise, just fit a whole new forest.</p>
+<p><strong>class_weight</strong> : dict, list of dicts, “balanced”,<br>“balanced_subsample” or None, optional (default=None) Weights associated with classes in the form {class_label: weight}. If not given, all classes are supposed to have weight one. For multi-output problems, a list of dicts can be provided in the same order as the columns of y.<br>Note that for multioutput (including multilabel) weights should be defined for each class of every column in its own dict. For example, for four-class multilabel classification weights should be [{0: 1, 1: 1}, {0: 1, 1: 5}, {0: 1, 1: 1}, {0: 1, 1: 1}] instead of [{1:1}, {2:5}, {3:1}, {4:1}].<br>The “balanced” mode uses the values of y to automatically adjust weights inversely proportional to class frequencies in the input data as n_samples / (n_classes * np.bincount(y))<br>The “balanced_subsample” mode is the same as “balanced” except that weights are computed based on the bootstrap sample for every tree grown.<br>For multi-output, the weights of each column of y will be multiplied.<br>Note that these weights will be multiplied with sample_weight (passed through the fit method) if sample_weight is specified.</p>
+<p>其余函数：<br>| function | description |<br>|:—–|:—–|<br>| apply(X) | Apply trees in the forest to X, return leaf indices. |<br>| decision_path(X) | Return the decision path in the forest |<br>| fit(X, y[, sample_weight]) | Build a forest of trees from the training set (X, y). |<br>| get_params([deep]) | Get parameters for this estimator. |<br>| predict(X) | Predict class for X. |<br>| predict_log_proba(X) | Predict class log-probabilities for X. |<br>| predict_proba(X) | Predict class probabilities for X. |<br>| score(X, y[, sample_weight]) | Returns the mean accuracy on the given test data and labels. |<br>| set_params(**params) | Set the parameters of this estimator. |</p>
 ]]></content>
     
     <summary type="html">
@@ -181,9 +208,9 @@ if __name__ == &apos;__main__&apos;:
     </summary>
     
     
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
       <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
   </entry>
   
@@ -380,11 +407,11 @@ draw_wordcloud2()
     </summary>
     
     
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
       <category term="电影" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1/"/>
     
       <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
   </entry>
   
