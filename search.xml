@@ -31,7 +31,7 @@ Out:
 1      1     1   13.5
 2      2     2   15.3
 </code></pre><h2 id="One-Hot-Encoding"><a href="#One-Hot-Encoding" class="headerlink" title="One Hot Encoding"></a>One Hot Encoding</h2><p>One-hot Encoding，又称为一位有效编码，即对每个状态采取一位进行编码。假设某个特征有N个特征值，则需要N位进行编码，且任意时候只有一位有效。</p>
-<pre><code>pd.get_dummies(df[[&apos;color&apos;,&apos;size&apos;]])
+<pre><code>pd.get_dummies(df)
 Out[28]: 
    prize  color_blue  color_green  color_red  size_L  size_M  size_XL
 0     11           0            1          0       0       1        0
@@ -286,9 +286,9 @@ if __name__ == &apos;__main__&apos;:
         
         <tags>
             
-            <tag> 机器学习 </tag>
-            
             <tag> python </tag>
+            
+            <tag> 机器学习 </tag>
             
         </tags>
         
