@@ -3,6 +3,226 @@
   
     
     <entry>
+      <title><![CDATA[kaggle入门：Predict survival on the Titanic]]></title>
+      <url>/2017/09/12/kaggle%E5%85%A5%E9%97%A8%EF%BC%9APredict-survival-on-the-Titanic/</url>
+      <content type="html"><![CDATA[<p><a href="https://www.kaggle.com/" target="_blank" rel="external">Kaggle</a>是一个数据分析建模的应用竞赛平台，学习了机器学习的算法，这是个很好的应用平台。Predict survival on the Titanic作为kaggle入门级别的比赛，也是我接触kaggle的第一个实践项目，最后的结果虽然不够优秀，仅Top20%左右，但是还是将第一次的实践过程mark一下。<br><img src="https://i.imgur.com/FEDyFse.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h2><p>从kaggle的网站上下载好比赛数据（train.csv和test.csv），泰坦尼克号问题就是根据乘客的个人信息，分析是否能够活下来，训练集提供了乘客信息以及存活状况，测试集仅提供信息，需要预测能否存活，其实就是一个二分类问题。</p>
+<p>下面读入训练集数据，开始初步分析。</p>
+<pre><code>import pandas as pd
+import numpy as np
+from pandas import Series,DataFrame
+data_train = pd.read_csv(&quot;train.csv&quot;)
+data_train.info()
+</code></pre><p>可以看到数据信息：</p>
+<pre><code>RangeIndex: 891 entries, 0 to 890
+Data columns (total 12 columns):
+PassengerId    891 non-null int64
+Survived       891 non-null int64
+Pclass         891 non-null int64
+Name           891 non-null object
+Sex            891 non-null object
+Age            714 non-null float64
+SibSp          891 non-null int64
+Parch          891 non-null int64
+Ticket         891 non-null object
+Fare           891 non-null float64
+Cabin          204 non-null object
+Embarked       889 non-null object
+dtypes: float64(2), int64(5), object(5)
+</code></pre><p>数据中存在缺项，其中不同的字段表示的信息为</p>
+<p>PassengerId    乘客ID<br>Survived       是否存活<br>Pclass         船舱等级<br>Name           姓名<br>Sex            性别<br>Age            年龄<br>SibSp          兄弟姐妹个数<br>Parch          父母小孩个数<br>Ticket         船票信息<br>Fare           票价<br>Cabin          船舱<br>Embarked       登船港口</p>
+<pre><code>import matplotlib.pyplot as plt
+fig = plt.figure()
+fig.set(alpha=0.2)  # 设定图表颜色alpha参数
+data_train.Age[data_train.Survived == 0].plot(kind=&apos;kde&apos;)   
+data_train.Age[data_train.Survived == 1].plot(kind=&apos;kde&apos;)
+plt.xlabel(u&quot;年龄&quot;)
+plt.ylabel(u&quot;密度&quot;)
+plt.title(u&quot;从年龄看获救情况&quot;)
+plt.legend((u&quot;未获救&quot;,u&quot;获救&quot;),loc=&apos;best&apos;)
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/Dt77VZG.png" alt=""></p>
+<p>年龄越小，获救的概率还是越高的，小孩还是要优先嘛。</p>
+<pre><code>#看看各乘客等级的获救情况
+fig = plt.figure()
+fig.set(alpha=0.2)
+
+Survived_0 = data_train.Pclass[data_train.Survived == 0].value_counts()
+Survived_1 = data_train.Pclass[data_train.Survived == 1].value_counts()
+df=pd.DataFrame({u&apos;获救&apos;:Survived_1, u&apos;未获救&apos;:Survived_0})
+df.plot(kind=&apos;bar&apos;, stacked=True)
+plt.title(u&quot;各乘客等级的获救情况&quot;)
+plt.xlabel(u&quot;乘客等级&quot;) 
+plt.ylabel(u&quot;人数&quot;) 
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/CAp7eKj.png" alt=""></p>
+<p>船舱等级越高，获救概率也是越高，还是上层社会的人容易获救啊。</p>
+<pre><code>#看看各性别的获救情况
+fig = plt.figure()
+fig.set(alpha=0.2)  
+
+Survived_m = data_train.Survived[data_train.Sex == &apos;male&apos;].value_counts()
+Survived_f = data_train.Survived[data_train.Sex == &apos;female&apos;].value_counts()
+df=pd.DataFrame({u&apos;男性&apos;:Survived_m, u&apos;女性&apos;:Survived_f})
+df.plot(kind=&apos;bar&apos;, stacked=True)
+plt.title(u&quot;按性别看获救情况&quot;)
+plt.xlabel(u&quot;性别&quot;) 
+plt.ylabel(u&quot;人数&quot;)
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/1PG3g2x.png" alt=""></p>
+<p>女性获救概率更高，嗯，Lady first.</p>
+<p>姓名中含有一些称谓信息，也代表着乘客的身份以及社会地位。</p>
+<pre><code>data_train.groupby(data_train[&apos;Name&apos;].apply(lambda x: x.split(&apos;, &apos;)[1]).apply(lambda x: x.split(&apos;.&apos;)[0]))[&apos;Survived&apos;].mean()
+</code></pre><p>得到的结果如下：</p>
+<pre><code>Name
+Capt            0.000000
+Col             0.500000
+Don             0.000000
+Dr              0.428571
+Jonkheer        0.000000
+Lady            1.000000
+Major           0.500000
+Master          0.575000
+Miss            0.697802
+Mlle            1.000000
+Mme             1.000000
+Mr              0.156673
+Mrs             0.792000
+Ms              1.000000
+Rev             0.000000
+Sir             1.000000
+the Countess    1.000000
+Name: Survived, dtype: float64
+</code></pre><p>还是要看身份的，有身份的人容易获救啊。</p>
+<pre><code>#信息中船舱有无对于获救情况影响
+fig = plt.figure()
+fig.set(alpha=0.2) 
+
+Cabin_Has= data_train.Survived[data_train.Cabin.notnull()].value_counts()
+Cabin_None = data_train.Survived[data_train.Cabin.isnull()].value_counts()
+df=pd.DataFrame({u&apos;有船舱号&apos;:Cabin_Has, u&apos;无船舱号&apos;:Cabin_None})
+df.plot(kind=&apos;bar&apos;, stacked=True)
+plt.title(u&quot;有无船舱号的获救情况&quot;)
+plt.xlabel(u&quot;船舱号有无&quot;) 
+plt.ylabel(u&quot;人数&quot;) 
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/C9tiryu.png" alt=""></p>
+<p>看起来有船舱号的人获救概率高一点。</p>
+<pre><code>#信息中Embarked登船港口的影响
+fig = plt.figure()
+fig.set(alpha=0.2) 
+
+Survived_0 = data_train.Embarked[data_train.Survived == 0].value_counts()
+Survived_1 = data_train.Embarked[data_train.Survived == 1].value_counts()
+df=pd.DataFrame({u&apos;获救&apos;:Survived_1, u&apos;未获救&apos;:Survived_0})
+df.plot(kind=&apos;bar&apos;, stacked=True)
+plt.title(u&quot;不同登船港口的获救情况&quot;)
+plt.xlabel(u&quot;乘客等级&quot;) 
+plt.ylabel(u&quot;人数&quot;) 
+plt.show()
+</code></pre><p><img src="https://i.imgur.com/8CZL0cP.png" alt=""></p>
+<p>C港口获救概率高一点。</p>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><p>下面就需要对训练集以及测试集的数据进行处理，以便算法的处理。</p>
+<pre><code>data_test = pd.read_csv(&apos;test.csv&apos;)
+data_test[&apos;Survived&apos;]=3 #为了能够合并在一起，test数据添加Suvrvived一列，不过数值为不存在的3
+data_combine=pd.concat([data_train,data_test])
+data_combine.info()
+</code></pre><p>可以看到合并数据信息：</p>
+<pre><code>Int64Index: 1309 entries, 0 to 417
+Data columns (total 12 columns):
+Age            1046 non-null float64
+Cabin          295 non-null object
+Embarked       1307 non-null object
+Fare           1308 non-null float64
+Name           1309 non-null object
+Parch          1309 non-null int64
+PassengerId    1309 non-null int64
+Pclass         1309 non-null int64
+Sex            1309 non-null object
+SibSp          1309 non-null int64
+Survived       1309 non-null int64
+Ticket         1309 non-null object
+dtypes: float64(2), int64(5), object(5)
+</code></pre><h3 id="缺省数据的处理"><a href="#缺省数据的处理" class="headerlink" title="缺省数据的处理"></a>缺省数据的处理</h3><p>上面信息中可以看到Age、Cabin、Embarked、Fare有数据缺失，下面需要进行处理。</p>
+<p>Cabin缺失数据很多，可以将有无Cabin记录为特征；Embarked仅缺失2个，可以取取值最多的来填补。</p>
+<pre><code>#对船舱号缺值进行处理，有船舱号标识为1，无船舱号标识为0
+data_combine.loc[(data_combine.Cabin.notnull()), &apos;Cabin&apos; ] = 1
+data_combine.loc[(data_combine.Cabin.isnull()), &apos;Cabin&apos; ] = 0
+#有两行数据缺失Embarked值，补全为Embarked的最多取值S
+data_combine.loc[(data_combine.Embarked.isnull()),&apos;Embarked&apos;] = &apos;S&apos;
+</code></pre><p>Fare有一个缺值，取所有Fare的平均值来填补。</p>
+<pre><code>data_combine.Fare.fillna(data_combine.Fare.mean(), inplace=True) #Fare有一个缺值，用均值填充
+</code></pre><p>Age缺省数值也是不多，但是不像Fare和Embarked那么少，考虑使用算法来拟合，采用随机森林的回归进行预测拟合填补。</p>
+<pre><code>from sklearn.ensemble import RandomForestRegressor
+
+### 使用 RandomForestClassifier 填补缺失的年龄属性
+def set_missing_ages(df):
+    # 把已有的数值型特征取出来丢进Random Forest Regressor中
+    age_df = df[[&apos;Age&apos;,&apos;Fare&apos;, &apos;Parch&apos;, &apos;SibSp&apos;, &apos;Pclass&apos;]]
+    # 乘客分成已知年龄和未知年龄两部分
+    known_age = age_df[age_df.Age.notnull()].as_matrix()
+    unknown_age = age_df[age_df.Age.isnull()].as_matrix()
+    # y即目标年龄
+    y = known_age[:, 0]
+    # X即特征属性值
+    X = known_age[:, 1:]
+    # fit到RandomForestRegressor之中
+    rfr = RandomForestRegressor(random_state=0, n_estimators=2000, n_jobs=-1)
+    rfr.fit(X, y)
+    # 用得到的模型进行未知年龄结果预测
+    predictedAges = rfr.predict(unknown_age[:, 1::])
+    # 用得到的预测结果填补原缺失数据
+    df.loc[ (df.Age.isnull()), &apos;Age&apos; ] = predictedAges 
+    return df, rfr
+
+data_combine, rfr = set_missing_ages(data_combine)
+</code></pre><h3 id="特征处理"><a href="#特征处理" class="headerlink" title="特征处理"></a>特征处理</h3><p>对名字可以提取到称谓作为一个特征，根据SibSp和Parch可以知道家庭情况，再添加一个FamilySize特征。</p>
+<pre><code>data_combine[&apos;title&apos;]=data_combine[&apos;Name&apos;].apply(lambda x: x.split(&apos;, &apos;)[1]).apply(lambda x: x.split(&apos;.&apos;)[0])
+data_combine[&apos;FamilySize&apos;]=data_combine[&apos;SibSp&apos;] + data_combine[&apos;Parch&apos;]
+</code></pre><p>下面将一些特征取值为文本的转化成数值取值。</p>
+<pre><code>#将所有特征转换成数值型编码
+# Sex
+df = pd.get_dummies(data_combine[&apos;Sex&apos;],prefix=&apos;Sex&apos;)
+data_combine = pd.concat([data_combine,df],axis=1).drop(&apos;Sex&apos;,axis=1)
+
+# Embarked
+df = pd.get_dummies(data_combine[&apos;Embarked&apos;],prefix=&apos;Embarked&apos;)
+data_combine = pd.concat([data_combine,df],axis=1).drop(&apos;Embarked&apos;,axis=1)
+
+# title
+data_combine[&apos;title&apos;]=data_combine[&apos;title&apos;].astype(&apos;category&apos;)
+data_combine[&apos;title&apos;]=data_combine[&apos;title&apos;].cat.codes
+
+# Pclass
+df = pd.get_dummies(data_combine[&apos;Pclass&apos;],prefix=&apos;Pclass&apos;)
+data_combine = pd.concat([data_combine,df],axis=1).drop(&apos;Pclass&apos;,axis=1)
+
+
+data_combine.drop([&apos;Name&apos;,&apos;SibSp&apos;,&apos;Parch&apos;,&apos;Ticket&apos;],axis=1,inplace=True)
+</code></pre><h3 id="算法预测"><a href="#算法预测" class="headerlink" title="算法预测"></a>算法预测</h3><p>预测算法采用集成学习中的随机森林，作一个典型的二分类。    </p>
+<pre><code>from sklearn.ensemble import RandomForestClassifier
+X_train = data_combine.iloc[:891,:].drop([&quot;PassengerId&quot;,&quot;Survived&quot;], axis=1)
+Y_train = data_combine.iloc[:891,:][&quot;Survived&quot;]
+X_test = data_combine.iloc[891:,:].drop([&quot;PassengerId&quot;,&quot;Survived&quot;], axis=1)
+clf = RandomForestClassifier(n_estimators=300,min_samples_leaf=4)
+clf.fit(X_train, Y_train)
+Y_test = clf.predict(X_test)
+gender_submission = pd.DataFrame({&apos;PassengerId&apos;:data_test.iloc[:,0],&apos;Survived&apos;:Y_test})
+gender_submission.to_csv(&apos;gender_submission.csv&apos;, index=None)
+</code></pre><h2 id="submission"><a href="#submission" class="headerlink" title="submission"></a>submission</h2><p>将保存的gender_submission.csv文件提交到kaggle，得到的0.79904，毕竟第一次实践，进入了Top20%，虽然不够优秀，也还可以，算法继续学习之后还待改进。<br><img src="https://i.imgur.com/jOHX4b4.png" alt=""></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[数据处理—Encoding Categorical Value]]></title>
       <url>/2017/08/30/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E2%80%94Encoding-Categorical-Value/</url>
       <content type="html"><![CDATA[<p>在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。<br><a id="more"></a></p>
@@ -286,9 +506,9 @@ if __name__ == &apos;__main__&apos;:
         
         <tags>
             
-            <tag> python </tag>
-            
             <tag> 机器学习 </tag>
+            
+            <tag> python </tag>
             
         </tags>
         
