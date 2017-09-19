@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title><![CDATA['朴素贝叶斯分类']]></title>
+      <title><![CDATA[朴素贝叶斯分类]]></title>
       <url>/2017/09/19/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB/</url>
       <content type="html"><![CDATA[<p>贝叶斯算法是分类算法的一种，算法的核心是概率论中的贝叶斯定理，而朴素贝叶斯则是贝叶斯分类算法中最简单的一种。<br><a id="more"></a></p>
 <h2 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h2><p>贝叶斯算法的核心就是贝叶斯定理：</p>
@@ -728,11 +728,11 @@ draw_wordcloud2()
         
         <tags>
             
-            <tag> python </tag>
-            
             <tag> 电影 </tag>
             
             <tag> 爬虫 </tag>
+            
+            <tag> python </tag>
             
         </tags>
         
