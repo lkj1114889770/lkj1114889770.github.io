@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-19T13:13:23.411Z</updated>
+  <updated>2017-09-19T13:16:18.084Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,13 +20,13 @@
     <link href="http://yoursite.com/2017/09/19/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB/"/>
     <id>http://yoursite.com/2017/09/19/朴素贝叶斯分类/</id>
     <published>2017-09-19T12:36:16.000Z</published>
-    <updated>2017-09-19T13:13:23.411Z</updated>
+    <updated>2017-09-19T13:16:18.084Z</updated>
     
     <content type="html"><![CDATA[<p>贝叶斯算法是分类算法的一种，算法的核心是概率论中的贝叶斯定理，而朴素贝叶斯则是贝叶斯分类算法中最简单的一种。<br><a id="more"></a></p>
 <h2 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h2><p>贝叶斯算法的核心就是贝叶斯定理：</p>
 <p><img src="https://i.imgur.com/Mc59jtP.png" alt=""></p>
 <p>而在分类算法中，B为某个类别，A为特征，P(B|A)为某个待分类个体的特征取不同类别的概率，显然是计算取不同类别的概率，取最大概率作为该个体的分类类别；上式右边的三个式子的取值通常可以根据已知数据集即训练集求取。</p>
-<h2 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h2><p>朴素贝叶斯的“朴素”以现在样本的各个特征都是条件独立的，这样就极大地简化了算法，当然这是一个比较强的条件，在实际应用中不一定符合。算法流程如下：</p>
+<h2 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h2><p>朴素贝叶斯的“朴素”体现在样本的各个特征都是条件独立的，这样就极大地简化了算法，当然这是一个比较强的条件，在实际应用中不一定符合。算法流程如下：</p>
 <ol>
 <li>样本x的特征集合{a1,a2,…am}</li>
 <li>所有分类类别取值{y1,y2,…yn}</li>
@@ -510,7 +510,7 @@ print(pd.crosstab(test[&apos;species&apos;], preds, rownames=[&apos;actual&apos;
     <link href="http://yoursite.com/2017/08/22/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/"/>
     <id>http://yoursite.com/2017/08/22/决策树算法介绍及python实现/</id>
     <published>2017-08-22T14:13:14.000Z</published>
-    <updated>2017-08-24T09:47:57.396Z</updated>
+    <updated>2017-09-20T02:57:00.823Z</updated>
     
     <content type="html"><![CDATA[<p>决策树算法是机器学习中经典的算法之一，既可以作为分类算法，也可以作为回归算法。在做开始入门机器学习这方面内容时，自然就接触到了这方面的知识。因此，本文对决策树算法进行了一些整理，首先对决策树算法的原理进行介绍，并且用python对决策树算法进行代码实现。<br><a id="more"></a></p>
 <h2 id="决策树算法的概述"><a href="#决策树算法的概述" class="headerlink" title="决策树算法的概述"></a>决策树算法的概述</h2><p>决策树算法的思想很类似于我们写代码经常用到的if，else if，else，用什么特征来判断if，这就是决策树算法的精髓所在。</p>
@@ -568,6 +568,8 @@ if __name__ == &apos;__main__&apos;:
 <p>SL和SR分别对应A属性分类点划分出的两个子集，取使得划分后信息熵最小的取值作为A属性的最佳分裂点，参与后面的运算，不够感觉这样计算量有点多的orz</p>
 <h3 id="CART算法"><a href="#CART算法" class="headerlink" title="CART算法"></a>CART算法</h3><p>CART算法的划分基于递归建立二叉树，对于一个变量属性来说，它的划分点是一对连续变量属性值的中点。假设m个样本的集合一个属性有m个连续的值，那么则会有m-1个分裂点，每个分裂点为相邻两个连续值的均值。每个属性的划分按照能减少的杂质的量来进行排序，而杂质的减少量定义为划分前的杂质减去划分后的每个节点的杂质量划分所占比率之和。而杂质度量方法常用Gini指标，假设一个样本共有C类，那么一个节点的Gini不纯度可定义为</p>
 <p><img src="http://i.imgur.com/s2AqUO0.png" alt=""></p>
+<p>那么，按属性A的某个属性值t分裂最后的Gini值为：</p>
+<p><img src="https://i.imgur.com/x3qv9ea.png" alt=""></p>
 <p>分别计算属性A不同属性值的Gini值，取最小的作为A的最佳分类点，然后对于S集此时所有的属性进行上述运算之后，取具有最小的Gini作为分裂属性，其最小的Gini值的属性值作为分裂点。</p>
 <p>CART还可以用于作为回归树，但是此时Gini值的算法就不一样，采用的是总方差：</p>
 <p><img src="http://i.imgur.com/FS7qiGE.png" alt=""></p>
@@ -780,11 +782,11 @@ draw_wordcloud2()
     </summary>
     
     
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
       <category term="电影" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1/"/>
     
       <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
   </entry>
   

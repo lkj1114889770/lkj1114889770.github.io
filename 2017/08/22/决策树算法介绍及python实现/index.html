@@ -111,8 +111,9 @@
 <meta property="og:image" content="http://i.imgur.com/ewGSoY2.png">
 <meta property="og:image" content="http://i.imgur.com/DWuCTu8.png">
 <meta property="og:image" content="http://i.imgur.com/s2AqUO0.png">
+<meta property="og:image" content="https://i.imgur.com/x3qv9ea.png">
 <meta property="og:image" content="http://i.imgur.com/FS7qiGE.png">
-<meta property="og:updated_time" content="2017-08-24T09:47:57.396Z">
+<meta property="og:updated_time" content="2017-09-20T02:57:00.823Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="决策树算法介绍及python实现">
 <meta name="twitter:description" content="决策树算法是机器学习中经典的算法之一，既可以作为分类算法，也可以作为回归算法。在做开始入门机器学习这方面内容时，自然就接触到了这方面的知识。因此，本文对决策树算法进行了一些整理，首先对决策树算法的原理进行介绍，并且用python对决策树算法进行代码实现。">
@@ -428,6 +429,8 @@ if __name__ == &apos;__main__&apos;:
 <p>SL和SR分别对应A属性分类点划分出的两个子集，取使得划分后信息熵最小的取值作为A属性的最佳分裂点，参与后面的运算，不够感觉这样计算量有点多的orz</p>
 <h3 id="CART算法"><a href="#CART算法" class="headerlink" title="CART算法"></a>CART算法</h3><p>CART算法的划分基于递归建立二叉树，对于一个变量属性来说，它的划分点是一对连续变量属性值的中点。假设m个样本的集合一个属性有m个连续的值，那么则会有m-1个分裂点，每个分裂点为相邻两个连续值的均值。每个属性的划分按照能减少的杂质的量来进行排序，而杂质的减少量定义为划分前的杂质减去划分后的每个节点的杂质量划分所占比率之和。而杂质度量方法常用Gini指标，假设一个样本共有C类，那么一个节点的Gini不纯度可定义为</p>
 <p><img src="http://i.imgur.com/s2AqUO0.png" alt=""></p>
+<p>那么，按属性A的某个属性值t分裂最后的Gini值为：</p>
+<p><img src="https://i.imgur.com/x3qv9ea.png" alt=""></p>
 <p>分别计算属性A不同属性值的Gini值，取最小的作为A的最佳分类点，然后对于S集此时所有的属性进行上述运算之后，取具有最小的Gini作为分裂属性，其最小的Gini值的属性值作为分裂点。</p>
 <p>CART还可以用于作为回归树，但是此时Gini值的算法就不一样，采用的是总方差：</p>
 <p><img src="http://i.imgur.com/FS7qiGE.png" alt=""></p>
