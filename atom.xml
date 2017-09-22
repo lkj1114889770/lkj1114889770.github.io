@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-22T07:45:07.861Z</updated>
+  <updated>2017-09-22T07:47:58.569Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/09/22/K_means%20Clustering/"/>
     <id>http://yoursite.com/2017/09/22/K_means Clustering/</id>
     <published>2017-09-22T06:56:04.000Z</published>
-    <updated>2017-09-22T07:45:07.861Z</updated>
+    <updated>2017-09-22T07:47:58.569Z</updated>
     
     <content type="html"><![CDATA[<p>分类通常是一种监督式学习算法，事先都知道标签信息，但是实际上很多情况下都不知道标签信息，这个时候就经常用到聚类算法（Clustering），属于无监督学习的一种，本文介绍无监督学习中典型的一种k-means聚类算法。<br><a id="more"></a></p>
 <h2 id="conventional-k-means"><a href="#conventional-k-means" class="headerlink" title="conventional k-means"></a>conventional k-means</h2><p>k-means聚类算法的思想很简单，就是将数据相似度最大的聚集在一起为一类，如何衡量数据之间的相似度，通常用欧几里得距离来表示：</p>
@@ -33,7 +33,9 @@
 <li>计算剩下的元素到k个中心的距离，并将其归类到离自己最近的簇中心点对应的簇</li>
 <li>重新计算每个簇的中心，采用簇中所有元素各个维度的算数平均数</li>
 <li>若新的簇的中心不变，或者在变化阈值内，则聚类结束，否则重新回到第2步。</li>
-<li><h2 id="k-means"><a href="#k-means" class="headerlink" title="k-means++"></a>k-means++</h2>k-means算法的一个弊端就是，初始选取的随机k个中心会对最终实际聚类效果影响很大，基于此对于初始k个点选取进行了改进，即k-measn++算法。<br>基本思想就是，选取的初始k个点的距离尽可能远。</li>
+</ol>
+<h2 id="k-means"><a href="#k-means" class="headerlink" title="k-means++"></a>k-means++</h2><p>k-means算法的一个弊端就是，初始选取的随机k个中心会对最终实际聚类效果影响很大，基于此对于初始k个点选取进行了改进，即k-measn++算法。<br>基本思想就是，选取的初始k个点的距离尽可能远。</p>
+<ol>
 <li>首先随机选择一个点作为第一个簇中心点</li>
 <li>计算其余点与最近的一个簇中心点的距离D(x)保存在一个数组，并累加得到和sum（D(X))。</li>
 <li>再在（0，1）取一个随机值Random，sum*Random对应的D(x)区间即为选中的下一个聚类中心（因为D(X)越大，被选中的概率越大）。</li>
@@ -832,11 +834,11 @@ draw_wordcloud2()
     </summary>
     
     
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
       <category term="电影" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1/"/>
     
       <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
   </entry>
   

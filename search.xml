@@ -16,7 +16,9 @@
 <li>计算剩下的元素到k个中心的距离，并将其归类到离自己最近的簇中心点对应的簇</li>
 <li>重新计算每个簇的中心，采用簇中所有元素各个维度的算数平均数</li>
 <li>若新的簇的中心不变，或者在变化阈值内，则聚类结束，否则重新回到第2步。</li>
-<li><h2 id="k-means"><a href="#k-means" class="headerlink" title="k-means++"></a>k-means++</h2>k-means算法的一个弊端就是，初始选取的随机k个中心会对最终实际聚类效果影响很大，基于此对于初始k个点选取进行了改进，即k-measn++算法。<br>基本思想就是，选取的初始k个点的距离尽可能远。</li>
+</ol>
+<h2 id="k-means"><a href="#k-means" class="headerlink" title="k-means++"></a>k-means++</h2><p>k-means算法的一个弊端就是，初始选取的随机k个中心会对最终实际聚类效果影响很大，基于此对于初始k个点选取进行了改进，即k-measn++算法。<br>基本思想就是，选取的初始k个点的距离尽可能远。</p>
+<ol>
 <li>首先随机选择一个点作为第一个簇中心点</li>
 <li>计算其余点与最近的一个簇中心点的距离D(x)保存在一个数组，并累加得到和sum（D(X))。</li>
 <li>再在（0，1）取一个随机值Random，sum*Random对应的D(x)区间即为选中的下一个聚类中心（因为D(X)越大，被选中的概率越大）。</li>
@@ -774,11 +776,11 @@ draw_wordcloud2()
         
         <tags>
             
+            <tag> python </tag>
+            
             <tag> 电影 </tag>
             
             <tag> 爬虫 </tag>
-            
-            <tag> python </tag>
             
         </tags>
         
