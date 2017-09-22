@@ -3,6 +3,24 @@
   
     
     <entry>
+      <title><![CDATA['浓烟下的诗歌电台']]></title>
+      <url>/2017/09/22/%E6%B5%93%E7%83%9F%E4%B8%8B%E7%9A%84%E8%AF%97%E6%AD%8C%E7%94%B5%E5%8F%B0/</url>
+      <content type="html"><![CDATA[<p><img src="http://clubimg.dbankcdn.com/data/attachment/forum/201612/08/192259beyumvep5wmavc1e.jpg" alt=""></p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="530" height="86" src="//music.163.com/outchain/player?type=2&id=31445772&auto=0&height=66"></iframe>
+
+<p>有颗远方的心，依然想去追寻。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 音乐 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[K-means Clustering]]></title>
       <url>/2017/09/22/K_means%20Clustering/</url>
       <content type="html"><![CDATA[<p>分类通常是一种监督式学习算法，事先都知道标签信息，但是实际上很多情况下都不知道标签信息，这个时候就经常用到聚类算法（Clustering），属于无监督学习的一种，本文介绍无监督学习中典型的一种k-means聚类算法。<br><a id="more"></a></p>
@@ -776,11 +794,11 @@ draw_wordcloud2()
         
         <tags>
             
-            <tag> python </tag>
-            
             <tag> 电影 </tag>
             
             <tag> 爬虫 </tag>
+            
+            <tag> python </tag>
             
         </tags>
         
