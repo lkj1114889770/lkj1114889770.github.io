@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://appwk.baidu.com/naapi/doc/view?ih=584&o=png_6_0_0_436_680_396_210_876_1252.5&iw=1100&ix=0&iy=414&aimw=1100&rn=1&doc_id=d6e8e02c647d27284b735162&pn=1&sign=b919aed799fa017c1e7f322b49ebb944&type=1&app_ver=2.9.8.2&ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&bid=1&app_ua=IncredibleS&uid=&cuid=&fr=3&Bdi_bear=WIFI&from=3_10000&bduss=&pid=1&screen=800_800&sys_ver=2.3.7">
 <meta property="og:image" content="https://i.imgur.com/JtGnkfW.png">
 <meta property="og:image" content="https://i.imgur.com/KSlpNem.png">
-<meta property="og:updated_time" content="2017-09-30T05:19:24.819Z">
+<meta property="og:updated_time" content="2017-09-30T05:25:40.884Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自组织特征映射神经网络（SOM）">
 <meta name="twitter:description" content="自组织特征映射神经网络（SOM）设计思想基于人体大脑，外界信息输入时，大脑皮层对应区域的部分神经元会产生兴奋，位置临近的神经云也会有相近的刺激。大脑神经元的这种特点，不是先天安排好的，而是通过后天的自学习组织形成的。芬兰Helsinki大学的Kohonen教授提出了一种成为自组织特征映射的神经网络模型。">
@@ -391,8 +391,9 @@ def ratecalc(self,indx):
 <li>根据优胜邻域半径，找出此邻域内的所有节点。</li>
 <li>根据学习率调整优胜邻域半径内的所有节点，然后回到步骤1进行迭代，直到到达相应的迭代次数</li>
 <li><p>根据最终的迭代结果，为分类结果分配标签。</p>
-<h1 id="主算法"><a href="#主算法" class="headerlink" title="主算法"></a>主算法</h1><p> def train(self):<br> #1 构建输入层网络</p>
-<pre><code>dm,dn = shape(self.dataMat) 
+<h1 id="主算法"><a href="#主算法" class="headerlink" title="主算法"></a>主算法</h1><p> def train(self):</p>
+<pre><code>#1 构建输入层网络
+dm,dn = shape(self.dataMat) 
 normDataset = self.normalize(self.dataMat) # 归一化数据x
 #2 构建分类网格
 grid = self.init_grid() # 初始化第二层分类网格 

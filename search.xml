@@ -29,8 +29,9 @@ def ratecalc(self,indx):
 <li>根据优胜邻域半径，找出此邻域内的所有节点。</li>
 <li>根据学习率调整优胜邻域半径内的所有节点，然后回到步骤1进行迭代，直到到达相应的迭代次数</li>
 <li><p>根据最终的迭代结果，为分类结果分配标签。</p>
-<h1 id="主算法"><a href="#主算法" class="headerlink" title="主算法"></a>主算法</h1><p> def train(self):<br> #1 构建输入层网络</p>
-<pre><code>dm,dn = shape(self.dataMat) 
+<h1 id="主算法"><a href="#主算法" class="headerlink" title="主算法"></a>主算法</h1><p> def train(self):</p>
+<pre><code>#1 构建输入层网络
+dm,dn = shape(self.dataMat) 
 normDataset = self.normalize(self.dataMat) # 归一化数据x
 #2 构建分类网格
 grid = self.init_grid() # 初始化第二层分类网格 

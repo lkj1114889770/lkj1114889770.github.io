@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-30T05:19:24.819Z</updated>
+  <updated>2017-09-30T05:25:40.884Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/09/30/%E8%87%AA%E7%BB%84%E7%BB%87%E7%89%B9%E5%BE%81%E6%98%A0%E5%B0%84%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88SOM%EF%BC%89/"/>
     <id>http://yoursite.com/2017/09/30/自组织特征映射神经网络（SOM）/</id>
     <published>2017-09-30T02:39:06.000Z</published>
-    <updated>2017-09-30T05:19:24.819Z</updated>
+    <updated>2017-09-30T05:25:40.884Z</updated>
     
     <content type="html"><![CDATA[<p>自组织特征映射神经网络（SOM）设计思想基于人体大脑，外界信息输入时，大脑皮层对应区域的部分神经元会产生兴奋，位置临近的神经云也会有相近的刺激。大脑神经元的这种特点，不是先天安排好的，而是通过后天的自学习组织形成的。芬兰Helsinki大学的Kohonen教授提出了一种成为自组织特征映射的神经网络模型。<br><a id="more"></a></p>
 <h2 id="SOM介绍"><a href="#SOM介绍" class="headerlink" title="SOM介绍"></a>SOM介绍</h2><p>SOM与kmeans算法有点相似，其基本思想也是，将距离小的个体集合划分为同一类别，而将距离大的个体划分为不同的类别。</p>
@@ -46,8 +46,9 @@ def ratecalc(self,indx):
 <li>根据优胜邻域半径，找出此邻域内的所有节点。</li>
 <li>根据学习率调整优胜邻域半径内的所有节点，然后回到步骤1进行迭代，直到到达相应的迭代次数</li>
 <li><p>根据最终的迭代结果，为分类结果分配标签。</p>
-<h1 id="主算法"><a href="#主算法" class="headerlink" title="主算法"></a>主算法</h1><p> def train(self):<br> #1 构建输入层网络</p>
-<pre><code>dm,dn = shape(self.dataMat) 
+<h1 id="主算法"><a href="#主算法" class="headerlink" title="主算法"></a>主算法</h1><p> def train(self):</p>
+<pre><code>#1 构建输入层网络
+dm,dn = shape(self.dataMat) 
 normDataset = self.normalize(self.dataMat) # 归一化数据x
 #2 构建分类网格
 grid = self.init_grid() # 初始化第二层分类网格 
