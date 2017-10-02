@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="机器学习,无监督学习," />
+  <meta name="keywords" content="爬虫," />
 
 
 
@@ -96,26 +96,23 @@
 
 
 
-<meta name="description" content="分类通常是一种监督式学习算法，事先都知道标签信息，但是实际上很多情况下都不知道标签信息，这个时候就经常用到聚类算法（Clustering），属于无监督学习的一种，本文介绍无监督学习中典型的一种k-means聚类算法。">
-<meta name="keywords" content="机器学习,无监督学习">
+<meta name="description" content="正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。">
+<meta name="keywords" content="爬虫">
 <meta property="og:type" content="article">
-<meta property="og:title" content="K-means Clustering">
-<meta property="og:url" content="http://yoursite.com/2017/09/22/K_means Clustering/index.html">
+<meta property="og:title" content="12306车次查询与短信提醒">
+<meta property="og:url" content="http://yoursite.com/2017/10/02/12306车次查询与短信提醒/index.html">
 <meta property="og:site_name" content="Kaijian Liu同学">
-<meta property="og:description" content="分类通常是一种监督式学习算法，事先都知道标签信息，但是实际上很多情况下都不知道标签信息，这个时候就经常用到聚类算法（Clustering），属于无监督学习的一种，本文介绍无监督学习中典型的一种k-means聚类算法。">
+<meta property="og:description" content="正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/lhYz2GX.png">
-<meta property="og:image" content="https://i.imgur.com/6DqsyIq.png">
-<meta property="og:image" content="https://i.imgur.com/FkIdHw1.jpg">
-<meta property="og:image" content="https://i.imgur.com/QSX5K1g.png">
-<meta property="og:image" content="https://i.imgur.com/Pamhtvp.png">
-<meta property="og:image" content="https://i.imgur.com/8c4UlBi.png">
-<meta property="og:image" content="https://i.imgur.com/Q0fK08M.png">
-<meta property="og:updated_time" content="2017-09-22T07:47:58.569Z">
+<meta property="og:image" content="https://i.imgur.com/DzxBB97.png">
+<meta property="og:image" content="https://i.imgur.com/fGEXVjb.png">
+<meta property="og:image" content="https://i.imgur.com/PESBfPR.png">
+<meta property="og:image" content="https://i.imgur.com/PpUZ7Qk.png">
+<meta property="og:updated_time" content="2017-10-02T03:28:34.935Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="K-means Clustering">
-<meta name="twitter:description" content="分类通常是一种监督式学习算法，事先都知道标签信息，但是实际上很多情况下都不知道标签信息，这个时候就经常用到聚类算法（Clustering），属于无监督学习的一种，本文介绍无监督学习中典型的一种k-means聚类算法。">
-<meta name="twitter:image" content="https://i.imgur.com/lhYz2GX.png">
+<meta name="twitter:title" content="12306车次查询与短信提醒">
+<meta name="twitter:description" content="正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。">
+<meta name="twitter:image" content="https://i.imgur.com/DzxBB97.png">
 
 
 
@@ -144,13 +141,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/22/K_means Clustering/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/02/12306车次查询与短信提醒/"/>
 
 
 
 
 
-  <title>K-means Clustering | Kaijian Liu同学</title>
+  <title>12306车次查询与短信提醒 | Kaijian Liu同学</title>
   
 
 
@@ -304,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/22/K_means Clustering/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/02/12306车次查询与短信提醒/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Kaijian Liu">
@@ -321,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">K-means Clustering</h1>
+          <h1 class="post-title" itemprop="name headline">12306车次查询与短信提醒</h1>
         
 
         <div class="post-meta">
@@ -333,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-22T14:56:04+08:00">
-                2017-09-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-02T10:33:05+08:00">
+                2017-10-02
               </time>
             
 
@@ -371,36 +368,70 @@
       
 
       
-        <p>分类通常是一种监督式学习算法，事先都知道标签信息，但是实际上很多情况下都不知道标签信息，这个时候就经常用到聚类算法（Clustering），属于无监督学习的一种，本文介绍无监督学习中典型的一种k-means聚类算法。<br><a id="more"></a></p>
-<h2 id="conventional-k-means"><a href="#conventional-k-means" class="headerlink" title="conventional k-means"></a>conventional k-means</h2><p>k-means聚类算法的思想很简单，就是将数据相似度最大的聚集在一起为一类，如何衡量数据之间的相似度，通常用欧几里得距离来表示：</p>
-<p><img src="https://i.imgur.com/lhYz2GX.png" alt=""></p>
-<p>有时候也用余弦向量来度量：</p>
-<p><img src="https://i.imgur.com/6DqsyIq.png" alt=""></p>
-<p>算法过程也比较简单：</p>
-<ol>
-<li>从数据集D中随机取k个元素，作为初始k个簇的中心</li>
-<li>计算剩下的元素到k个中心的距离，并将其归类到离自己最近的簇中心点对应的簇</li>
-<li>重新计算每个簇的中心，采用簇中所有元素各个维度的算数平均数</li>
-<li>若新的簇的中心不变，或者在变化阈值内，则聚类结束，否则重新回到第2步。</li>
-</ol>
-<h2 id="k-means"><a href="#k-means" class="headerlink" title="k-means++"></a>k-means++</h2><p>k-means算法的一个弊端就是，初始选取的随机k个中心会对最终实际聚类效果影响很大，基于此对于初始k个点选取进行了改进，即k-measn++算法。<br>基本思想就是，选取的初始k个点的距离尽可能远。</p>
-<ol>
-<li>首先随机选择一个点作为第一个簇中心点</li>
-<li>计算其余点与最近的一个簇中心点的距离D(x)保存在一个数组，并累加得到和sum（D(X))。</li>
-<li>再在（0，1）取一个随机值Random，sum*Random对应的D(x)区间即为选中的下一个聚类中心（因为D(X)越大，被选中的概率越大）。</li>
-<li>重复2 3步骤知直到k个初始聚类中心都被找出来</li>
-<li>再进行上面的k-means聚类算法。</li>
-</ol>
-<h2 id="Kernel-k-means"><a href="#Kernel-k-means" class="headerlink" title="Kernel k-means"></a>Kernel k-means</h2><p>当数据无法线性可分的时候，k-means算法也无法进行分类，类似于SVM，将分类空间推广到更广义的度量空间，即为kernel k-means.</p>
-<p><img src="https://i.imgur.com/FkIdHw1.jpg" alt=""></p>
-<p>将点从原来的空间映射到更高维度的特征空间，则距离公式变成：</p>
-<p><img src="https://i.imgur.com/QSX5K1g.png" alt=""></p>
-<p>常见的核函数有：<br>Linear Kernel:</p>
-<p><img src="https://i.imgur.com/Pamhtvp.png" alt=""></p>
-<p>Polynomial Kernel:</p>
-<p><img src="https://i.imgur.com/8c4UlBi.png" alt=""></p>
-<p>Gaussian Kernel：</p>
-<p><img src="https://i.imgur.com/Q0fK08M.png" alt=""></p>
+        <p>正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。</p>
+<p><img src="https://i.imgur.com/DzxBB97.png" alt=""></p>
+<a id="more"></a>
+<p>首先打开12306的查票页面<a href="https://kyfw.12306.cn/otn/leftTicket/init" target="_blank" rel="external">https://kyfw.12306.cn/otn/leftTicket/init </a>输入出发地和目的地进行搜索。<br>下面就是常见的套路，对于谷歌浏览器按F12打开开发者工具，获取查询的时候的数据信息。按下查询之后，可以发现有两个数据请求：</p>
+<p><img src="https://i.imgur.com/fGEXVjb.png" alt=""></p>
+<p>显然第二个请求返回数据含有我们需要的车次信息，因此根据第二个请求的header来封装我们requests.get时候的请求包，以及如何封装cookies也可见之前的<a href="http://blog.lkj666.top/2017/08/08/也看战狼2：爬取豆瓣影评做词云/#more" target="_blank" rel="external">爬虫博客</a>。</p>
+<pre><code>url = &apos;https://kyfw.12306.cn/otn/leftTicket/queryX?leftTicketDTO.train_date=2017-10-08&amp;leftTicketDTO.from_station=YTG&amp;leftTicketDTO.to_station=HZH&amp;purpose_codes=ADULT&apos;
+headers = {
+    &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.9&apos;,
+    &apos;Accept-Language&apos;: &apos;zh-CN,zh;q=0.9&apos;,
+    &apos;Host&apos;: &apos;kyfw.12306.cn&apos;,
+    &quot;User-Agent&quot;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3218.0 Safari/537.36&apos;,
+}
+</code></pre><p>由于12306网站还有SSL验证，所以用常规的方法去get数据都会有SSLError，最简单的处理方式就是直接忽略这个验证。</p>
+<pre><code>a = requests.get(url, cookies=cookies,headers=headers,verify = False)
+</code></pre><p>12306网站在访问的时候经常有时候请求不到数据，这个时候需要进行判别，以防止后续处理信息报错，有计算机网络知识就知道，正常的http response的状态code就是会返回200，可以据此来判别。</p>
+<pre><code>while (a.status_code !=200):
+    time.sleep(10)
+    a = requests.get(url, cookies=cookies, headers=headers, verify=False)
+</code></pre><p>对返回的车次信息进行查看，返回的信息类似于jason格式的文件，车次信息包含在里面。</p>
+<p><img src="https://i.imgur.com/PESBfPR.png" alt=""></p>
+<p>通过json.load进行读取后返回字典格式文件，取出其中的车次此案次，存为csv文件后用excel打开，以便更加直观地分析。</p>
+<p><img src="https://i.imgur.com/PpUZ7Qk.png" alt=""></p>
+<pre><code>data = json.loads(a.content.decode(&apos;utf-8&apos;,&apos;ignore&apos;))
+train_infos = data[&apos;data&apos;][&apos;result&apos;]
+train_infos_csv=[]
+infos = train_infos
+for info in infos:
+    train_infos_csv.append((info.replace(&apos;|&apos;,&apos;,&apos;))+&apos;\n&apos;)
+f = open(&apos;train_infos.csv&apos;,&apos;w&apos;)
+for info in train_infos_csv:
+    f.write(info)
+
+f.close()
+csv_reader = csv.reader(open(&apos;train_infos.csv&apos;))
+</code></pre><p>下面需要取出所需要的信息，我要的是高铁或者动车的二等座，再进行一次过滤：</p>
+<pre><code>HSR_infos=[]
+for info in csv_reader:
+    if(&apos;G&apos; in info[3]):
+        HSR_infos.append(info)
+    elif(&apos;D&apos; in info[3]):
+        HSR_infos.append(info)
+
+Ticket_avaliable=&apos;&apos;
+for info in HSR_infos:
+    if(info[-6] != u&apos;无&apos;):
+        Ticket_avaliable=Ticket_avaliable + info[3] +&apos;,&apos;
+Body=u&apos;这些车次还有票&apos; + Ticket_avaliable
+if(Ticket_avaliable ==&apos;&apos;):
+    print(u&apos;好悲伤，没票了&apos;)
+    time.sleep(5)
+else:
+    print(Body)
+    messeage = client.messages.create(to=To, from_=From, body=Body)
+    time.sleep(600)
+</code></pre><p>上面的client.messages.create就是发送短信模块，需要用到Twilio，首先需要到Twilio官方网站注册之后账号，有账户的SID 和TOKEN后进行配置，就能发送了</p>
+<pre><code>SID = &apos;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&apos;
+TOKEN = &apos;xxxxxxxxxxxxxxxxxxxxxxxxxxxxx&apos;
+client = Client(SID,TOKEN)
+To = &apos;+86xxxxxxxxxxxxxxx&apos;
+From = &apos;xxxxxxxxxxxxxx&apos;
+Body = u&apos;啦啦啦啦啦&apos;
+messeage = client.messages.create(to=To,from_=From,body=Body)
+</code></pre><p>上面的xxxx部分都需要根据自己的账户替换自己的信息。<br>这样就实现了有票自动提醒，由于Twilio接收短信比较麻烦，所以没法通过短信终止程序，只能在查到票之后先终止运行10分钟，其实可以考虑通过邮件来控制程序，这个还是比较好操作的。</p>
 
       
     </div>
@@ -418,9 +449,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
-          
-            <a href="/tags/无监督学习/" rel="tag"># 无监督学习</a>
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
           
         </div>
       
@@ -433,8 +462,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/19/朴素贝叶斯分类/" rel="next" title="朴素贝叶斯分类">
-                <i class="fa fa-chevron-left"></i> 朴素贝叶斯分类
+              <a href="/2017/09/30/自组织特征映射神经网络（SOM）/" rel="next" title="自组织特征映射神经网络（SOM）">
+                <i class="fa fa-chevron-left"></i> 自组织特征映射神经网络（SOM）
               </a>
             
           </div>
@@ -442,10 +471,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/22/浓烟下的诗歌电台/" rel="prev" title="浓烟下的诗歌电台">
-                浓烟下的诗歌电台 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -520,17 +545,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -634,22 +650,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#conventional-k-means"><span class="nav-number">1.</span> <span class="nav-text">conventional k-means</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-means"><span class="nav-number">2.</span> <span class="nav-text">k-means++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernel-k-means"><span class="nav-number">3.</span> <span class="nav-text">Kernel k-means</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

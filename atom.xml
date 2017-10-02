@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-30T05:25:40.884Z</updated>
+  <updated>2017-10-02T03:28:34.935Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,96 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>12306车次查询与短信提醒</title>
+    <link href="http://yoursite.com/2017/10/02/12306%E8%BD%A6%E6%AC%A1%E6%9F%A5%E8%AF%A2%E4%B8%8E%E7%9F%AD%E4%BF%A1%E6%8F%90%E9%86%92/"/>
+    <id>http://yoursite.com/2017/10/02/12306车次查询与短信提醒/</id>
+    <published>2017-10-02T02:33:05.000Z</published>
+    <updated>2017-10-02T03:28:34.935Z</updated>
+    
+    <content type="html"><![CDATA[<p>正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。</p>
+<p><img src="https://i.imgur.com/DzxBB97.png" alt=""></p>
+<a id="more"></a>
+<p>首先打开12306的查票页面<a href="https://kyfw.12306.cn/otn/leftTicket/init" target="_blank" rel="external">https://kyfw.12306.cn/otn/leftTicket/init </a>输入出发地和目的地进行搜索。<br>下面就是常见的套路，对于谷歌浏览器按F12打开开发者工具，获取查询的时候的数据信息。按下查询之后，可以发现有两个数据请求：</p>
+<p><img src="https://i.imgur.com/fGEXVjb.png" alt=""></p>
+<p>显然第二个请求返回数据含有我们需要的车次信息，因此根据第二个请求的header来封装我们requests.get时候的请求包，以及如何封装cookies也可见之前的<a href="http://blog.lkj666.top/2017/08/08/也看战狼2：爬取豆瓣影评做词云/#more" target="_blank" rel="external">爬虫博客</a>。</p>
+<pre><code>url = &apos;https://kyfw.12306.cn/otn/leftTicket/queryX?leftTicketDTO.train_date=2017-10-08&amp;leftTicketDTO.from_station=YTG&amp;leftTicketDTO.to_station=HZH&amp;purpose_codes=ADULT&apos;
+headers = {
+    &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.9&apos;,
+    &apos;Accept-Language&apos;: &apos;zh-CN,zh;q=0.9&apos;,
+    &apos;Host&apos;: &apos;kyfw.12306.cn&apos;,
+    &quot;User-Agent&quot;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3218.0 Safari/537.36&apos;,
+}
+</code></pre><p>由于12306网站还有SSL验证，所以用常规的方法去get数据都会有SSLError，最简单的处理方式就是直接忽略这个验证。</p>
+<pre><code>a = requests.get(url, cookies=cookies,headers=headers,verify = False)
+</code></pre><p>12306网站在访问的时候经常有时候请求不到数据，这个时候需要进行判别，以防止后续处理信息报错，有计算机网络知识就知道，正常的http response的状态code就是会返回200，可以据此来判别。</p>
+<pre><code>while (a.status_code !=200):
+    time.sleep(10)
+    a = requests.get(url, cookies=cookies, headers=headers, verify=False)
+</code></pre><p>对返回的车次信息进行查看，返回的信息类似于jason格式的文件，车次信息包含在里面。</p>
+<p><img src="https://i.imgur.com/PESBfPR.png" alt=""></p>
+<p>通过json.load进行读取后返回字典格式文件，取出其中的车次此案次，存为csv文件后用excel打开，以便更加直观地分析。</p>
+<p><img src="https://i.imgur.com/PpUZ7Qk.png" alt=""></p>
+<pre><code>data = json.loads(a.content.decode(&apos;utf-8&apos;,&apos;ignore&apos;))
+train_infos = data[&apos;data&apos;][&apos;result&apos;]
+train_infos_csv=[]
+infos = train_infos
+for info in infos:
+    train_infos_csv.append((info.replace(&apos;|&apos;,&apos;,&apos;))+&apos;\n&apos;)
+f = open(&apos;train_infos.csv&apos;,&apos;w&apos;)
+for info in train_infos_csv:
+    f.write(info)
+
+f.close()
+csv_reader = csv.reader(open(&apos;train_infos.csv&apos;))
+</code></pre><p>下面需要取出所需要的信息，我要的是高铁或者动车的二等座，再进行一次过滤：</p>
+<pre><code>HSR_infos=[]
+for info in csv_reader:
+    if(&apos;G&apos; in info[3]):
+        HSR_infos.append(info)
+    elif(&apos;D&apos; in info[3]):
+        HSR_infos.append(info)
+
+Ticket_avaliable=&apos;&apos;
+for info in HSR_infos:
+    if(info[-6] != u&apos;无&apos;):
+        Ticket_avaliable=Ticket_avaliable + info[3] +&apos;,&apos;
+Body=u&apos;这些车次还有票&apos; + Ticket_avaliable
+if(Ticket_avaliable ==&apos;&apos;):
+    print(u&apos;好悲伤，没票了&apos;)
+    time.sleep(5)
+else:
+    print(Body)
+    messeage = client.messages.create(to=To, from_=From, body=Body)
+    time.sleep(600)
+</code></pre><p>上面的client.messages.create就是发送短信模块，需要用到Twilio，首先需要到Twilio官方网站注册之后账号，有账户的SID 和TOKEN后进行配置，就能发送了</p>
+<pre><code>SID = &apos;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&apos;
+TOKEN = &apos;xxxxxxxxxxxxxxxxxxxxxxxxxxxxx&apos;
+client = Client(SID,TOKEN)
+To = &apos;+86xxxxxxxxxxxxxxx&apos;
+From = &apos;xxxxxxxxxxxxxx&apos;
+Body = u&apos;啦啦啦啦啦&apos;
+messeage = client.messages.create(to=To,from_=From,body=Body)
+</code></pre><p>上面的xxxx部分都需要根据自己的账户替换自己的信息。<br>这样就实现了有票自动提醒，由于Twilio接收短信比较麻烦，所以没法通过短信终止程序，只能在查到票之后先终止运行10分钟，其实可以考虑通过邮件来控制程序，这个还是比较好操作的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/DzxBB97.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
+  
+  <entry>
     <title>自组织特征映射神经网络（SOM）</title>
     <link href="http://yoursite.com/2017/09/30/%E8%87%AA%E7%BB%84%E7%BB%87%E7%89%B9%E5%BE%81%E6%98%A0%E5%B0%84%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88SOM%EF%BC%89/"/>
     <id>http://yoursite.com/2017/09/30/自组织特征映射神经网络（SOM）/</id>
     <published>2017-09-30T02:39:06.000Z</published>
-    <updated>2017-09-30T05:25:40.884Z</updated>
+    <updated>2017-09-30T05:53:29.315Z</updated>
     
     <content type="html"><![CDATA[<p>自组织特征映射神经网络（SOM）设计思想基于人体大脑，外界信息输入时，大脑皮层对应区域的部分神经元会产生兴奋，位置临近的神经云也会有相近的刺激。大脑神经元的这种特点，不是先天安排好的，而是通过后天的自学习组织形成的。芬兰Helsinki大学的Kohonen教授提出了一种成为自组织特征映射的神经网络模型。<br><a id="more"></a></p>
 <h2 id="SOM介绍"><a href="#SOM介绍" class="headerlink" title="SOM介绍"></a>SOM介绍</h2><p>SOM与kmeans算法有点相似，其基本思想也是，将距离小的个体集合划分为同一类别，而将距离大的个体划分为不同的类别。</p>
@@ -45,47 +130,47 @@ def ratecalc(self,indx):
 <li>随机抽取一个数据样本，计算竞争层中神经元对应的权重矩阵与数据样本的距离，找到距离最近的为获胜节点。</li>
 <li>根据优胜邻域半径，找出此邻域内的所有节点。</li>
 <li>根据学习率调整优胜邻域半径内的所有节点，然后回到步骤1进行迭代，直到到达相应的迭代次数</li>
-<li><p>根据最终的迭代结果，为分类结果分配标签。</p>
-<h1 id="主算法"><a href="#主算法" class="headerlink" title="主算法"></a>主算法</h1><p> def train(self):</p>
-<pre><code>#1 构建输入层网络
-dm,dn = shape(self.dataMat) 
-normDataset = self.normalize(self.dataMat) # 归一化数据x
-#2 构建分类网格
-grid = self.init_grid() # 初始化第二层分类网格 
-#3 构建两层之间的权重向量
-self.w = random.rand(dn,self.M*self.N); #随机初始化权值 w
-distM = self.distEclud   # 确定距离公式
-#4 迭代求解
-if self.Steps &lt; 10*dm:    self.Steps = 10*dm   # 设定最小迭代次数
-for i in range(self.Steps):     
-    lrate,r = self.ratecalc(i) # 计算学习率和分类半径
-    self.lratelist.append(lrate);self.rlist.append(r)
-    # 随机生成样本索引，并抽取一个样本
-    k = random.randint(0,dm) 
-    mySample = normDataset[k,:]     
-
-    # 计算最优节点：返回最小距离的索引值
-    minIndx= (distM(mySample,self.w)).argmin()
-    d1 = int(round(minIndx - r));
-    d2 = int(round(minIndx + r));
-
-    if(d1&lt;0): 
-        d1=0
-    if(d2&gt;(shape(self.w)[1]-1)):
-        d2= shape(self.w)[1]-1
-    di=d1;
-    #print(d1,d2)
-    while(di&lt;=d2):
-        self.w[:,di] = self.w[:,di]+lrate*(mySample[0]-self.w[:,di])
-        di=di+1
-
-# 分配类别标签
-for i in range(dm):
-    self.classLabel.append(distM(normDataset[i,:],self.w).argmin())
-self.classLabel = mat(self.classLabel)        
-</code></pre></li>
+<li>根据最终的迭代结果，为分类结果分配标签。</li>
 </ol>
-<p>具体实现代码可见：<a href="https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/SOM" target="_blank" rel="external">https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/SOM</a></p>
+<pre><code># 主算法    
+def train(self):
+    #1 构建输入层网络
+    dm,dn = shape(self.dataMat) 
+    normDataset = self.normalize(self.dataMat) # 归一化数据x
+    #2 构建分类网格
+    grid = self.init_grid() # 初始化第二层分类网格 
+    #3 构建两层之间的权重向量
+    self.w = random.rand(dn,self.M*self.N); #随机初始化权值 w
+    distM = self.distEclud   # 确定距离公式
+    #4 迭代求解
+    if self.Steps &lt; 10*dm:    self.Steps = 10*dm   # 设定最小迭代次数
+    for i in range(self.Steps):     
+        lrate,r = self.ratecalc(i) # 计算学习率和分类半径
+        self.lratelist.append(lrate);self.rlist.append(r)
+        # 随机生成样本索引，并抽取一个样本
+        k = random.randint(0,dm) 
+        mySample = normDataset[k,:]     
+
+        # 计算最优节点：返回最小距离的索引值
+        minIndx= (distM(mySample,self.w)).argmin()
+        d1 = int(round(minIndx - r));
+        d2 = int(round(minIndx + r));
+
+        if(d1&lt;0): 
+            d1=0
+        if(d2&gt;(shape(self.w)[1]-1)):
+            d2= shape(self.w)[1]-1
+        di=d1;
+        #print(d1,d2)
+        while(di&lt;=d2):
+            self.w[:,di] = self.w[:,di]+lrate*(mySample[0]-self.w[:,di])
+            di=di+1
+
+    # 分配类别标签
+    for i in range(dm):
+        self.classLabel.append(distM(normDataset[i,:],self.w).argmin())
+    self.classLabel = mat(self.classLabel)        
+</code></pre><p>具体实现代码可见：<a href="https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/SOM" target="_blank" rel="external">https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/SOM</a></p>
 <p>针对数据集的分类结果：</p>
 <p><img src="https://i.imgur.com/KSlpNem.png" alt=""></p>
 <p><strong><br>参考文献：</strong></p>
@@ -952,9 +1037,9 @@ draw_wordcloud2()
     </summary>
     
     
-      <category term="电影" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1/"/>
-    
       <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="电影" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1/"/>
     
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     

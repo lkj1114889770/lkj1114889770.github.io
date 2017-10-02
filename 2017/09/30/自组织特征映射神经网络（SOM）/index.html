@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://appwk.baidu.com/naapi/doc/view?ih=584&o=png_6_0_0_436_680_396_210_876_1252.5&iw=1100&ix=0&iy=414&aimw=1100&rn=1&doc_id=d6e8e02c647d27284b735162&pn=1&sign=b919aed799fa017c1e7f322b49ebb944&type=1&app_ver=2.9.8.2&ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&bid=1&app_ua=IncredibleS&uid=&cuid=&fr=3&Bdi_bear=WIFI&from=3_10000&bduss=&pid=1&screen=800_800&sys_ver=2.3.7">
 <meta property="og:image" content="https://i.imgur.com/JtGnkfW.png">
 <meta property="og:image" content="https://i.imgur.com/KSlpNem.png">
-<meta property="og:updated_time" content="2017-09-30T05:25:40.884Z">
+<meta property="og:updated_time" content="2017-09-30T05:53:29.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自组织特征映射神经网络（SOM）">
 <meta name="twitter:description" content="自组织特征映射神经网络（SOM）设计思想基于人体大脑，外界信息输入时，大脑皮层对应区域的部分神经元会产生兴奋，位置临近的神经云也会有相近的刺激。大脑神经元的这种特点，不是先天安排好的，而是通过后天的自学习组织形成的。芬兰Helsinki大学的Kohonen教授提出了一种成为自组织特征映射的神经网络模型。">
@@ -390,47 +390,47 @@ def ratecalc(self,indx):
 <li>随机抽取一个数据样本，计算竞争层中神经元对应的权重矩阵与数据样本的距离，找到距离最近的为获胜节点。</li>
 <li>根据优胜邻域半径，找出此邻域内的所有节点。</li>
 <li>根据学习率调整优胜邻域半径内的所有节点，然后回到步骤1进行迭代，直到到达相应的迭代次数</li>
-<li><p>根据最终的迭代结果，为分类结果分配标签。</p>
-<h1 id="主算法"><a href="#主算法" class="headerlink" title="主算法"></a>主算法</h1><p> def train(self):</p>
-<pre><code>#1 构建输入层网络
-dm,dn = shape(self.dataMat) 
-normDataset = self.normalize(self.dataMat) # 归一化数据x
-#2 构建分类网格
-grid = self.init_grid() # 初始化第二层分类网格 
-#3 构建两层之间的权重向量
-self.w = random.rand(dn,self.M*self.N); #随机初始化权值 w
-distM = self.distEclud   # 确定距离公式
-#4 迭代求解
-if self.Steps &lt; 10*dm:    self.Steps = 10*dm   # 设定最小迭代次数
-for i in range(self.Steps):     
-    lrate,r = self.ratecalc(i) # 计算学习率和分类半径
-    self.lratelist.append(lrate);self.rlist.append(r)
-    # 随机生成样本索引，并抽取一个样本
-    k = random.randint(0,dm) 
-    mySample = normDataset[k,:]     
-
-    # 计算最优节点：返回最小距离的索引值
-    minIndx= (distM(mySample,self.w)).argmin()
-    d1 = int(round(minIndx - r));
-    d2 = int(round(minIndx + r));
-
-    if(d1&lt;0): 
-        d1=0
-    if(d2&gt;(shape(self.w)[1]-1)):
-        d2= shape(self.w)[1]-1
-    di=d1;
-    #print(d1,d2)
-    while(di&lt;=d2):
-        self.w[:,di] = self.w[:,di]+lrate*(mySample[0]-self.w[:,di])
-        di=di+1
-
-# 分配类别标签
-for i in range(dm):
-    self.classLabel.append(distM(normDataset[i,:],self.w).argmin())
-self.classLabel = mat(self.classLabel)        
-</code></pre></li>
+<li>根据最终的迭代结果，为分类结果分配标签。</li>
 </ol>
-<p>具体实现代码可见：<a href="https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/SOM" target="_blank" rel="external">https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/SOM</a></p>
+<pre><code># 主算法    
+def train(self):
+    #1 构建输入层网络
+    dm,dn = shape(self.dataMat) 
+    normDataset = self.normalize(self.dataMat) # 归一化数据x
+    #2 构建分类网格
+    grid = self.init_grid() # 初始化第二层分类网格 
+    #3 构建两层之间的权重向量
+    self.w = random.rand(dn,self.M*self.N); #随机初始化权值 w
+    distM = self.distEclud   # 确定距离公式
+    #4 迭代求解
+    if self.Steps &lt; 10*dm:    self.Steps = 10*dm   # 设定最小迭代次数
+    for i in range(self.Steps):     
+        lrate,r = self.ratecalc(i) # 计算学习率和分类半径
+        self.lratelist.append(lrate);self.rlist.append(r)
+        # 随机生成样本索引，并抽取一个样本
+        k = random.randint(0,dm) 
+        mySample = normDataset[k,:]     
+
+        # 计算最优节点：返回最小距离的索引值
+        minIndx= (distM(mySample,self.w)).argmin()
+        d1 = int(round(minIndx - r));
+        d2 = int(round(minIndx + r));
+
+        if(d1&lt;0): 
+            d1=0
+        if(d2&gt;(shape(self.w)[1]-1)):
+            d2= shape(self.w)[1]-1
+        di=d1;
+        #print(d1,d2)
+        while(di&lt;=d2):
+            self.w[:,di] = self.w[:,di]+lrate*(mySample[0]-self.w[:,di])
+            di=di+1
+
+    # 分配类别标签
+    for i in range(dm):
+        self.classLabel.append(distM(normDataset[i,:],self.w).argmin())
+    self.classLabel = mat(self.classLabel)        
+</code></pre><p>具体实现代码可见：<a href="https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/SOM" target="_blank" rel="external">https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/SOM</a></p>
 <p>针对数据集的分类结果：</p>
 <p><img src="https://i.imgur.com/KSlpNem.png" alt=""></p>
 <p><strong><br>参考文献：</strong></p>
@@ -478,6 +478,10 @@ self.classLabel = mat(self.classLabel)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/02/12306车次查询与短信提醒/" rel="prev" title="12306车次查询与短信提醒">
+                12306车次查询与短信提醒 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -583,7 +587,7 @@ self.classLabel = mat(self.classLabel)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -676,7 +680,7 @@ self.classLabel = mat(self.classLabel)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SOM介绍"><span class="nav-number">1.</span> <span class="nav-text">SOM介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOM算法学习过程"><span class="nav-number">2.</span> <span class="nav-text">SOM算法学习过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络初始化"><span class="nav-number">2.1.</span> <span class="nav-text">网络初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络训练"><span class="nav-number">2.2.</span> <span class="nav-text">网络训练</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主算法"><span class="nav-number"></span> <span class="nav-text">主算法</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SOM介绍"><span class="nav-number">1.</span> <span class="nav-text">SOM介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOM算法学习过程"><span class="nav-number">2.</span> <span class="nav-text">SOM算法学习过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络初始化"><span class="nav-number">2.1.</span> <span class="nav-text">网络初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络训练"><span class="nav-number">2.2.</span> <span class="nav-text">网络训练</span></a></li></ol></li></ol></div>
             
 
           </div>
