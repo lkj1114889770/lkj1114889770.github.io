@@ -108,7 +108,7 @@
 <meta property="og:image" content="https://i.imgur.com/fGEXVjb.png">
 <meta property="og:image" content="https://i.imgur.com/PESBfPR.png">
 <meta property="og:image" content="https://i.imgur.com/PpUZ7Qk.png">
-<meta property="og:updated_time" content="2017-10-02T03:28:34.935Z">
+<meta property="og:updated_time" content="2017-10-02T05:35:41.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="12306车次查询与短信提醒">
 <meta name="twitter:description" content="正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。">
@@ -387,7 +387,7 @@ headers = {
 <pre><code>while (a.status_code !=200):
     time.sleep(10)
     a = requests.get(url, cookies=cookies, headers=headers, verify=False)
-</code></pre><p>对返回的车次信息进行查看，返回的信息类似于jason格式的文件，车次信息包含在里面。</p>
+</code></pre><p>对返回的车次信息进行查看，返回的信息类似于json格式的文件，车次信息包含在里面。</p>
 <p><img src="https://i.imgur.com/PESBfPR.png" alt=""></p>
 <p>通过json.load进行读取后返回字典格式文件，取出其中的车次此案次，存为csv文件后用excel打开，以便更加直观地分析。</p>
 <p><img src="https://i.imgur.com/PpUZ7Qk.png" alt=""></p>
@@ -432,6 +432,7 @@ From = &apos;xxxxxxxxxxxxxx&apos;
 Body = u&apos;啦啦啦啦啦&apos;
 messeage = client.messages.create(to=To,from_=From,body=Body)
 </code></pre><p>上面的xxxx部分都需要根据自己的账户替换自己的信息。<br>这样就实现了有票自动提醒，由于Twilio接收短信比较麻烦，所以没法通过短信终止程序，只能在查到票之后先终止运行10分钟，其实可以考虑通过邮件来控制程序，这个还是比较好操作的。</p>
+<p>完整代码可见<a href="https://github.com/lkj1114889770/WebScraping/tree/master/12306_Webscraping" target="_blank" rel="external">Github</a>.</p>
 
       
     </div>
