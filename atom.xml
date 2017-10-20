@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-02T05:35:41.814Z</updated>
+  <updated>2017-10-20T13:48:04.677Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>下完这场雨</title>
+    <link href="http://yoursite.com/2017/10/20/%E4%B8%8B%E5%AE%8C%E8%BF%99%E5%9C%BA%E9%9B%A8/"/>
+    <id>http://yoursite.com/2017/10/20/下完这场雨/</id>
+    <published>2017-10-20T13:30:47.000Z</published>
+    <updated>2017-10-20T13:48:04.677Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1508516341880&amp;di=9aa12487fe827b6b8a9082e544536914&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.ylq.com%2F2016%2F0819%2F20160819055353748.png" alt=""></p>
+<p><a href="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1508516341880&amp;di=9aa12487fe827b6b8a9082e544536914&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.ylq.com%2F2016%2F0819%2F20160819055353748.png" target="_blank" rel="external">https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1508516341880&amp;di=9aa12487fe827b6b8a9082e544536914&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.ylq.com%2F2016%2F0819%2F20160819055353748.png</a></p>
+<a id="more"></a>
+<p>偶然间网易云推送了这首《下完这场雨》，多久没有再听过后弦的歌了，这首17年的可以说是新歌，歌词一贯写得好，一如六七年前的清新中国风。江南烟雨中，伞下约无果；下完这场雨，此生难再遇。</p>
+<p><img src="https://i.imgur.com/UPsFARi.png" alt=""></p>
+<p>仿佛又回到了六七年前，戴着耳机，揣着MP3，走在凤凰花园去学校的路上，穿过西厢，看过娃娃脸，有这样喜欢的清新中国风，有许嵩，有庐州月，断桥残雪，清明雨上，半城烟沙。。。<br>真好。<br>如果可以 别下完这场雨</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://timgsa.baidu.com/timg?image&amp;amp;quality=80&amp;amp;size=b9999_10000&amp;amp;sec=1508516341880&amp;amp;di=9aa12487fe827b6b8a9082e544536914&amp;amp;imgtype=0&amp;amp;src=http%3A%2F%2Fimg.ylq.com%2F2016%2F0819%2F20160819055353748.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://timgsa.baidu.com/timg?image&amp;amp;quality=80&amp;amp;size=b9999_10000&amp;amp;sec=1508516341880&amp;amp;di=9aa12487fe827b6b8a9082e544536914&amp;amp;imgtype=0&amp;amp;src=http%3A%2F%2Fimg.ylq.com%2F2016%2F0819%2F20160819055353748.png&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://timgsa.baidu.com/timg?image&amp;amp;quality=80&amp;amp;size=b9999_10000&amp;amp;sec=1508516341880&amp;amp;di=9aa12487fe827b6b8a9082e544536914&amp;amp;imgtype=0&amp;amp;src=http%3A%2F%2Fimg.ylq.com%2F2016%2F0819%2F20160819055353748.png&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="音乐" scheme="http://yoursite.com/tags/%E9%9F%B3%E4%B9%90/"/>
+    
+  </entry>
   
   <entry>
     <title>12306车次查询与短信提醒</title>
@@ -766,7 +793,7 @@ print(pd.crosstab(test[&apos;species&apos;], preds, rownames=[&apos;actual&apos;
     <link href="http://yoursite.com/2017/08/22/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/"/>
     <id>http://yoursite.com/2017/08/22/决策树算法介绍及python实现/</id>
     <published>2017-08-22T14:13:14.000Z</published>
-    <updated>2017-09-20T02:57:00.823Z</updated>
+    <updated>2017-10-13T12:28:47.224Z</updated>
     
     <content type="html"><![CDATA[<p>决策树算法是机器学习中经典的算法之一，既可以作为分类算法，也可以作为回归算法。在做开始入门机器学习这方面内容时，自然就接触到了这方面的知识。因此，本文对决策树算法进行了一些整理，首先对决策树算法的原理进行介绍，并且用python对决策树算法进行代码实现。<br><a id="more"></a></p>
 <h2 id="决策树算法的概述"><a href="#决策树算法的概述" class="headerlink" title="决策树算法的概述"></a>决策树算法的概述</h2><p>决策树算法的思想很类似于我们写代码经常用到的if，else if，else，用什么特征来判断if，这就是决策树算法的精髓所在。</p>
@@ -818,7 +845,8 @@ if __name__ == &apos;__main__&apos;:
     data=pd.read_csv(&apos;tennis.csv&apos;)
     tree=Tree_building(data)
     print(tree)
-</code></pre><h2 id="C4-5-和CART算法"><a href="#C4-5-和CART算法" class="headerlink" title="C4.5 和CART算法"></a>C4.5 和CART算法</h2><h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p>ID3算法有一个弊端，因为是选择信息增益最大的特征来分裂，所以更偏向于具有大量属性的特征进行分裂，这样做其实有时候是没有意义的，针对此，有了C4.5算法，对ID3进行了改进。C4.5采用信息增益率来选择分裂特征即：<br>gr(S,A)=gain(S,A)/H(S,A),<br>其中，gain(S,A)为ID3算法的熵的增益，H(S,A)为取特征为A进行分类的的信息熵<br>取A为outlook即为H（S,outlook），H(S,A)=H(S,outlook)= -(5/14)<em>log(5/14) - (5/14)</em>log(5/14) - (4/14)*log(4/14)</p>
+</code></pre><p>具体代码源文件可见我的<a href="https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/Decision%20Tree" target="_blank" rel="external">github</a>。</p>
+<h2 id="C4-5-和CART算法"><a href="#C4-5-和CART算法" class="headerlink" title="C4.5 和CART算法"></a>C4.5 和CART算法</h2><h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p>ID3算法有一个弊端，因为是选择信息增益最大的特征来分裂，所以更偏向于具有大量属性的特征进行分裂，这样做其实有时候是没有意义的，针对此，有了C4.5算法，对ID3进行了改进。C4.5采用信息增益率来选择分裂特征即：<br>gr(S,A)=gain(S,A)/H(S,A),<br>其中，gain(S,A)为ID3算法的熵的增益，H(S,A)为取特征为A进行分类的的信息熵<br>取A为outlook即为H（S,outlook），H(S,A)=H(S,outlook)= -(5/14)<em>log(5/14) - (5/14)</em>log(5/14) - (4/14)*log(4/14)</p>
 <p>C4.5算法采用的熵信息增益率，因为分母采用了基于属性A分裂后的信息熵，从而抵消了如果信息A属性取值数目过大带来的影响。</p>
 <p>C4.5算法还可以应用于处理连续性的属性则按属性A的取值递增排序，将每对相邻值的中点看作可能的分裂点，对每个可能的分裂点，计算：<br><img src="http://i.imgur.com/DWuCTu8.png" alt=""></p>
 <p>SL和SR分别对应A属性分类点划分出的两个子集，取使得划分后信息熵最小的取值作为A属性的最佳分裂点，参与后面的运算，不够感觉这样计算量有点多的orz</p>

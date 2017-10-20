@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/10/20/%E4%B8%8B%E5%AE%8C%E8%BF%99%E5%9C%BA%E9%9B%A8/</loc>
+    
+    <lastmod>2017-10-20T13:48:04.677Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2017/08/22/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/</loc>
+    
+    <lastmod>2017-10-13T12:28:47.224Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/10/02/12306%E8%BD%A6%E6%AC%A1%E6%9F%A5%E8%AF%A2%E4%B8%8E%E7%9F%AD%E4%BF%A1%E6%8F%90%E9%86%92/</loc>
     
     <lastmod>2017-10-02T05:35:41.814Z</lastmod>
@@ -26,13 +40,6 @@
     <loc>http://yoursite.com/2017/09/22/K_means%20Clustering/</loc>
     
     <lastmod>2017-09-22T07:47:58.569Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/08/22/%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/</loc>
-    
-    <lastmod>2017-09-20T02:57:00.823Z</lastmod>
     
   </url>
   
