@@ -3,10 +3,45 @@
   
     
     <entry>
-      <title><![CDATA['AdaBoost算法']]></title>
+      <title><![CDATA[AdaBoost算法笔记]]></title>
       <url>/2017/10/22/AdaBoost%E7%AE%97%E6%B3%95/</url>
-      <content type="html"></content>
+      <content type="html"><![CDATA[<p>AdaBoost属于机器学习中的集成学习，其基本思想是基于“弱学习算法”集成强化为“强学习算法”，在分类中就是组合弱分类器得到强分类器。实际中很容易得到正确率不是非常高的弱分类器(当然，通常来说at least &gt;50%），通过Adaboost算法，来组合得到正确率很高的强分类器。</p>
+<p>从上述就可以知道，AdaBoost算法有两部分，顶层是主算法，底层是其他的分类算法，可以是决策树，SVM之类的算法</p>
+<p><img src="http://https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1508668378014&amp;di=01aa3880a8e7f69c6ba088b4a9eddbfe&amp;imgtype=0&amp;src=http%3A%2F%2Fimage.lxway.com%2Fupload%2Fb%2F58%2Fb5858d83e02a4ccf748de99fa84d9fa8_thumb.png" alt=""></p>
+<p>AdaBoost算法的核心思想就是：加大分类错误数据集的权重，以便迭代中进一步分类；加大正确率高的分类器在最终分类结果表决中的权重。</p>
+<p>对算法进一步阐述，考虑简单的二分类问题。</p>
+<ol>
+<li>初始化数据集的权值分布，初始化为相等的数值</li>
+</ol>
+<p><img src="https://i.imgur.com/ryYjqNg.png" alt=""></p>
+<ol>
+<li>使用训练集学习，得到基本分类器Gm,计算其分类误差率</li>
+</ol>
+<p><img src="https://i.imgur.com/kelrKCR.png" alt=""></p>
+<ol>
+<li>计算分类器Gm的系数</li>
+</ol>
+<p><img src="https://i.imgur.com/4cl86ii.png" alt=""></p>
+<p>am随着em增大而减小，这样分类器在最终组合分类器中权重会下降，同时还需要据此来更新数据集的权重。</p>
+<ol>
+<li>更新数据集权重分布</li>
+</ol>
+<p><img src="https://i.imgur.com/amKwnm4.png" alt=""></p>
+<p>其中Zm为规范化因子，是的Dm+1成一个概率分布。</p>
+<ol>
+<li>构造弱分类器的组合<br>通过权重值的线性组合得到强分类器<br><img src="https://i.imgur.com/0cjwKb5.png" alt=""></li>
+</ol>
+<p>上述过程迭代M次，或者是分类精度达到要求</p>
+]]></content>
       
+        
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+            <tag> 集成学习 </tag>
+            
+        </tags>
         
     </entry>
     
@@ -798,9 +833,9 @@ if __name__ == &apos;__main__&apos;:
         
         <tags>
             
-            <tag> python </tag>
-            
             <tag> 机器学习 </tag>
+            
+            <tag> python </tag>
             
         </tags>
         
