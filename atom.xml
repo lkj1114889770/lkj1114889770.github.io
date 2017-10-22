@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-22T08:09:52.077Z</updated>
+  <updated>2017-10-22T08:12:04.821Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,11 +20,10 @@
     <link href="http://yoursite.com/2017/10/22/AdaBoost%E7%AE%97%E6%B3%95/"/>
     <id>http://yoursite.com/2017/10/22/AdaBoost算法/</id>
     <published>2017-10-22T07:35:19.000Z</published>
-    <updated>2017-10-22T08:09:52.077Z</updated>
+    <updated>2017-10-22T08:12:04.821Z</updated>
     
-    <content type="html"><![CDATA[<p>AdaBoost属于机器学习中的集成学习，其基本思想是基于“弱学习算法”集成强化为“强学习算法”，在分类中就是组合弱分类器得到强分类器。实际中很容易得到正确率不是非常高的弱分类器(当然，通常来说at least &gt;50%），通过Adaboost算法，来组合得到正确率很高的强分类器。</p>
-<p>从上述就可以知道，AdaBoost算法有两部分，顶层是主算法，底层是其他的分类算法，可以是决策树，SVM之类的算法</p>
-<p><img src="http://https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1508668378014&amp;di=01aa3880a8e7f69c6ba088b4a9eddbfe&amp;imgtype=0&amp;src=http%3A%2F%2Fimage.lxway.com%2Fupload%2Fb%2F58%2Fb5858d83e02a4ccf748de99fa84d9fa8_thumb.png" alt=""></p>
+    <content type="html"><![CDATA[<p>AdaBoost属于机器学习中的集成学习，其基本思想是基于“弱学习算法”集成强化为“强学习算法”，在分类中就是组合弱分类器得到强分类器。实际中很容易得到正确率不是非常高的弱分类器(当然，通常来说at least &gt;50%），通过Adaboost算法，来组合得到正确率很高的强分类器。<br><a id="more"></a><br>从上述就可以知道，AdaBoost算法有两部分，顶层是主算法，底层是其他的分类算法，可以是决策树，SVM之类的算法</p>
+<p><img src="https://i.imgur.com/YrWP4SU.jpg" alt=""></p>
 <p>AdaBoost算法的核心思想就是：加大分类错误数据集的权重，以便迭代中进一步分类；加大正确率高的分类器在最终分类结果表决中的权重。</p>
 <p>对算法进一步阐述，考虑简单的二分类问题。</p>
 <ol>
@@ -53,7 +52,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;AdaBoost属于机器学习中的集成学习，其基本思想是基于“弱学习算法”集成强化为“强学习算法”，在分类中就是组合弱分类器得到强分类器。实际中很容易得到正确率不是非常高的弱分类器(当然，通常来说at least &amp;gt;50%），通过Adaboost算法，来组合得到正确率很
+      &lt;p&gt;AdaBoost属于机器学习中的集成学习，其基本思想是基于“弱学习算法”集成强化为“强学习算法”，在分类中就是组合弱分类器得到强分类器。实际中很容易得到正确率不是非常高的弱分类器(当然，通常来说at least &amp;gt;50%），通过Adaboost算法，来组合得到正确率很高的强分类器。&lt;br&gt;
     
     </summary>
     
