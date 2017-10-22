@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="机器学习," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -96,22 +96,17 @@
 
 
 
-<meta name="description" content="贝叶斯算法是分类算法的一种，算法的核心是概率论中的贝叶斯定理，而朴素贝叶斯则是贝叶斯分类算法中最简单的一种。">
-<meta name="keywords" content="机器学习">
+<meta name="description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
 <meta property="og:type" content="article">
-<meta property="og:title" content="朴素贝叶斯分类">
-<meta property="og:url" content="http://yoursite.com/2017/09/19/朴素贝叶斯分类/index.html">
+<meta property="og:title" content="&#39;AdaBoost算法&#39;">
+<meta property="og:url" content="http://yoursite.com/2017/10/22/AdaBoost算法/index.html">
 <meta property="og:site_name" content="Kaijian Liu同学">
-<meta property="og:description" content="贝叶斯算法是分类算法的一种，算法的核心是概率论中的贝叶斯定理，而朴素贝叶斯则是贝叶斯分类算法中最简单的一种。">
+<meta property="og:description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/Mc59jtP.png">
-<meta property="og:image" content="https://i.imgur.com/rRISY1C.png">
-<meta property="og:image" content="https://i.imgur.com/4NRfZsa.png">
-<meta property="og:updated_time" content="2017-09-19T13:16:18.084Z">
+<meta property="og:updated_time" content="2017-10-22T07:35:19.853Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="朴素贝叶斯分类">
-<meta name="twitter:description" content="贝叶斯算法是分类算法的一种，算法的核心是概率论中的贝叶斯定理，而朴素贝叶斯则是贝叶斯分类算法中最简单的一种。">
-<meta name="twitter:image" content="https://i.imgur.com/Mc59jtP.png">
+<meta name="twitter:title" content="&#39;AdaBoost算法&#39;">
+<meta name="twitter:description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
 
 
 
@@ -140,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/19/朴素贝叶斯分类/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/22/AdaBoost算法/"/>
 
 
 
 
 
-  <title>朴素贝叶斯分类 | Kaijian Liu同学</title>
+  <title>'AdaBoost算法' | Kaijian Liu同学</title>
   
 
 
@@ -300,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/朴素贝叶斯分类/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/22/AdaBoost算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Kaijian Liu">
@@ -317,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">朴素贝叶斯分类</h1>
+          <h1 class="post-title" itemprop="name headline">'AdaBoost算法'</h1>
         
 
         <div class="post-meta">
@@ -329,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T20:36:16+08:00">
-                2017-09-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T15:35:19+08:00">
+                2017-10-22
               </time>
             
 
@@ -367,23 +362,7 @@
       
 
       
-        <p>贝叶斯算法是分类算法的一种，算法的核心是概率论中的贝叶斯定理，而朴素贝叶斯则是贝叶斯分类算法中最简单的一种。<br><a id="more"></a></p>
-<h2 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h2><p>贝叶斯算法的核心就是贝叶斯定理：</p>
-<p><img src="https://i.imgur.com/Mc59jtP.png" alt=""></p>
-<p>而在分类算法中，B为某个类别，A为特征，P(B|A)为某个待分类个体的特征取不同类别的概率，显然是计算取不同类别的概率，取最大概率作为该个体的分类类别；上式右边的三个式子的取值通常可以根据已知数据集即训练集求取。</p>
-<h2 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h2><p>朴素贝叶斯的“朴素”体现在样本的各个特征都是条件独立的，这样就极大地简化了算法，当然这是一个比较强的条件，在实际应用中不一定符合。算法流程如下：</p>
-<ol>
-<li>样本x的特征集合{a1,a2,…am}</li>
-<li>所有分类类别取值{y1,y2,…yn}</li>
-<li>计算所有P(y1|x),P(y2|x)….,P(yn|x)</li>
-<li>取3中最大概率对应的分类为x的分类</li>
-</ol>
-<p>根据贝叶斯定理，可以转换成求解：</p>
-<p><img src="https://i.imgur.com/rRISY1C.png" alt=""></p>
-<p>因为特征之间的独立性，那么有：</p>
-<p><img src="https://i.imgur.com/4NRfZsa.png" alt=""></p>
-<p>而对于P(yi)可以从样本中得到，分母特征的取值概率通常对于一组特定的特征组合为常数，可以不用求解，至此完成了朴素贝叶斯算法的介绍。</p>
-
+        
       
     </div>
     
@@ -398,12 +377,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
-          
-        </div>
-      
 
       
       
@@ -413,8 +386,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/12/kaggle入门：Predict-survival-on-the-Titanic/" rel="next" title="kaggle入门：Predict survival on the Titanic">
-                <i class="fa fa-chevron-left"></i> kaggle入门：Predict survival on the Titanic
+              <a href="/2017/10/20/下完这场雨/" rel="next" title="下完这场雨">
+                <i class="fa fa-chevron-left"></i> 下完这场雨
               </a>
             
           </div>
@@ -422,10 +395,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/22/K_means Clustering/" rel="prev" title="K-means Clustering">
-                K-means Clustering <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -500,17 +469,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -614,22 +574,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯定理"><span class="nav-number">1.</span> <span class="nav-text">贝叶斯定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯"><span class="nav-number">2.</span> <span class="nav-text">朴素贝叶斯</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

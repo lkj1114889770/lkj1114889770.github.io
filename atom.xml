@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-20T13:51:01.543Z</updated>
+  <updated>2017-10-22T07:35:19.853Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>&#39;AdaBoost算法&#39;</title>
+    <link href="http://yoursite.com/2017/10/22/AdaBoost%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2017/10/22/AdaBoost算法/</id>
+    <published>2017-10-22T07:35:19.000Z</published>
+    <updated>2017-10-22T07:35:19.853Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>下完这场雨</title>
@@ -868,9 +882,9 @@ if __name__ == &apos;__main__&apos;:
     </summary>
     
     
-      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   

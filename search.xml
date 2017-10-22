@@ -3,6 +3,14 @@
   
     
     <entry>
+      <title><![CDATA['AdaBoost算法']]></title>
+      <url>/2017/10/22/AdaBoost%E7%AE%97%E6%B3%95/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[下完这场雨]]></title>
       <url>/2017/10/20/%E4%B8%8B%E5%AE%8C%E8%BF%99%E5%9C%BA%E9%9B%A8/</url>
       <content type="html"><![CDATA[<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1508516341880&amp;di=9aa12487fe827b6b8a9082e544536914&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.ylq.com%2F2016%2F0819%2F20160819055353748.png" alt=""></p>
@@ -790,9 +798,9 @@ if __name__ == &apos;__main__&apos;:
         
         <tags>
             
-            <tag> 机器学习 </tag>
-            
             <tag> python </tag>
+            
+            <tag> 机器学习 </tag>
             
         </tags>
         
