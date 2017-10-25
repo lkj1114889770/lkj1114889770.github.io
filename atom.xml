@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-23T11:41:30.598Z</updated>
+  <updated>2017-10-25T10:19:29.035Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,101 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网易云音乐爬虫连载（1）之热门歌单音乐获取</title>
+    <link href="http://yoursite.com/2017/10/25/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%88%AC%E8%99%AB%E8%BF%9E%E8%BD%BD%EF%BC%881%EF%BC%89%E4%B9%8B%E7%83%AD%E9%97%A8%E6%AD%8C%E5%8D%95%E9%9F%B3%E4%B9%90%E8%8E%B7%E5%8F%96/"/>
+    <id>http://yoursite.com/2017/10/25/网易云音乐爬虫连载（1）之热门歌单音乐获取/</id>
+    <published>2017-10-25T08:30:47.000Z</published>
+    <updated>2017-10-25T10:19:29.035Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近想做文本挖掘方面的工作，想到了获取网易云音乐平台的用户评论以及音乐数据，这可以作为一个文本挖掘以及推荐系统的很好的数据来源。诚然，获取大量的数据设计到内容还是挺多的，因此从本文开始做一个连载，记录今后对网易云音乐数据的爬取，以及今后对于获取的数据进行分析，作为机器学习的素材进一步处理。</p>
+<p>作为连载的第一篇，首先就是介绍基本的网易云音乐信息获取，以及音乐评论的获取。<br><a id="more"></a></p>
+<p>为了获得大量的音乐数据，从网易云音乐首页的热门歌单中入手，获取音乐信息。</p>
+<p><img src="https://i.imgur.com/IFZFT1q.png" alt=""></p>
+<p>用谷歌开发者工具发现，其实获取热门歌单的时候，网易云的请求包中的网址并不是截图中浏览器的<a href="http://music.163.com/#/discover/playlist，而是http://music.163.com/discover/playlist" target="_blank" rel="external">http://music.163.com/#/discover/playlist，而是http://music.163.com/discover/playlist</a></p>
+<p><img src="https://i.imgur.com/XeyP1qq.png" alt=""></p>
+<p>所以说爬虫的时候，不能单纯看浏览器的url，还是得看真实发送的请求包中的数据。</p>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+import codecs
+url = &apos;http://music.163.com/discover/playlist&apos;
+url_top = &apos;http://music.163.com&apos;
+headers = {
+    &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&apos;,
+    &apos;Accept-Language&apos;: &apos;zh-CN,zh;q=0.9&apos;,
+    &apos;Host&apos;: &apos;music.163.com&apos;,
+    &quot;User-Agent&quot;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3218.0 Safari/537.36&apos;,
+}
+</code></pre><p>分析获取的html文档，采用的是Beautiful Soup，这个时候首先查看html文档，找到歌单数据所在位置。</p>
+<p><img src="https://i.imgur.com/vxTTQWY.png" alt=""></p>
+<p>发现一个id属性，id属性在一个html文档中是独一无二的，可以据此定位找出我们要的歌单信息。</p>
+<pre><code>a=requests.get(url,headers=headers)
+html = a.content
+soup=BeautifulSoup(html,&apos;lxml&apos;)
+playlist={}
+f=codecs.open(&apos;playlist.txt&apos;,&apos;w&apos;,encoding=&apos;utf-8&apos;)
+PlaylistBlock = soup.select(&apos;#m-pl-container&apos;)[0].select(&apos;.msk&apos;)
+for piece in PlaylistBlock:
+    playlist[piece.get(&apos;title&apos;)]=piece.get(&apos;href&apos;)
+    f.write(piece.get(&apos;title&apos;)+&apos;: &apos;+piece.get(&apos;href&apos;)+&apos;\n&apos;)
+f.close()
+</code></pre><p>现在仅仅是获取了第一页的热门歌单：</p>
+<p><img src="https://i.imgur.com/OK1vv6L.png" alt=""></p>
+<p>歌单的链接都是相对链接，只要加上<a href="http://music.163.com就可以访问到相应的具体歌单，来进一步获取歌单内的歌曲。" target="_blank" rel="external">http://music.163.com就可以访问到相应的具体歌单，来进一步获取歌单内的歌曲。</a></p>
+<p><img src="https://i.imgur.com/RKF87RZ.png" alt=""></p>
+<pre><code>f=codecs.open(&apos;musiclist.txt&apos;,&apos;w&apos;,encoding=&apos;utf-8&apos;)
+musiclist = []
+
+for description,url_music in playlist.items():
+    html = requests.get(url_top+url_music,headers=headers).content
+    soup = BeautifulSoup(html,&apos;lxml&apos;)
+    songs= soup.find(&apos;ul&apos;,{&apos;class&apos;:&apos;f-hide&apos;}).find_all(&apos;a&apos;)
+    music={}
+    f.writelines(description+&apos;\n&apos;)
+    for song in songs:
+        music[song[&apos;href&apos;]] = song.string
+        a = music_info_get(url_top+song[&apos;href&apos;],headers)
+        f.write(song[&apos;href&apos;]+&apos;:  &apos;+song.string+a+&apos;\n&apos;)
+    musiclist.append(music)
+    f.write(&apos;---------------------------------&apos;+&apos;\n&apos;)
+
+f.close()
+</code></pre><p>由于在歌单页面没有查到歌曲的对应歌手、专辑信息（理论上应该有的，但是我并没有找到），所以考虑进一步进到歌曲页面，可以看到歌曲的详细信息，后期主要在歌曲页面进行信息获取，所以在这里先进到歌曲页面获取歌手、专辑信息。</p>
+<p>以赵雷的《成都》为例，进入歌曲页面</p>
+<p><img src="https://i.imgur.com/0lHWxPm.png" alt=""></p>
+<p>提取出歌曲的详细信息：</p>
+<pre><code>def music_info_get(url,headers):
+    html = requests.get(url, headers=headers).content
+    soup = BeautifulSoup(html, &apos;lxml&apos;)
+    a = soup.find(&apos;meta&apos;, {&apos;name&apos;: &apos;description&apos;})[&apos;content&apos;]
+    return a
+</code></pre><p>《成都》的网页中包含歌词、评论等信息，但是在请求返回的数据包中并没有见到，刷新《成都》页面其实有很多请求，再仔细查看之后，在其他请求中看到了包括评论以及歌词信息。</p>
+<p><img src="https://i.imgur.com/T59hAoY.png" alt=""></p>
+<p>在这个post请求包中，返回数据中有《成都》的音乐评论，post和get方式不同，post需要带参数，在request的header中可以看到有两个参数，</p>
+<p><img src="https://i.imgur.com/mtOQ9xQ.png" alt=""></p>
+<p>将这个数据带上，用request.post也确实得到了评论数据。</p>
+<pre><code>params = &apos;5iLo/oxg1fK3aTLbh99GhtE6AnWBnEGVKMt4iDi6Qm9ag54eFjI/XRn2rI6QOAk8Zj6u2eS7NkRu04mUakNwntZMQrf9f6cdN6PWZuB16f0CgA0N/5IOl7tUXKZCbsduXzfpYCExtIvLDlOeu9LkGpUksFW3O0zq5ZTjRc1MrB49sxRvF8NA+U9LIMvhJHmO&apos;
+encSecKey = &apos;3ae5b6afde65dede52224db59c2cc8e46aac937dd95915ba6538859aa0615cb6aa938a118fd6f473256fc5cf95d8c3821b07264d7189c07db922088b711a357e3f2092e5a10df5e3d6008a0314adcb8817fc3fe14a2ee657a0a2221597cc51a78534043a1429484a251e4b2b9128fe042d821b7e862114207773cbdba951c8a2&apos;
+data={&quot;params&quot;: params, &quot;encSecKey&quot;: encSecKey}
+a = requests.post(url,headers=headers,data=data)
+</code></pre><p>但是post所带上的参数data，看起来应该是跟数据加密相关，每个请求应该不一样，在爬取大量音乐的时候没办法对每首歌的参数都去手动获得，这里在网上<a href="https://www.zhihu.com/question/36081767" target="_blank" rel="external">https://www.zhihu.com/question/36081767</a>看到了一个方法，之后可以参照来实现。<br>得到的评论数据：<br><img src="https://i.imgur.com/RIr58UA.png" alt=""><br>还有就是请求歌曲的评论数据的url，对《成都》来说是<a href="http://music.163.com/weapi/v1/resource/comments/R_SO_4_436514312?csrf_token=，其规律就是R_SO_4_之后的数字为歌曲对应的id，比如《成都》的URL：http://music.163.com/#/song?id=436514312" target="_blank" rel="external">http://music.163.com/weapi/v1/resource/comments/R_SO_4_436514312?csrf_token=，其规律就是R_SO_4_之后的数字为歌曲对应的id，比如《成都》的URL：http://music.163.com/#/song?id=436514312</a></p>
+<p>爬虫进行到这，仅仅是从歌单到歌曲，再到歌曲信息以及评论单纯地获取了一遍，对于今后大量歌单大规模的爬取，还需要考虑很多，比如多线程爬虫，结合数据库的爬虫数据存储，以及对于长时间爬虫如何应对发爬虫策略，仅仅是获取数据就还有这么多坑，先Mark一下，留着坑慢慢填。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近想做文本挖掘方面的工作，想到了获取网易云音乐平台的用户评论以及音乐数据，这可以作为一个文本挖掘以及推荐系统的很好的数据来源。诚然，获取大量的数据设计到内容还是挺多的，因此从本文开始做一个连载，记录今后对网易云音乐数据的爬取，以及今后对于获取的数据进行分析，作为机器学习的素材进一步处理。&lt;/p&gt;
+&lt;p&gt;作为连载的第一篇，首先就是介绍基本的网易云音乐信息获取，以及音乐评论的获取。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="音乐" scheme="http://yoursite.com/tags/%E9%9F%B3%E4%B9%90/"/>
+    
+  </entry>
   
   <entry>
     <title>BP网络及python实现</title>
@@ -304,13 +399,13 @@ plt.show()
     <link href="http://yoursite.com/2017/10/20/%E4%B8%8B%E5%AE%8C%E8%BF%99%E5%9C%BA%E9%9B%A8/"/>
     <id>http://yoursite.com/2017/10/20/下完这场雨/</id>
     <published>2017-10-20T13:30:47.000Z</published>
-    <updated>2017-10-20T13:51:01.543Z</updated>
+    <updated>2017-10-25T10:20:53.235Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1508516341880&amp;di=9aa12487fe827b6b8a9082e544536914&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.ylq.com%2F2016%2F0819%2F20160819055353748.png" alt=""></p>
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="530" height="86" src="//music.163.com/outchain/player?type=2&id=434550534&auto=0&height=66"></iframe>
 
-<a id="more"></a>
 <p>偶然间网易云推送了这首《下完这场雨》，多久没有再听过后弦的歌了，这首17年的可以说是新歌，歌词一贯写得好，一如六七年前的清新中国风。江南烟雨中，伞下约无果；下完这场雨，此生难再遇。</p>
+<a id="more"></a>
 <p><img src="https://i.imgur.com/UPsFARi.png" alt=""></p>
 <p>仿佛又回到了六七年前，戴着耳机，揣着MP3，走在凤凰花园去学校的路上，穿过西厢，看过娃娃脸，有这样喜欢的清新中国风，有许嵩，有庐州月，断桥残雪，清明雨上，半城烟沙。。。<br>真好。<br>如果可以 别下完这场雨</p>
 ]]></content>
@@ -319,6 +414,8 @@ plt.show()
     
       &lt;p&gt;&lt;img src=&quot;https://timgsa.baidu.com/timg?image&amp;amp;quality=80&amp;amp;size=b9999_10000&amp;amp;sec=1508516341880&amp;amp;di=9aa12487fe827b6b8a9082e544536914&amp;amp;imgtype=0&amp;amp;src=http%3A%2F%2Fimg.ylq.com%2F2016%2F0819%2F20160819055353748.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;530&quot; height=&quot;86&quot; src=&quot;//music.163.com/outchain/player?type=2&amp;id=434550534&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;偶然间网易云推送了这首《下完这场雨》，多久没有再听过后弦的歌了，这首17年的可以说是新歌，歌词一贯写得好，一如六七年前的清新中国风。江南烟雨中，伞下约无果；下完这场雨，此生难再遇。&lt;/p&gt;
     
     </summary>
     
