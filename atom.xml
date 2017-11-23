@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-11-01T12:34:49.151Z</updated>
+  <updated>2017-11-23T12:57:04.163Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网格搜索与Pipeline</title>
+    <link href="http://yoursite.com/2017/11/23/%E7%BD%91%E6%A0%BC%E6%90%9C%E7%B4%A2%E4%B8%8E%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81/"/>
+    <id>http://yoursite.com/2017/11/23/网格搜索与交叉验证/</id>
+    <published>2017-11-23T12:03:19.000Z</published>
+    <updated>2017-11-23T12:57:04.163Z</updated>
+    
+    <content type="html"><![CDATA[<p>学习机器学习有段时间了，第一参加了个比赛，京东JDD数据探索大赛，做了个<a href="http://jddjr.jd.com/item/1" target="_blank" rel="external">登陆识行为识别</a>。不得不说，在实际业务场景中用学的机器学习算法来解决问题，比想象中的难度还是大很多，毕竟实际问题其实比平时简单的算法应用复杂得多。虽然目前数据准确率还不是很高，这个数据集的正例和负例比例相差太大，而且数据上对于特征工程处理也有很大的难度。Anyway，毕竟是第一次参加这样的比赛，收获还是很大的，学到了很多新东西。比如网格搜索和Pipeline机制，以及一个神器Xgboost。先将网格搜索和交叉验证mark一下吧。<br><a id="more"></a></p>
+<h2 id="网格搜索"><a href="#网格搜索" class="headerlink" title="网格搜索"></a>网格搜索</h2><p>实际机器学习应用场景中的一个利器，通俗点就是暴力搜索。机器学习在应用的的时候，调参是一个很重要的环节，而网格搜索就在于优化参数搜索选择，更直白地说，就是你选择可能的参数集给你的分类器，然后网格搜索把这些可能的参数情况都运行一遍，按照你设定的score计算方式，返回score最高的参数。</p>
+<p>函数原型：</p>
+<pre><code>GridSearchCV(estimator, param_grid, scoring=None,
+   fit_params=None, n_jobs=1, iid=True, refit=True, cv=None, 
+   verbose=0, pre_dispatch=‘2*n_jobs’, error_score=’raise’)
+</code></pre><p>常用参数<br><strong>estimator</strong>：所使用的分类器，如estimator=RandomForestClassifier(min_samples_split=100,min_samples_leaf=20,max_depth=8,max_features=’sqrt’,random_state=10), 并且传入除需要确定最佳的参数之外的其他参数。每一个分类器都需要一个scoring参数，或者score方法。<br><strong>param_grid</strong>：值为字典或者列表，即需要最优化的参数的取值，param_grid =param_test1，param_test1 = {‘n_estimators’:range(10,71,10)}。我用的Xgboost算法，优化的参数集为：</p>
+<pre><code>parameters = {
+    &apos;max_depth&apos;:[4,6],
+    &apos;learning_rate&apos;:[0.1,0.3],
+    &apos;subsample&apos;:[0.8,1.0],
+    &apos;gamma&apos;:[0,3,5]
+}
+</code></pre><p><strong>scoring</strong> :准确度评价标准，默认None,这时需要使用score函数；或者如scoring=’roc_auc’，根据所选模型不同，评价准则不同。字符串（函数名），或是可调用对象，需要其函数签名形如：scorer(estimator, X, y)；如果是None，则使用estimator的误差估计函数。scoring官方给的参数选择为<a href="http://scikit-learn.org/stable/modules/model_evaluation.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/model_evaluation.html</a>，当然也可以自定义，我在比赛中就按照JDD给的评分要求自定义了：</p>
+<pre><code>from sklearn.metrics import fbeta_score,make_scorer
+#评估函数
+JdScore = make_scorer(fbeta_score,beta=0.1,greater_is_better=True)
+</code></pre><p><strong>cv</strong> :交叉验证参数，默认None，使用三折交叉验证。指定fold数量，默认为3，也可以是yield训练/测试数据的生成器。<br><strong>verbose</strong>：日志冗长度，int：冗长度，0：不输出训练过程，1：偶尔输出，&gt;1：对每个子模型都输出。<br><strong>n_jobs</strong>: 并行数，int：个数,-1：跟CPU核数一致, 1:默认值。</p>
+<p>一个完整的网格搜索：</p>
+<p>from xgboost.sklearn import XGBClassifier</p>
+<p>#xgb的配置<br>xgbFier = XGBClassifier(<br>    learning_rate =0.1,<br>    n_estimators=1000,<br>    max_depth=5,<br>    min_child_weight=1,<br>    gamma=0,<br>    subsample=0.8,<br>    colsample_bytree=0.8,<br>    objective= ‘binary:logistic’,<br>    scale_pos_weight=1,<br>    seed=27,<br>    silent=0<br>)</p>
+<p>#网格搜索实验<br>    from sklearn.model_selection import GridSearchCV<br>    parameters = {<br>        ‘max_depth’:[4,6],<br>        ‘learning_rate’:[0.1,0.3],<br>        ‘subsample’:[0.8,1.0],<br>        ‘gamma’:[0,3,5]<br>    }<br>    gSearch  =GridSearchCV(xgbFier,parameters,n_jobs=-1,scoring=JdScore,cv=5)</p>
+<pre><code>mport time
+start =time.time()
+gSearch.fit(X_train,Y_train)
+runtime=time.time()-start
+print(&apos;run time:&apos;,runtime)
+print(gSearch.best_params_,gSearch.best_score_)
+</code></pre><p>输出结果为：</p>
+<pre><code>run time: 4109.730866909027
+{&apos;gamma&apos;: 3, &apos;learning_rate&apos;: 0.1, &apos;max_depth&apos;: 6, &apos;subsample&apos;: 0.8} 0.738112481672
+</code></pre><p>这样就找出了较优的参数，唉，现在只能得到0.78的线下score，还要继续修改啊。</p>
+<h2 id="Pipeline机制"><a href="#Pipeline机制" class="headerlink" title="Pipeline机制"></a>Pipeline机制</h2><p>顾名思义就是管道机制，就是将机器学习整个流程流式化封装和管理，因为参数集在很多情况下对于测试集和训练集都是一样处理，他们有很多共同的步骤，这个机制就是便于这些步骤的共同使用。网上找到的一个很好解释的图如下，模型训练和预测过程中数据标准化、PCA降维之类的处理都可以通用，而且训练和预测用的是同一算法。</p>
+<center> <br><br><img width="500" height="400" src="http://img.blog.csdn.net/20160115095855517"> <br><br></center>
+
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;学习机器学习有段时间了，第一参加了个比赛，京东JDD数据探索大赛，做了个&lt;a href=&quot;http://jddjr.jd.com/item/1&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;登陆识行为识别&lt;/a&gt;。不得不说，在实际业务场景中用学的机器学习算法来解决问题，比想象中的难度还是大很多，毕竟实际问题其实比平时简单的算法应用复杂得多。虽然目前数据准确率还不是很高，这个数据集的正例和负例比例相差太大，而且数据上对于特征工程处理也有很大的难度。Anyway，毕竟是第一次参加这样的比赛，收获还是很大的，学到了很多新东西。比如网格搜索和Pipeline机制，以及一个神器Xgboost。先将网格搜索和交叉验证mark一下吧。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>EVD、SVD以及PCA整理</title>
@@ -1591,9 +1646,9 @@ draw_wordcloud2()
     
       <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
     
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
       <category term="电影" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1/"/>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
   </entry>
   
