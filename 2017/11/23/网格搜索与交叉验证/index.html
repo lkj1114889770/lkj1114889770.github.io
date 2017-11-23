@@ -83,8 +83,6 @@
 
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="Kaijian Liu同学" type="application/atom+xml" />
 
@@ -107,7 +105,7 @@
 <meta property="og:description" content="学习机器学习有段时间了，第一参加了个比赛，京东JDD数据探索大赛，做了个登陆识行为识别。不得不说，在实际业务场景中用学的机器学习算法来解决问题，比想象中的难度还是大很多，毕竟实际问题其实比平时简单的算法应用复杂得多。虽然目前数据准确率还不是很高，这个数据集的正例和负例比例相差太大，而且数据上对于特征工程处理也有很大的难度。Anyway，毕竟是第一次参加这样的比赛，收获还是很大的，学到了很多新东西。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://img.blog.csdn.net/20160115095855517">
-<meta property="og:updated_time" content="2017-11-23T12:57:04.163Z">
+<meta property="og:updated_time" content="2017-11-23T13:00:42.760Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网格搜索与Pipeline">
 <meta name="twitter:description" content="学习机器学习有段时间了，第一参加了个比赛，京东JDD数据探索大赛，做了个登陆识行为识别。不得不说，在实际业务场景中用学的机器学习算法来解决问题，比想象中的难度还是大很多，毕竟实际问题其实比平时简单的算法应用复杂得多。虽然目前数据准确率还不是很高，这个数据集的正例和负例比例相差太大，而且数据上对于特征工程处理也有很大的难度。Anyway，毕竟是第一次参加这样的比赛，收获还是很大的，学到了很多新东西。">
@@ -386,10 +384,33 @@
 JdScore = make_scorer(fbeta_score,beta=0.1,greater_is_better=True)
 </code></pre><p><strong>cv</strong> :交叉验证参数，默认None，使用三折交叉验证。指定fold数量，默认为3，也可以是yield训练/测试数据的生成器。<br><strong>verbose</strong>：日志冗长度，int：冗长度，0：不输出训练过程，1：偶尔输出，&gt;1：对每个子模型都输出。<br><strong>n_jobs</strong>: 并行数，int：个数,-1：跟CPU核数一致, 1:默认值。</p>
 <p>一个完整的网格搜索：</p>
-<p>from xgboost.sklearn import XGBClassifier</p>
-<p>#xgb的配置<br>xgbFier = XGBClassifier(<br>    learning_rate =0.1,<br>    n_estimators=1000,<br>    max_depth=5,<br>    min_child_weight=1,<br>    gamma=0,<br>    subsample=0.8,<br>    colsample_bytree=0.8,<br>    objective= ‘binary:logistic’,<br>    scale_pos_weight=1,<br>    seed=27,<br>    silent=0<br>)</p>
-<p>#网格搜索实验<br>    from sklearn.model_selection import GridSearchCV<br>    parameters = {<br>        ‘max_depth’:[4,6],<br>        ‘learning_rate’:[0.1,0.3],<br>        ‘subsample’:[0.8,1.0],<br>        ‘gamma’:[0,3,5]<br>    }<br>    gSearch  =GridSearchCV(xgbFier,parameters,n_jobs=-1,scoring=JdScore,cv=5)</p>
-<pre><code>mport time
+<pre><code>from xgboost.sklearn import XGBClassifier
+#xgb的配置
+xgbFier = XGBClassifier(
+learning_rate =0.1,
+n_estimators=1000,
+max_depth=5,
+min_child_weight=1,
+gamma=0,
+subsample=0.8,
+colsample_bytree=0.8,
+objective= &apos;binary:logistic&apos;,
+scale_pos_weight=1,
+seed=27,
+silent=0
+)
+
+#网格搜索实验
+from sklearn.model_selection import GridSearchCV
+parameters = {
+    &apos;max_depth&apos;:[4,6],
+    &apos;learning_rate&apos;:[0.1,0.3],
+    &apos;subsample&apos;:[0.8,1.0],
+    &apos;gamma&apos;:[0,3,5]
+}
+gSearch  =GridSearchCV(xgbFier,parameters,n_jobs=-1,scoring=JdScore,cv=5)
+
+mport time
 start =time.time()
 gSearch.fit(X_train,Y_train)
 runtime=time.time()-start
