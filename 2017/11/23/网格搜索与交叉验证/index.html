@@ -105,7 +105,7 @@
 <meta property="og:description" content="学习机器学习有段时间了，第一参加了个比赛，京东JDD数据探索大赛，做了个登陆识行为识别。不得不说，在实际业务场景中用学的机器学习算法来解决问题，比想象中的难度还是大很多，毕竟实际问题其实比平时简单的算法应用复杂得多。虽然目前数据准确率还不是很高，这个数据集的正例和负例比例相差太大，而且数据上对于特征工程处理也有很大的难度。Anyway，毕竟是第一次参加这样的比赛，收获还是很大的，学到了很多新东西。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://img.blog.csdn.net/20160115095855517">
-<meta property="og:updated_time" content="2017-11-23T13:00:42.760Z">
+<meta property="og:updated_time" content="2017-11-23T13:02:31.773Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网格搜索与Pipeline">
 <meta name="twitter:description" content="学习机器学习有段时间了，第一参加了个比赛，京东JDD数据探索大赛，做了个登陆识行为识别。不得不说，在实际业务场景中用学的机器学习算法来解决问题，比想象中的难度还是大很多，毕竟实际问题其实比平时简单的算法应用复杂得多。虽然目前数据准确率还不是很高，这个数据集的正例和负例比例相差太大，而且数据上对于特征工程处理也有很大的难度。Anyway，毕竟是第一次参加这样的比赛，收获还是很大的，学到了很多新东西。">
@@ -410,7 +410,7 @@ parameters = {
 }
 gSearch  =GridSearchCV(xgbFier,parameters,n_jobs=-1,scoring=JdScore,cv=5)
 
-mport time
+import time
 start =time.time()
 gSearch.fit(X_train,Y_train)
 runtime=time.time()-start
@@ -462,6 +462,10 @@ print(gSearch.best_params_,gSearch.best_score_)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/07/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -567,7 +571,7 @@ print(gSearch.best_params_,gSearch.best_score_)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -688,7 +692,7 @@ print(gSearch.best_params_,gSearch.best_score_)
 <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
