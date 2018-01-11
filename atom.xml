@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-11T06:57:35.189Z</updated>
+  <updated>2018-01-11T07:10:43.912Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/01/11/%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E6%9E%84%E5%BB%BA/"/>
     <id>http://yoursite.com/2018/01/11/电影推荐系统构建/</id>
     <published>2018-01-11T06:12:27.000Z</published>
-    <updated>2018-01-11T06:57:35.189Z</updated>
+    <updated>2018-01-11T07:10:43.912Z</updated>
     
     <content type="html"><![CDATA[<p>很久没有更新博客了，最近刚做完数据挖掘的大作业，选了一个电影数据集挖掘的课题，做了一个推荐系统，在这里简单地记录一下。<br>电影推荐系统数据集来源于<a href="https://www.kaggle.com/rounakbanik/the-movies-dataset" target="_blank" rel="external">kaggle</a>上的MovieLens完整的45,000条数据，电影数据包括2017年7月前发布的电影，包括270,000个用户的超过26,000,000条评论，以及从GroupLens官方网站获得的评分。基于此电影数据集，完成下面的数据挖掘目标。<br><a id="more"></a><br>•    电影数据集处理及可视化分析<br>•    基于用户投票的推荐算法<br>•    基于内容的推荐算法<br>•    基于协同过滤的推荐算法<br>•    数据库技术的应用<br>•    简单的电影推荐网站构建<br>当然这次代码也有很大程度上参考了这个数据集下的大佬分享的kernel，提供了许多不错的精致代码。</p>
 <h2 id="数据集介绍及分析"><a href="#数据集介绍及分析" class="headerlink" title="数据集介绍及分析"></a>数据集介绍及分析</h2><p>movies_metadata.csv: 电影基本信息描述文件，包括 45000部电影的演员、工作人员、情节关键字、预算、收入、海报、发布日期、语言、制作公司、国家、TMDB投票计数和平均投票信息.<br>keywords.csv: 包含电影的关键词信息，每条数据为json格式.。<br>credits.csv: 演员和电影工作人员的信息，每条数据为json格式。<br>links.csv: 包含所有电影TMDB IDs和IMDB IDs 对应信息。<br>links_small.csv: 9,000部电影的TMDB IDs和IMDB IDs 对应信息.<br>rating.csv:用户对于所有电影的打分，1-5。<br>ratings_small.csv: 电影打分子集，700个用户对于9,000部电影的100,000个评分。<br>针对电影的情况，首先我们看一下电影的平均投票分布，如下图所示，由图中可以看出，电影集中分布在6分左右，也是比较符合实际情况，一般的电影居多，高分电影以及烂片数量相对较少。</p>
@@ -202,6 +202,7 @@ cur.close()
 conn.close()
 </code></pre><p>小伙伴应用Django框架，是一个开放源代码的Web应用框架，由Python写，时间仓促的情况下赶出了一个还是很不错的页面，点赞。</p>
 <p><img src="https://i.imgur.com/qF14GhU.png" alt=""></p>
+<p>详细代码可见个人<a href="https://github.com/lkj1114889770/File_Recommend" target="_blank" rel="external">github</a>。</p>
 ]]></content>
     
     <summary type="html">

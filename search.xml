@@ -185,6 +185,7 @@ cur.close()
 conn.close()
 </code></pre><p>小伙伴应用Django框架，是一个开放源代码的Web应用框架，由Python写，时间仓促的情况下赶出了一个还是很不错的页面，点赞。</p>
 <p><img src="https://i.imgur.com/qF14GhU.png" alt=""></p>
+<p>详细代码可见个人<a href="https://github.com/lkj1114889770/File_Recommend" target="_blank" rel="external">github</a>。</p>
 ]]></content>
       
         
