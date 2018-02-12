@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-12T11:07:56.917Z</updated>
+  <updated>2018-02-12T11:09:11.983Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/02/12/%E6%88%91%E4%BB%8E%E5%B4%96%E8%BE%B9%E8%B7%8C%E8%90%BD/"/>
     <id>http://yoursite.com/2018/02/12/我从崖边跌落/</id>
     <published>2018-02-12T10:58:56.000Z</published>
-    <updated>2018-02-12T11:07:56.917Z</updated>
+    <updated>2018-02-12T11:09:11.983Z</updated>
     
     <content type="html"><![CDATA[<p>我从崖边跌落<br>落入星空辽阔<br>银河不清不浊<br>不知何以摆脱</p>
 <p><a href="http://music.163.com/#/song?id=415086030&amp;market=baiduqk" target="_blank" rel="external">谢春花《我从崖边跌落》</a></p>
@@ -38,7 +38,7 @@
     </summary>
     
     
-      <category term="电影" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1/"/>
+      <category term="音乐" scheme="http://yoursite.com/tags/%E9%9F%B3%E4%B9%90/"/>
     
   </entry>
   
