@@ -3,6 +3,25 @@
   
     
     <entry>
+      <title><![CDATA[我从崖边跌落]]></title>
+      <url>/2018/02/12/%E6%88%91%E4%BB%8E%E5%B4%96%E8%BE%B9%E8%B7%8C%E8%90%BD/</url>
+      <content type="html"><![CDATA[<p>我从崖边跌落<br>落入星空辽阔<br>银河不清不浊<br>不知何以摆脱</p>
+<p><a href="http://music.163.com/#/song?id=415086030&amp;market=baiduqk" target="_blank" rel="external">谢春花《我从崖边跌落》</a></p>
+<p><img src="http://img.mp.itc.cn/upload/20170408/f70dc16bc19b47e68670c262e8b8ccc9_th.jpeg" alt=""></p>
+<a id="more"></a>
+<p><img src="https://i.imgur.com/jMS0zwA.png" alt=""></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 电影 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[电影推荐系统构建]]></title>
       <url>/2018/01/11/%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E6%9E%84%E5%BB%BA/</url>
       <content type="html"><![CDATA[<p>很久没有更新博客了，最近刚做完数据挖掘的大作业，选了一个电影数据集挖掘的课题，做了一个推荐系统，在这里简单地记录一下。<br>电影推荐系统数据集来源于<a href="https://www.kaggle.com/rounakbanik/the-movies-dataset" target="_blank" rel="external">kaggle</a>上的MovieLens完整的45,000条数据，电影数据包括2017年7月前发布的电影，包括270,000个用户的超过26,000,000条评论，以及从GroupLens官方网站获得的评分。基于此电影数据集，完成下面的数据挖掘目标。<br><a id="more"></a><br>•    电影数据集处理及可视化分析<br>•    基于用户投票的推荐算法<br>•    基于内容的推荐算法<br>•    基于协同过滤的推荐算法<br>•    数据库技术的应用<br>•    简单的电影推荐网站构建<br>当然这次代码也有很大程度上参考了这个数据集下的大佬分享的kernel，提供了许多不错的精致代码。</p>
