@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="爬虫," />
 
 
 
@@ -96,16 +96,23 @@
 
 
 
-<meta name="description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kaijian Liu同学">
-<meta property="og:url" content="http://yoursite.com/tags/电影/index.html">
+<meta name="description" content="到现在做过很多爬虫的小玩意，今天用爬虫来做一个更实际的东西。学校内部有个电影资源分享网站NHD，虽然说是免费下载，但是需要消耗魔力值，魔力值可以通过每天签到获得，连续签到的话每天得到的魔力值数量客观，但是有时候会忘了签到，因此写了一个小程序来实现每天自动登陆NHD并实现自动签到。">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NHD自动登陆签到脚本">
+<meta property="og:url" content="http://yoursite.com/2018/03/05/NHD自动登陆签到脚本/index.html">
 <meta property="og:site_name" content="Kaijian Liu同学">
-<meta property="og:description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
+<meta property="og:description" content="到现在做过很多爬虫的小玩意，今天用爬虫来做一个更实际的东西。学校内部有个电影资源分享网站NHD，虽然说是免费下载，但是需要消耗魔力值，魔力值可以通过每天签到获得，连续签到的话每天得到的魔力值数量客观，但是有时候会忘了签到，因此写了一个小程序来实现每天自动登陆NHD并实现自动签到。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/blGVz73.png">
+<meta property="og:image" content="https://i.imgur.com/gI5d49F.png">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/997599/201707/997599-20170720145847427-1503464818.png">
+<meta property="og:image" content="https://i.imgur.com/9KcOc9O.png">
+<meta property="og:updated_time" content="2018-03-05T13:23:10.790Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kaijian Liu同学">
-<meta name="twitter:description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
+<meta name="twitter:title" content="NHD自动登陆签到脚本">
+<meta name="twitter:description" content="到现在做过很多爬虫的小玩意，今天用爬虫来做一个更实际的东西。学校内部有个电影资源分享网站NHD，虽然说是免费下载，但是需要消耗魔力值，魔力值可以通过每天签到获得，连续签到的话每天得到的魔力值数量客观，但是有时候会忘了签到，因此写了一个小程序来实现每天自动登陆NHD并实现自动签到。">
+<meta name="twitter:image" content="https://i.imgur.com/blGVz73.png">
 
 
 
@@ -134,13 +141,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/电影/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/05/NHD自动登陆签到脚本/"/>
 
 
 
 
 
-  <title>标签: 电影 | Kaijian Liu同学</title>
+  <title>NHD自动登陆签到脚本 | Kaijian Liu同学</title>
   
 
 
@@ -165,7 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 	<a href="https://github.com/lkj1114889770"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
@@ -280,82 +287,203 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>电影<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/05/NHD自动登陆签到脚本/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kaijian Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kaijian Liu同学">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/01/11/电影推荐系统构建/" itemprop="url">
-              
-                <span itemprop="name">电影推荐系统构建</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">NHD自动登陆签到脚本</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-11T14:12:27+08:00"
-              content="2018-01-11" >
-          01-11
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T20:46:38+08:00">
+                2018-03-05
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>到现在做过很多爬虫的小玩意，今天用爬虫来做一个更实际的东西。学校内部有个电影资源分享网站<a href="http://www.nexushd.org/index.php" target="_blank" rel="external">NHD</a>，虽然说是免费下载，但是需要消耗魔力值，魔力值可以通过每天签到获得，连续签到的话每天得到的魔力值数量客观，但是有时候会忘了签到，因此写了一个小程序来实现每天自动登陆NHD并实现自动签到。<br><a id="more"></a></p>
+<p>首先还是老套路，先用浏览器实现一遍登陆以及签到过程，用谷歌浏览器的开发者模式获取这过程中的信息。可以看到首次登陆之后，response的header有set-cookie字段</p>
+<p><img src="https://i.imgur.com/blGVz73.png" alt=""></p>
+<p>而后这个服务器返回的set-cookie字段在下一次会话中又出现了</p>
+<p><img src="https://i.imgur.com/gI5d49F.png" alt=""></p>
+<p>其实总体思路还是很简单的，与之前的爬虫不同，这次需要用户登陆，所以是POST方法，并将用户名和密码以data参数代入，登陆之后服务器会返回cookie来标识用户。因为http是一种无状态协议，用户首次访问web站点的时候，服务器对用户一无所知。而Cookie就像是服务器给每个来访问的用户贴的标签，而这些标签就是对来访问的客户端的独有的身份的一个标识，这里就如同每个人的身份证一样，带着你的个人信息。而当一个客户端第一次连接过来的时候，服务端就会给他打一个标签，这里就如同给你发了一个身份证，所以之后的访问服务器再带上这个cookie就标识了该账户，具体流程网上找到一张很好的图可以解释。</p>
+<p><img src="https://images2015.cnblogs.com/blog/997599/201707/997599-20170720145847427-1503464818.png" alt=""></p>
+<p>这样的话，只需要第一次输入密码，后面浏览器再次访问只要带上这个服务器返回的cookie，服务器就可以知道是该账户在访问，所以python程序也模拟该过程。利用request库中的session对象来创建类似于图中的过程，session对象会保存访问过程中的cookie用于之后对服务器的继续访问。</p>
+<pre><code>url = &apos;http://www.nexushd.org/takelogin.php&apos;  #登陆界面
+a = session.post(url=url, cookies=cookies, headers=headers, data=data)
+#这里的cookie是浏览器首次访问的使用的cookie，之后服务器
+#设置的cookie会保存在session对象中
+time.sleep(2)
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/08/08/也看战狼2：爬取豆瓣影评做词云/" itemprop="url">
-              
-                <span itemprop="name">也看战狼2：爬取豆瓣影评做词云</span>
-              
-            </a>
-        
-      </h2>
+url2 = &apos;http://www.nexushd.org/signin.php&apos;  #签到界面
+b = session.get(url=url2, headers=headers)
+time.sleep(2)
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-08T22:47:02+08:00"
-              content="2017-08-08" >
-          08-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+url3 = &apos;http://www.nexushd.org/signin.php?&apos;
+qiandao = {&apos;action&apos;:&apos;post&apos;,&apos;content&apos;:&apos;lalala2333&apos;} #签到信息随便填，lalala2333
+r = session.post(url=url3, headers=headers, data=qiandao)
+</code></pre><p>而后就是一个判断是否登陆成功的程序，依然使用BeautifulSoup来解析，得到已签到之后退出循环，并将日志信息记录到日志文件。</p>
+<pre><code>r = session.post(url=url3, headers=headers, data=qiandao)
+r = BeautifulSoup(r.content,&apos;lxml&apos;)
+message = r.find_all(&apos;a&apos;,{&apos;href&apos;:&quot;signin.php&quot;})[0].contents[0]
+if message == &apos;已签到&apos;: #如果已经签到
+    f = codecs.open(&apos;logging.txt&apos;, &apos;a&apos;, encoding=&apos;utf-8&apos;)
+    str= time.strftime(&apos;%Y-%m-%d  %H:%M:%S&apos;,time.localtime(time.time())) +&apos;-----签到成功&apos;+&apos;\n&apos;
+    f.write(str)  #记录日志信息到日志文件
+    f.close()
+    break
+</code></pre><p>测试结果：</p>
+<p><img src="https://i.imgur.com/9KcOc9O.png" alt=""></p>
+<p>之后我把这个代码挂在自己寝室一直在运行的主机上，就可以保证每天实现签到了。目前来来说，程序没有出现什么问题，所以先记录一下，但是之后长时间运行不知道会怎样，或许得优化，反正先放出来，以后还能改。完整代码详见个人<a href="https://github.com/lkj1114889770/WebScraping/tree/master/qiandao" target="_blank" rel="external">github</a>了。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/12/我从崖边跌落/" rel="next" title="我从崖边跌落">
+                <i class="fa fa-chevron-left"></i> 我从崖边跌落
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -363,6 +491,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -622,10 +754,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-12T11:09:11.983Z</updated>
+  <updated>2018-03-05T13:23:10.790Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>NHD自动登陆签到脚本</title>
+    <link href="http://yoursite.com/2018/03/05/NHD%E8%87%AA%E5%8A%A8%E7%99%BB%E9%99%86%E7%AD%BE%E5%88%B0%E8%84%9A%E6%9C%AC/"/>
+    <id>http://yoursite.com/2018/03/05/NHD自动登陆签到脚本/</id>
+    <published>2018-03-05T12:46:38.000Z</published>
+    <updated>2018-03-05T13:23:10.790Z</updated>
+    
+    <content type="html"><![CDATA[<p>到现在做过很多爬虫的小玩意，今天用爬虫来做一个更实际的东西。学校内部有个电影资源分享网站<a href="http://www.nexushd.org/index.php" target="_blank" rel="external">NHD</a>，虽然说是免费下载，但是需要消耗魔力值，魔力值可以通过每天签到获得，连续签到的话每天得到的魔力值数量客观，但是有时候会忘了签到，因此写了一个小程序来实现每天自动登陆NHD并实现自动签到。<br><a id="more"></a></p>
+<p>首先还是老套路，先用浏览器实现一遍登陆以及签到过程，用谷歌浏览器的开发者模式获取这过程中的信息。可以看到首次登陆之后，response的header有set-cookie字段</p>
+<p><img src="https://i.imgur.com/blGVz73.png" alt=""></p>
+<p>而后这个服务器返回的set-cookie字段在下一次会话中又出现了</p>
+<p><img src="https://i.imgur.com/gI5d49F.png" alt=""></p>
+<p>其实总体思路还是很简单的，与之前的爬虫不同，这次需要用户登陆，所以是POST方法，并将用户名和密码以data参数代入，登陆之后服务器会返回cookie来标识用户。因为http是一种无状态协议，用户首次访问web站点的时候，服务器对用户一无所知。而Cookie就像是服务器给每个来访问的用户贴的标签，而这些标签就是对来访问的客户端的独有的身份的一个标识，这里就如同每个人的身份证一样，带着你的个人信息。而当一个客户端第一次连接过来的时候，服务端就会给他打一个标签，这里就如同给你发了一个身份证，所以之后的访问服务器再带上这个cookie就标识了该账户，具体流程网上找到一张很好的图可以解释。</p>
+<p><img src="https://images2015.cnblogs.com/blog/997599/201707/997599-20170720145847427-1503464818.png" alt=""></p>
+<p>这样的话，只需要第一次输入密码，后面浏览器再次访问只要带上这个服务器返回的cookie，服务器就可以知道是该账户在访问，所以python程序也模拟该过程。利用request库中的session对象来创建类似于图中的过程，session对象会保存访问过程中的cookie用于之后对服务器的继续访问。</p>
+<pre><code>url = &apos;http://www.nexushd.org/takelogin.php&apos;  #登陆界面
+a = session.post(url=url, cookies=cookies, headers=headers, data=data)
+#这里的cookie是浏览器首次访问的使用的cookie，之后服务器
+#设置的cookie会保存在session对象中
+time.sleep(2)
+
+url2 = &apos;http://www.nexushd.org/signin.php&apos;  #签到界面
+b = session.get(url=url2, headers=headers)
+time.sleep(2)
+
+url3 = &apos;http://www.nexushd.org/signin.php?&apos;
+qiandao = {&apos;action&apos;:&apos;post&apos;,&apos;content&apos;:&apos;lalala2333&apos;} #签到信息随便填，lalala2333
+r = session.post(url=url3, headers=headers, data=qiandao)
+</code></pre><p>而后就是一个判断是否登陆成功的程序，依然使用BeautifulSoup来解析，得到已签到之后退出循环，并将日志信息记录到日志文件。</p>
+<pre><code>r = session.post(url=url3, headers=headers, data=qiandao)
+r = BeautifulSoup(r.content,&apos;lxml&apos;)
+message = r.find_all(&apos;a&apos;,{&apos;href&apos;:&quot;signin.php&quot;})[0].contents[0]
+if message == &apos;已签到&apos;: #如果已经签到
+    f = codecs.open(&apos;logging.txt&apos;, &apos;a&apos;, encoding=&apos;utf-8&apos;)
+    str= time.strftime(&apos;%Y-%m-%d  %H:%M:%S&apos;,time.localtime(time.time())) +&apos;-----签到成功&apos;+&apos;\n&apos;
+    f.write(str)  #记录日志信息到日志文件
+    f.close()
+    break
+</code></pre><p>测试结果：</p>
+<p><img src="https://i.imgur.com/9KcOc9O.png" alt=""></p>
+<p>之后我把这个代码挂在自己寝室一直在运行的主机上，就可以保证每天实现签到了。目前来来说，程序没有出现什么问题，所以先记录一下，但是之后长时间运行不知道会怎样，或许得优化，反正先放出来，以后还能改。完整代码详见个人<a href="https://github.com/lkj1114889770/WebScraping/tree/master/qiandao" target="_blank" rel="external">github</a>了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;到现在做过很多爬虫的小玩意，今天用爬虫来做一个更实际的东西。学校内部有个电影资源分享网站&lt;a href=&quot;http://www.nexushd.org/index.php&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;NHD&lt;/a&gt;，虽然说是免费下载，但是需要消耗魔力值，魔力值可以通过每天签到获得，连续签到的话每天得到的魔力值数量客观，但是有时候会忘了签到，因此写了一个小程序来实现每天自动登陆NHD并实现自动签到。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
   
   <entry>
     <title>我从崖边跌落</title>
@@ -1901,9 +1955,9 @@ draw_wordcloud2()
     
       <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
     
-      <category term="电影" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1/"/>
-    
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+      <category term="电影" scheme="http://yoursite.com/tags/%E7%94%B5%E5%BD%B1/"/>
     
   </entry>
   
