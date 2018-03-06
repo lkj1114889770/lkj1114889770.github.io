@@ -27,18 +27,56 @@ url3 = &apos;http://www.nexushd.org/signin.php?&apos;
 qiandao = {&apos;action&apos;:&apos;post&apos;,&apos;content&apos;:&apos;lalala2333&apos;} #签到信息随便填，lalala2333
 r = session.post(url=url3, headers=headers, data=qiandao)
 </code></pre><p>而后就是一个判断是否登陆成功的程序，依然使用BeautifulSoup来解析，得到已签到之后退出循环，并将日志信息记录到日志文件。</p>
-<pre><code>r = session.post(url=url3, headers=headers, data=qiandao)
-r = BeautifulSoup(r.content,&apos;lxml&apos;)
+<pre><code>r = BeautifulSoup(r.content,&apos;lxml&apos;)
 message = r.find_all(&apos;a&apos;,{&apos;href&apos;:&quot;signin.php&quot;})[0].contents[0]
 if message == &apos;已签到&apos;: #如果已经签到
     f = codecs.open(&apos;logging.txt&apos;, &apos;a&apos;, encoding=&apos;utf-8&apos;)
     str= time.strftime(&apos;%Y-%m-%d  %H:%M:%S&apos;,time.localtime(time.time())) +&apos;-----签到成功&apos;+&apos;\n&apos;
     f.write(str)  #记录日志信息到日志文件
     f.close()
+    print(r.find_all(&apos;span&apos;,{&apos;class&apos;:&apos;medium&apos;})[0].getText())
+    print(r.find_all(&apos;td&apos;,{&apos;class&apos;:&apos;text&apos;})[-1].getText().split(&apos;。&apos;)[0])
     break
-</code></pre><p>测试结果：</p>
-<p><img src="https://i.imgur.com/9KcOc9O.png" alt=""></p>
-<p>之后我把这个代码挂在自己寝室一直在运行的主机上，就可以保证每天实现签到了。目前来来说，程序没有出现什么问题，所以先记录一下，但是之后长时间运行不知道会怎样，或许得优化，反正先放出来，以后还能改。完整代码详见个人<a href="https://github.com/lkj1114889770/WebScraping/tree/master/qiandao" target="_blank" rel="external">github</a>了。</p>
+if maxtry&lt;30:
+    print(&apos;签到失败，第&apos;+str(maxtry)+&apos;次重试&apos;)
+    time.sleep(5)
+else:
+    print(&quot;自动签到失败，请手动签到，或者检查网络连接&quot;)
+    break
+</code></pre><p>为了能够开机自动运行程序，将该程序添加至windows启动运行。代码中读取在配置文件中的账户信息，并且通过读取上一次签到成功时间来判断是否成功签到过。</p>
+<pre><code>maxtry=0  #记录重试次数
+f = codecs.open(&apos;profile.txt&apos;, &apos;r&apos;, encoding=&apos;utf-8&apos;)  #读取配置文件，包含账户及密码
+line=f.readline()
+f.close()
+
+username = line.split()[0] #你的用户名
+password = line.split()[1]  #你的密码
+data = {&apos;username&apos;: username, &apos;password&apos;:password}
+
+flag = True
+day_now = time.localtime(time.time()).tm_mday
+f = codecs.open(&apos;logging.txt&apos;, &apos;r&apos;, encoding=&apos;utf-8&apos;)
+lines = f.readlines()
+f.close()
+#######更换账户登陆时，最好清除以前账户的日志信息
+try:  #如果第一次使用可能没有签到记录
+    day_log = int(lines[-1].split()[0].split(&apos;-&apos;)[-1])
+except:
+    day_log=33
+
+day_log = int(lines[-1].split()[0].split(&apos;-&apos;)[-1])
+if day_now == day_log:
+    print(username+&apos;今天签到过了哦&apos;)
+    flag = False
+</code></pre><p>将配置文件profile.txt和日志文件logging.txt以及代码qiandao.py放入windows的启动运行的文件夹，这个文件夹可以通过在cmd窗口下输入</p>
+<pre><code>shell:Startup
+</code></pre><p>打开</p>
+<p>在这个启动文件夹下写一个bat脚本来运行python代码</p>
+<pre><code>cd C:\Users\lkj\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+python qiandao.py
+pause
+</code></pre><p>至此就完整实现了电脑开机自动登陆签到NHD啦。效果如下<br>测试结果：<br><img src="https://i.imgur.com/YCq9I1U.png" alt=""></p>
+<p>完整代码详见个人<a href="https://github.com/lkj1114889770/WebScraping/tree/master/qiandao" target="_blank" rel="external">github</a>了。</p>
 ]]></content>
       
         
