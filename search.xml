@@ -72,7 +72,8 @@ if day_now == day_log:
 <pre><code>shell:Startup
 </code></pre><p>打开</p>
 <p>在这个启动文件夹下写一个bat脚本来运行python代码</p>
-<pre><code>cd C:\Users\lkj\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+<pre><code>D:
+cd D:\simulation file\pyCharm\python3\qiandao
 python qiandao.py
 pause
 </code></pre><p>至此就完整实现了电脑开机自动登陆签到NHD啦。效果如下<br>测试结果：<br><img src="https://i.imgur.com/YCq9I1U.png" alt=""></p>
