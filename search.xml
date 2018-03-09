@@ -27,18 +27,24 @@ url3 = &apos;http://www.nexushd.org/signin.php?&apos;
 qiandao = {&apos;action&apos;:&apos;post&apos;,&apos;content&apos;:&apos;lalala2333&apos;} #签到信息随便填，lalala2333
 r = session.post(url=url3, headers=headers, data=qiandao)
 </code></pre><p>而后就是一个判断是否登陆成功的程序，依然使用BeautifulSoup来解析，得到已签到之后退出循环，并将日志信息记录到日志文件。</p>
-<pre><code>r = BeautifulSoup(r.content,&apos;lxml&apos;)
-message = r.find_all(&apos;a&apos;,{&apos;href&apos;:&quot;signin.php&quot;})[0].contents[0]
-if message == &apos;已签到&apos;: #如果已经签到
+<pre><code>r = session.post(url=url3, headers=headers, data=qiandao)
+r = BeautifulSoup(r.content,&apos;lxml&apos;)
+message1 = r.find_all(&apos;a&apos;,{&apos;href&apos;:&quot;signin.php&quot;})[0].contents[0]
+message2 = r.find_all(&apos;h2&apos;)[0].getText()
+if message2 == &apos;签到成功&apos;:
     f = codecs.open(&apos;logging.txt&apos;, &apos;a&apos;, encoding=&apos;utf-8&apos;)
-    str= time.strftime(&apos;%Y-%m-%d  %H:%M:%S&apos;,time.localtime(time.time())) +&apos;-----签到成功&apos;+&apos;\n&apos;
-    f.write(str)  #记录日志信息到日志文件
+    str = time.strftime(&apos;%Y-%m-%d  %H:%M:%S&apos;, time.localtime(time.time())) + &apos;-----签到成功&apos; + &apos;\n&apos;
+    f.write(str)  # 记录日志信息到日志文件
     f.close()
-    print(r.find_all(&apos;span&apos;,{&apos;class&apos;:&apos;medium&apos;})[0].getText())
-    print(r.find_all(&apos;td&apos;,{&apos;class&apos;:&apos;text&apos;})[-1].getText().split(&apos;。&apos;)[0])
+    print(r.find_all(&apos;span&apos;, {&apos;class&apos;: &apos;medium&apos;})[0].getText())
+    print(r.find_all(&apos;td&apos;, {&apos;class&apos;: &apos;text&apos;})[-1].getText().split(&apos;。&apos;)[0])
     break
-if maxtry&lt;30:
-    print(&apos;签到失败，第&apos;+str(maxtry)+&apos;次重试&apos;)
+elif message1 == &apos;已签到&apos;: #如果已经签到
+    print(&apos;已经签到过了哦&apos;)
+    break
+if maxtry &lt; 30:
+    print(&apos;签到失败，第&apos;+str(maxtry+1)+&apos;次重试&apos;)
+    maxtry = maxtry+1
     time.sleep(5)
 else:
     print(&quot;自动签到失败，请手动签到，或者检查网络连接&quot;)
@@ -76,7 +82,7 @@ if day_now == day_log:
 cd D:\simulation file\pyCharm\python3\qiandao
 python qiandao.py
 pause
-</code></pre><p>至此就完整实现了电脑开机自动登陆签到NHD啦。效果如下<br>测试结果：<br><img src="https://i.imgur.com/YCq9I1U.png" alt=""></p>
+</code></pre><p>至此就完整实现了电脑开机自动登陆签到NHD啦。效果如下<br>测试结果：<br><img src="https://i.imgur.com/UgfuNIl.png" alt=""></p>
 <p>完整代码详见个人<a href="https://github.com/lkj1114889770/WebScraping/tree/master/qiandao" target="_blank" rel="external">github</a>了。</p>
 ]]></content>
       
