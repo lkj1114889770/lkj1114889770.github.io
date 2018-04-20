@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Kaijian Liu同学</title>
+  <title>听歌的小孩</title>
   <subtitle>好好学习，好好科研</subtitle>
   <link href="/atom.xml" rel="self"/>
   
@@ -9,7 +9,7 @@
   <id>http://yoursite.com/</id>
   
   <author>
-    <name>Kaijian Liu</name>
+    <name>听歌的小孩</name>
     <email>kaijianliu@qq.com</email>
   </author>
   
