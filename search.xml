@@ -3,6 +3,71 @@
   
     
     <entry>
+      <title><![CDATA[目标检测网络之YOLO学习笔记]]></title>
+      <url>/2018/06/15/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%BD%91%E7%BB%9C%E4%B9%8BYOLO%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>YOLO是一种全新的，与R-CNN思想截然不同的目标检测的方法。R-CNN系列网络是通过proposal region产生可能包含目标物体的bounding box，再通分类器判断是否包含物品以及物品类别，用regression对bounding的坐标、大小进行修正。YOLO则是一种end to end的方式，用一个神经网络，实现了预测出bounding box 的坐标、box中包含物体的置信度和物体的probabilities，因此检测速度更快，训练相对更加简单，当然相对来说也带来一些其他缺点。</p>
+<a id="more"></a>
+<h2 id="YOLO-v1-Unified-Detection"><a href="#YOLO-v1-Unified-Detection" class="headerlink" title="YOLO v1(Unified Detection)"></a>YOLO v1(Unified Detection)</h2><p>YOLO使用来自整张图片的feature map来预测bounding box和class，因此可以保持较高的精度。YOLO将整张图片分成S×S的网格，如果一个目标的中心落入到网格单元中，那么这个网格单元负责这个目标的检测。</p>
+<div align="center"><br>    <img src="https://i.imgur.com/KVhyOJE.png" width="300" height="300"><br></div>
+
+<p>每个网格单元预测B个bounding box和confidence score，confidence score反应了box包含目标的可信度，论文中将可confidence score定义为：</p>
+<div align="center"><br>    <img src="https://i.imgur.com/6vox4OO.png" height="30"><br></div>
+
+
+<p>，因此，如果没有目标存在confidence score为0，否则应该为IOU(intersection over union)，即真实框和预测框的交集部分。所以每个bounding box的预测值包括(x,y,w,h.confidence score). (x,y)表示预测的box中心相对于网格单元的的位置，(w,h)是用整个图片大小进行归一化的宽度和高度，另外，针对C个类别，每个类别需要预测一个条件概率，即：</p>
+<div align="center"><br>    <img src="https://i.imgur.com/VgNV9Rc.png" height="30"><br></div><br>最终得到box中包含某个特定物品的概率为：<br><div align="center"><br>    <img src="https://i.imgur.com/sehftW1.png" height="40"><br></div><br>整个过程如下图所示。<br><div align="center"><br>    <img src="https://i.imgur.com/u90BPbt.png" width="700" height="400"><br></div><br> 总结来说，YOLO网络将检测问题转换成regression，首先将整张图片转换成S×S的网格，并且每个网格单元预测<br>B个边界框，这些边界框的(x,y,w,h,confidence score)以及C个类别概率,这些预测被编码为S×S×(B*5+C)<br>的张量。<br><br>### Network Design<br>YOLO1的网络结构设计借鉴了GoodLeNet模型，包含了24个卷积层和2个全连接层，YOLO未使用inception module，而是使用1x1卷积层和）3x3卷积层简单替代，交替出现的1x1卷积层实现了跨通道信息融合以及通道数目降低。<br><div align="center"><br>    <img src="https://i.imgur.com/BmDEK3e.png"><br></div>
+
+<h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><ol>
+<li>使用 ImageNet 1000 类数据训练YOLO网络的前20个卷积层+1个average池化层+1个全连接层。</li>
+<li>用上面得到的前20个卷积层网络参数来初始化YOLO模型前20个卷积层的网络参数，加入后面的4层卷积层以及2层全连接层进行detection的训练，detection通常需要有细密纹理的视觉信息,所以为提高图像精度，在训练检测模型时，将输入图像分辨率从224 × 224 resize到448x448。</li>
+<li>我们的最后一层预测类概率和边界框坐标。我们通过图像宽度和高度来规范(w,h)，使它们落在0和1之间。我们将边界框(x,y)坐标参数化为特定网格单元位置的偏移量，所以它们边界也在0和1之间。</li>
+</ol>
+<h3 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h3><p>YOLO1的误差计算对于分类误差和定位误差用了不同的权重，对包含与不包含物品的box的误差权重也进行了区分。具体来说，论文中增加了边界框坐标预测损失，并减少了不包含目标边界框的置信度预测损失，使用两个参数λcoord和λnoobj来完成这个工作，论文中设置了λcoord=5和λnoobj=0.5。<br>另一个问题是平方和误差权重在大框和小框中进行了区分。相同的误差下，小框误差的重要性肯定更好，论文中用了一个很巧妙的方法，<strong>直接预测边界框宽度和高度的平方根，而不是宽度和高度</strong>。根据y=x^1/2的函数就可以知道，函数斜率是随着x的增大而减小的，这样就可以提高小框的误差权重，真的巧妙。<br>YOLO每个网格单元预测多个box。在训练时，每个目标我们只需要一个box来负责，选定的原则是与真实框具有最大的IOU。</p>
+<p><div align="center"><br>    <img src="https://i.imgur.com/CsmNs9B.png"><br></div></p>
+<h3 id="Shortcoming"><a href="#Shortcoming" class="headerlink" title="Shortcoming"></a>Shortcoming</h3><p>YOLO对边界框预测强加空间约束，因为每个网格单元只预测两个盒子，只能有一个类别。这个空间约束限制了我们的模型可以预测的邻近目标的数量，因此在小物品的检测上比较局限。</p>
+<h2 id="YOLO-v2"><a href="#YOLO-v2" class="headerlink" title="YOLO v2"></a>YOLO v2</h2><p>为提高物体定位精准性和召回率，YOLO2对网络结构的设计进行了改进，输出层使用卷积层替代YOLO的全连接层，联合使用coco物体检测标注数据和imagenet物体分类标注数据训练物体检测模型。相比YOLO，YOLO9000在识别种类、精度、速度、和定位准确性等方面都有大大提升。</p>
+<h2 id="YOLO-v3"><a href="#YOLO-v3" class="headerlink" title="YOLO v3"></a>YOLO v3</h2>]]></content>
+      
+        
+        <tags>
+            
+            <tag> 深度学习 </tag>
+            
+            <tag> 目标检测 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[PCL的python库安装for Ubuntu16.04]]></title>
+      <url>/2018/05/11/PCL%E7%9A%84python%E5%BA%93%E5%AE%89%E8%A3%85for-Ubuntu16-04/</url>
+      <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>PCL（Point Cloud Library）是包含各种点云算法的大型跨平台开源C++编程库，是吸纳了大量点云相关算法，包括点云获取、滤波、分割、特征提取、曲面重建以及可视化等各种算法，然而现在我主要使用的是python语言，网上目前又有公布的python_pcl实现库<a href="https://github.com/strawlab/python-pcl" target="_blank" rel="external">python_pcl实现库</a> ，然而针对Ubuntu16.04按照官方给的方法没有能够实现安装，踩了无数坑之后，博客记录一种简单且成功安装的方法。</p>
+<a id="more"></a>
+<h2 id="PCL安装"><a href="#PCL安装" class="headerlink" title="PCL安装"></a>PCL安装</h2><p>不用编译源码，一行命令直接apt安装，顺带安装各种依赖的乱七八糟的库</p>
+<pre><code>sudo apt-get install libpcl-all 
+</code></pre><p>再安装一些pcl可视化等软件包</p>
+<pre><code>sudo apt-get install pcl_tools
+</code></pre><h2 id="安装-python-pcl"><a href="#安装-python-pcl" class="headerlink" title="安装 python_pcl"></a>安装 python_pcl</h2><p>首先下载python_pcl源文件</p>
+<pre><code>git clone https://github.com/strawlab/python-pcl.git
+</code></pre><p>编译、安装</p>
+<pre><code>python setup.py build_ext -i
+python setup.py install
+</code></pre><p>在此之前常出现的一个编译问题是cython版本问题，所以在执行上一步之前首先：</p>
+<pre><code>pip install cython==0.25.2
+</code></pre><h2 id="解决常出现的链接失败的问题"><a href="#解决常出现的链接失败的问题" class="headerlink" title="解决常出现的链接失败的问题"></a>解决常出现的链接失败的问题</h2><p>由于我的默认python为anaconda3的python，可能是anaconda3自带的链接库的问题，所以出现了如下错误：</p>
+<pre><code>./lib/libgomp.so.1: version `GOMP_4.0&apos; not found (required by /home/lkj/anaconda3/lib/python3.5/site-packages/xgboost-0.6-py3.5.egg/xgboost/libxgboost.so) 
+</code></pre><p>上面的意思是anaconda3/lib/libgomp.so.1中没有‘GOMP_4.0’，这个可以使用strings命令查看libgomp.so.1这个文件，显示并无4.0版本，因此寻找其他路径的链接库替代，用locate命令搜索系统中所有的libgomp.so.1，得到：<br><img src="https://i.imgur.com/tSz0fdU.png" alt=""><br>然后用strings查看这些文件信息，</p>
+<pre><code>/usr/lib/x86_64-linux-gnu/libgomp.so.1 |grep GOMP
+</code></pre><p>发现x86_64-linux-gnu/libgomp.so.1包含GOMP_4.0<br><img src="https://i.imgur.com/Hi1QcUV.png" alt=""><br>因此可以删掉原有的libgomp.so.1，重新做一个新的链接。</p>
+<pre><code>ln -s /usr/lib/x86_64-linux-gnu/libgomp.so.1 libgomp.so.1 
+</code></pre><p>然后再次在python里面import pcl,又提示libstdc++.so.6出现类似的问题，对上述做类似处理，如果还有链接库的问题，也可以用同样的方法处理,至此实现了python的pcl库安装。</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[基于深度学习的目标检测技术学习笔记(R-CNN系列)]]></title>
       <url>/2018/04/20/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(R-CNN%E7%B3%BB%E5%88%97)/</url>
       <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>图像的目标检测（object detection）主要包括两个任务，一是要标注出目标物体的位置（localization），而是要识别出目标物体的类别（classification）。通俗来说，就是解决图像中多个目标在哪里，是什么的一个问题。这个问题的涉及，主要是目前参加了天池大赛的一个目标识别方面的问题，所以阅读了一些相关方面的文献，在此做一个学习总结，主要来介绍R-CNN（Regions with CNN features）系列的算法。<br><a id="more"></a></p>
