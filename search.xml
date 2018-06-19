@@ -244,7 +244,7 @@ def build(self, feat_ex, res18, res10):
       <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>PCL（Point Cloud Library）是包含各种点云算法的大型跨平台开源C++编程库，是吸纳了大量点云相关算法，包括点云获取、滤波、分割、特征提取、曲面重建以及可视化等各种算法，然而现在我主要使用的是python语言，网上目前又有公布的python_pcl实现库<a href="https://github.com/strawlab/python-pcl" target="_blank" rel="external">python_pcl实现库</a> ，然而针对Ubuntu16.04按照官方给的方法没有能够实现安装，踩了无数坑之后，博客记录一种简单且成功安装的方法。</p>
 <a id="more"></a>
 <h2 id="PCL安装"><a href="#PCL安装" class="headerlink" title="PCL安装"></a>PCL安装</h2><p>不用编译源码，一行命令直接apt安装，顺带安装各种依赖的乱七八糟的库</p>
-<pre><code>sudo apt-get install libpcl-all 
+<pre><code>sudo apt-get install libpcl-dev 
 </code></pre><p>再安装一些pcl可视化等软件包</p>
 <pre><code>sudo apt-get install pcl_tools
 </code></pre><h2 id="安装-python-pcl"><a href="#安装-python-pcl" class="headerlink" title="安装 python_pcl"></a>安装 python_pcl</h2><p>首先下载python_pcl源文件</p>
