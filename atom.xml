@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-06T01:59:25.954Z</updated>
+  <updated>2018-07-07T15:58:30.963Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>表扬一下pycharm</title>
+    <link href="http://yoursite.com/2018/07/07/%E8%A1%A8%E6%89%AC%E4%B8%80%E4%B8%8Bpycharm/"/>
+    <id>http://yoursite.com/2018/07/07/表扬一下pycharm/</id>
+    <published>2018-07-07T15:43:06.000Z</published>
+    <updated>2018-07-07T15:58:30.963Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>难得写一篇记录心情博客，表扬一下pycharm，拯救了一下我从大喜到大悲的悲伤，再回到大喜的刺激，其实就是发现了pycharm的一个记录修改过程的功能。</p>
+<a id="more"></a>
+<p><img src="https://i.imgur.com/Hh7lDmv.png" alt=""></p>
+<p>炼丹过程中参数修改频繁，还忘了备份已经效果比较好的参数，结果改的调不回去了，本来还有个理想的结果，现在越来越差，真实欲哭无泪，直到发现了上面的那个功能，pycharm是真的优秀，按这样点开，就能发现一天的修改过程，如下图</p>
+<p><img src="https://i.imgur.com/ppmhT6f.png" alt=""></p>
+<p>可以点开看到一整天的修改历史，和现有版本进行对比，还可以导出修改历史。嗯，真的是良心IDE，特此表扬，以资鼓励。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;难得写一篇记录心情博客，表扬一下pycharm，拯救了一下我从大喜到大悲的悲伤，再回到大喜的刺激，其实就是发现了pycharm的一个记录修改过程的功能。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="杂" scheme="http://yoursite.com/tags/%E6%9D%82/"/>
+    
+  </entry>
+  
+  <entry>
     <title>目标检测网络之YOLO学习笔记</title>
     <link href="http://yoursite.com/2018/06/15/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%BD%91%E7%BB%9C%E4%B9%8BYOLO%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>http://yoursite.com/2018/06/15/目标检测网络之YOLO学习笔记/</id>
     <published>2018-06-15T06:59:34.000Z</published>
-    <updated>2018-07-06T01:59:25.954Z</updated>
+    <updated>2018-07-06T02:10:26.670Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>YOLO是一种全新的，与R-CNN思想截然不同的目标检测的方法。R-CNN系列网络是通过proposal region产生可能包含目标物体的bounding box，再通分类器判断是否包含物品以及物品类别，用regression对bounding的坐标、大小进行修正。YOLO则是一种end to end的方式，用一个神经网络，实现了预测出bounding box 的坐标、box中包含物体的置信度和物体的probabilities，因此检测速度更快，训练相对更加简单，当然相对来说也带来一些其他缺点。<br><a id="more"></a></p>
 <p>YOLO项目主页<a href="https://pjreddie.com/yolo/" target="_blank" rel="external">地址</a><br>YOLO1 <a href="https://arxiv.org/abs/1506.02640" target="_blank" rel="external">论文</a><br>YOLO2 <a href="https://arxiv.org/abs/1612.08242" target="_blank" rel="external">论文</a><br>YOLO3 <a href="https://pjreddie.com/media/files/papers/YOLOv3.pdf" target="_blank" rel="external">论文</a></p>
@@ -45,7 +71,11 @@
 <h4 id="High-Resolution-Classifier"><a href="#High-Resolution-Classifier" class="headerlink" title="High Resolution Classifier"></a>High Resolution Classifier</h4><p>YOLO2将ImageNet以448×448 的分辨率微调最初的分类网络，迭代10 epochs。</p>
 <h4 id="Convolutional-With-Anchor-Boxes"><a href="#Convolutional-With-Anchor-Boxes" class="headerlink" title="Convolutional With Anchor Boxes"></a>Convolutional With Anchor Boxes</h4><p>借鉴faster R-CNN的思想，引入anchor box，取消全连接层来进行预测，改用卷积层作为预测层对anchor box的offset和confidence进行预测。去除了一个池化层，使得输出特征具有更高的分辨率，将图片输入尺寸resize为416而非448，使得特征图大小为奇数，所以有一个中心单元格。目标，特别是大目标，倾向于占据图像的中心，所以在中心有一个单一的位置可以很好的预测这些目标，而不是四个位置都在中心附近。YOLO的卷积层将图像下采样32倍，所以通过使用输入图像416，我们得到13×13的输出特征图。同时，使用anchor box进行预测的时候，解耦空间位置预测与类别预测，对每个anchor box都预测object和class，仍然沿用YOLO1，目标检测仍然是预测proposed box和ground truth的IOU，类别预测（class predictions）仍然是存在object下的条件概率。</p>
 <h4 id="Dimension-Clusters"><a href="#Dimension-Clusters" class="headerlink" title="Dimension Clusters"></a>Dimension Clusters</h4><p>YOLO2不再采用手动挑选的box尺寸，而是对训练集的box尺寸进行k-means聚类，因为聚类的目的是想要更好的IOU，所以聚类的距离使用下列公式：</p>
-<div align="center"><br>    <img src="https://i.imgur.com/F8AsPNZ.png" height="40"><br></div><br>对不同的k值采用k-means聚类算法，即对数据集的ground truth聚类，在VOC和COCO数据集上的bounding box得到的结果如下图：<br><div align="center"><br>    <img src="https://i.imgur.com/EkQOmSz.png"><br></div><br>根据上图，k=5的时候，模型的复杂度和IOU能够得到一个不错的trade off。<br><br>#### Direct location prediction<br>对于位置坐标，YOLO2没有采用R-CNN的预测偏移，而是仍然类似于YOLO1中的，他预测相对于网格单元的位置坐标，将ground truth也限制在0-1之间，使用logistic activation 来实现。网络为每个边界框预测tx，ty，th，tw和to这5个坐标。如果网格单元从图像的左上角偏移（Cx，Cy），给定的anchor的宽度，高度分比为Pw，Ph那么预测结果为：<br><div align="center"><br>    <img src="https://i.imgur.com/XShUyy1.png"><br></div><br><div align="center"><br>    <img src="https://i.imgur.com/21a8YXR.png"><br></div>
+<div align="center"><br>    <img src="https://i.imgur.com/F8AsPNZ.png" height="40"><br></div><br>对不同的k值采用k-means聚类算法，即对数据集的ground truth聚类，在VOC和COCO数据集上的bounding box得到的结果如下图：<br><div align="center"><br>    <img src="https://i.imgur.com/EkQOmSz.png"><br></div>
+
+<p>根据上图，k=5的时候，模型的复杂度和IOU能够得到一个不错的trade off。</p>
+<h4 id="Direct-location-prediction"><a href="#Direct-location-prediction" class="headerlink" title="Direct location prediction"></a>Direct location prediction</h4><p>对于位置坐标，YOLO2没有采用R-CNN的预测偏移，而是仍然类似于YOLO1中的，他预测相对于网格单元的位置坐标，将ground truth也限制在0-1之间，使用logistic activation 来实现。网络为每个边界框预测tx，ty，th，tw和to这5个坐标。如果网格单元从图像的左上角偏移（Cx，Cy），给定的anchor的宽度，高度分比为Pw，Ph那么预测结果为：</p>
+<div align="center"><br>    <img src="https://i.imgur.com/XShUyy1.png"><br></div><br><div align="center"><br>    <img src="https://i.imgur.com/21a8YXR.png"><br></div>
 
 <h4 id="Fine-Grained-Features"><a href="#Fine-Grained-Features" class="headerlink" title="Fine-Grained Features"></a>Fine-Grained Features</h4><p>在13×13特征图上检测可以很容易检测到大目标，从更小粒度的特征图中可以更好地检测小物体，YOLO2添加一个passthrough layer从前一层26×26的特征图进行融合。传递层通过将相邻特征堆叠到不同的通道而不是堆叠到空间位置，将较高分辨率特征与低分辨率特征相连，类似于ResNet中的标识映射。这将26×26×512特征映射转换为13×13×2048特征映射，其可以与原始特征连接。</p>
 <h4 id="Multi-Scale-Training"><a href="#Multi-Scale-Training" class="headerlink" title="Multi-Scale Training"></a>Multi-Scale Training</h4><p>添加anchor box后，YOLO2将分辨率更改为416×416。然而，由于模型只使用卷积层和池化层，它可以在运行中调整大小。为了使YOLOv2能够在不同大小的图像上运行，相比于固定输入图像大小，YOLO2每隔几次迭代更改网络。每迭代10个batch网络随机选择一个新的图像尺寸大小。因为模型以32的因子下采样，YOLO2从以下32的倍数中抽取：{320,352，…，608}。因此，最小的选项是320×320，最大的是608×608.调整网络的大小，并继续训练。<br>这种训练方法迫使网络学习在各种输入维度上很好地预测。这意味着相同的网络可以预测不同分辨率的检测。网络在更小的尺寸下运行更快，因此YOLO2在速度和精度之间提供了一个简单的折衷。</p>
@@ -1896,169 +1926,6 @@ Out[37]:
     <summary type="html">
     
       &lt;p&gt;在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>从决策树到随机森林</title>
-    <link href="http://yoursite.com/2017/08/24/%E4%BB%8E%E5%86%B3%E7%AD%96%E6%A0%91%E5%88%B0%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/"/>
-    <id>http://yoursite.com/2017/08/24/从决策树到随机森林/</id>
-    <published>2017-08-24T09:56:19.000Z</published>
-    <updated>2017-08-30T07:36:17.078Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>学习了决策树算法之后又接触到了随机森林，随机森林可以说是决策树算法的集成加强版。从分类上来说，随机森林属于机器学习中的集成学习，所谓集成学习，顾名思义就是集成一些方法一起来学习，随机森林就是集成很多决策树来实现其分类或者回归的功能。</p>
-<a id="more"></a>
-<h2 id="随机森林之“森林”"><a href="#随机森林之“森林”" class="headerlink" title="随机森林之“森林”"></a>随机森林之“森林”</h2><p>“森林”表示有很多决策树，每棵决策树都是一个分类器，对于一个输入测试样本，经过森林中的每棵树都会有相应的预测值或者标签，而最终的结果就取决于这些树之间的投票结果作为最终预测结果。每棵随机树都是一个弱分类器，但是通过投票选择，最终组成一个强分类器。<br><img src="http://i.imgur.com/Q9qFsle.png" alt=""></p>
-<h2 id="随机森林之“随机”"><a href="#随机森林之“随机”" class="headerlink" title="随机森林之“随机”"></a>随机森林之“随机”</h2><p>随机森林的随机体现在两个地方：一个是构建单棵决策树时的样本选择随机，一个是决策树分裂的时候选择的特征集随机。</p>
-<ol>
-<li>假设有N个样本，那么构建某一棵随机数时，放回抽样选择N个样本，称为bootstrap，这样每棵树的训练集都是不同的，当然也会包括重复样本。</li>
-<li>在决策树分类的时候，假设每个样本含有M个特征，对于每一棵树，随机抽取m&lt;&lt;M(有不同的取法，常见的有log2（M)，sqrt（M）等）个特征，在每一次进行树枝分裂的时候都从这m个特征中选取最优分裂点。</li>
-</ol>
-<h2 id="随机森林经典python实现及API总结"><a href="#随机森林经典python实现及API总结" class="headerlink" title="随机森林经典python实现及API总结"></a>随机森林经典python实现及API总结</h2><p>python的sklearn模块集成了众多的机器学习算法，其中也包括随机森林（RandomTree），再结合pandas模块，就可以实现随机森林算法的分类或者回归。</p>
-<pre><code>from sklearn.datasets import load_iris
-from sklearn.ensemble import RandomForestClassifier
-import pandas as pd
-import numpy as np
-
-iris = load_iris() #导入鸢尾植物数据集
-df = pd.DataFrame(iris.data, columns=iris.feature_names)
-df[&apos;is_train&apos;] = np.random.uniform(0, 1, len(df)) &lt;= .75  #随机选取训练节，大概取3/4
-df[&apos;species&apos;] = pd.Categorical.from_codes(iris.target, iris.target_names) #添加从分类变量解码的分类值
-
-train, test = df[df[&apos;is_train&apos;]==True], df[df[&apos;is_train&apos;]==False]
-
-features = df.columns[:4]
-clf = RandomForestClassifier(n_jobs=2)
-y, _ = pd.factorize(train[&apos;species&apos;]) #将分类结果编码成数值
-clf.fit(train[features], y)
-
-preds = iris.target_names[clf.predict(test[features])]
- #将实际结果与预测结果合并成交叉列表输出
-print(pd.crosstab(test[&apos;species&apos;], preds, rownames=[&apos;actual&apos;], colnames=[&apos;preds&apos;])) 
-</code></pre><p>最终的预测结果如下图：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">preds</th>
-<th style="text-align:left">setosa</th>
-<th style="text-align:left">versicolor</th>
-<th style="text-align:left">virginica</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">actual</td>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left">setosa</td>
-<td style="text-align:left">16</td>
-<td style="text-align:left">0</td>
-<td style="text-align:left">0</td>
-</tr>
-<tr>
-<td style="text-align:left">versicolor</td>
-<td style="text-align:left">0</td>
-<td style="text-align:left">15</td>
-<td style="text-align:left">1</td>
-</tr>
-<tr>
-<td style="text-align:left">virginca</td>
-<td style="text-align:left">0</td>
-<td style="text-align:left">3</td>
-<td style="text-align:left">16</td>
-</tr>
-</tbody>
-</table>
-<p>当然，每次运行最终预测结果是不一样的，因为测试集和训练集都是每次随机选取的。</p>
-<pre><code>iris = load_iris() #导入鸢尾植物数据集
-</code></pre><p>sklearn模块含有一些机器学习经典的数据集，这里导入了鸢尾植物数据集，导入后iris为字典数据类型，存储了其萼片和花瓣的长宽，一共4个属性，鸢尾植物又分三类。与之相对，iris里有两个属性iris.data，iris.target，data里是一个矩阵，每一列代表了萼片或花瓣的长宽，一共4列，每一列代表某个被测量的鸢尾植物，一共采样了150条记录。</p>
-<p>然后又碰到了pandas的一个模块，pandas.Categorical，将一些label转变成categorical variable（分类变量）</p>
-<pre><code>Categorical.from_codes(codes, categories, ordered=False)
-</code></pre><p>这个函数产生一个categorical type根据codes和categories。</p>
-<p>pandas.factorizes 则与之相反，Encode input values as an enumerated type or categorical variable。</p>
-<p>返回的结果中：<br>labels : the indexer to the original array<br>uniques : ndarray (1-d) or Index</p>
-<p>python机器学习模块sklearn中的RandomForestClassifier</p>
-<p><strong>sklearn.ensemble</strong>.<strong>RandomForestClassifier</strong>(n_estimators=10, criterion=’gini’, max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features=’auto’, max_leaf_nodes=None, min_impurity_decrease=0.0, min_impurity_split=None, bootstrap=True, oob_score=False, n_jobs=1, random_state=None, verbose=0, warm_start=False, class_weight=None)</p>
-<p><strong>n_estimators</strong> : integer, optional (default=10)<br>&emsp;&emsp;森林中树木数目</p>
-<p><strong>criterion</strong> : string, optional (default=”gini”)<br>&emsp;&emsp;树枝分裂算法，gini和entropy</p>
-<p><strong>max_features</strong> : int, float, string or None, optional (default=”auto”)<br>&emsp;&emsp;寻找最优分裂点计算采用的特征数目<br>If int, then consider max_features features at each split.<br>If float, then max_features is a percentage and int(max_features * n_features) features are considered at each split.<br>If “auto”, then max_features=sqrt(n_features).<br>If “sqrt”, then max_features=sqrt(n_features) (same as “auto”).<br>If “log2”, then max_features=log2(n_features).<br>If None, then max_features=n_features.<br>Note: the search for a split does not stop until at least one valid partition of the node samples is found, even if it requires to effectively inspect more than max_features features.</p>
-<p><strong>max_depth</strong> : integer or None, optional (default=None)<br>&emsp;&emsp;树的最大深度<br>The maximum depth of the tree. If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples.</p>
-<p><strong>min_samples_split</strong> : int, float, optional (default=2)<br>The minimum number of samples required to split an internal node:<br>If int, then consider min_samples_split as the minimum number.<br>If float, then min_samples_split is a percentage and ceil(min_samples_split * n_samples) are the minimum number of samples for each split.<br>Changed in version 0.18: Added float values for percentages.</p>
-<p><strong>min_samples_leaf</strong> : int, float, optional (default=1)<br>The minimum number of samples required to be at a leaf node:<br>If int, then consider min_samples_leaf as the minimum number.<br>If float, then min_samples_leaf is a percentage and ceil(min_samples_leaf * n_samples) are the minimum number of samples for each node.<br>Changed in version 0.18: Added float values for percentages.</p>
-<p><strong>min_weight_fraction_leaf</strong> : float, optional (default=0.)<br>The minimum weighted fraction of the sum total of weights (of all the input samples) required to be at a leaf node. Samples have equal weight when sample_weight is not provided.</p>
-<p><strong>max_leaf_nodes</strong> : int or None, optional (default=None)<br>Grow trees with max_leaf_nodes in best-first fashion. Best nodes are defined as relative reduction in impurity. If None then unlimited number of leaf nodes.</p>
-<p><strong>min_impurity_split</strong> : float,<br>Threshold for early stopping in tree growth. A node will split if its impurity is above the threshold, otherwise it is a leaf.<br>Deprecated since version 0.19: min_impurity_split has been deprecated in favor of min_impurity_decrease in 0.19 and will be removed in 0.21. Use min_impurity_decrease instead. </p>
-<p><strong>min_impurity_decrease</strong> : float, optional (default=0.)<br>A node will be split if this split induces a decrease of the impurity greater than or equal to this value.<br>The weighted impurity decrease equation is the following:</p>
-<blockquote>
-<p>N_t / N <em> (impurity - N_t_R / N_t </em> right_impurity</p>
-<pre><code>- N_t_L / N_t * left_impurity)
-</code></pre></blockquote>
-<p>where N is the total number of samples, N_t is the number of samples at the current node, N_t_L is the number of samples in the left child, and N_t_R is the number of samples in the right child.<br>N, N_t, N_t_R and N_t_L all refer to the weighted sum, if sample_weight is passed.<br>New in version 0.19.</p>
-<p><strong>bootstrap</strong> : boolean, optional (default=True)<br>Whether bootstrap samples are used when building trees.<br>oob_score : bool (default=False)<br>Whether to use out-of-bag samples to estimate the generalization accuracy.</p>
-<p><strong>n_jobs</strong> : integer, optional (default=1)<br>The number of jobs to run in parallel for both fit and predict. If -1, then the number of jobs is set to the number of cores.</p>
-<p><strong>random_state</strong> : int, RandomState instance or None, optional (default=None)<br>If int, random_state is the seed used by the random number generator; If RandomState instance, random_state is the random number generator; If None, the random number generator is the RandomState instance used by np.random.</p>
-<p><strong>verbose</strong> : int, optional (default=0)<br>Controls the verbosity of the tree building process.<br>warm_start : bool, optional (default=False)<br>When set to True, reuse the solution of the previous call to fit and add more estimators to the ensemble, otherwise, just fit a whole new forest.</p>
-<p><strong>class_weight</strong> : dict, list of dicts, “balanced”,<br>“balanced_subsample” or None, optional (default=None) Weights associated with classes in the form {class_label: weight}. If not given, all classes are supposed to have weight one. For multi-output problems, a list of dicts can be provided in the same order as the columns of y.<br>Note that for multioutput (including multilabel) weights should be defined for each class of every column in its own dict. For example, for four-class multilabel classification weights should be [{0: 1, 1: 1}, {0: 1, 1: 5}, {0: 1, 1: 1}, {0: 1, 1: 1}] instead of [{1:1}, {2:5}, {3:1}, {4:1}].<br>The “balanced” mode uses the values of y to automatically adjust weights inversely proportional to class frequencies in the input data as n_samples / (n_classes * np.bincount(y))<br>The “balanced_subsample” mode is the same as “balanced” except that weights are computed based on the bootstrap sample for every tree grown.<br>For multi-output, the weights of each column of y will be multiplied.<br>Note that these weights will be multiplied with sample_weight (passed through the fit method) if sample_weight is specified.</p>
-<p>其余函数：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">function</th>
-<th style="text-align:left">description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">apply(X)</td>
-<td style="text-align:left">Apply trees in the forest to X, return leaf indices.</td>
-</tr>
-<tr>
-<td style="text-align:left">decision_path(X)</td>
-<td style="text-align:left">Return the decision path in the forest</td>
-</tr>
-<tr>
-<td style="text-align:left">fit(X, y[, sample_weight])</td>
-<td style="text-align:left">Build a forest of trees from the training set (X, y).</td>
-</tr>
-<tr>
-<td style="text-align:left">get_params([deep])</td>
-<td style="text-align:left">Get parameters for this estimator.</td>
-</tr>
-<tr>
-<td style="text-align:left">predict(X)</td>
-<td style="text-align:left">Predict class for X.</td>
-</tr>
-<tr>
-<td style="text-align:left">predict_log_proba(X)</td>
-<td style="text-align:left">Predict class log-probabilities for X.</td>
-</tr>
-<tr>
-<td style="text-align:left">predict_proba(X)</td>
-<td style="text-align:left">Predict class probabilities for X.</td>
-</tr>
-<tr>
-<td style="text-align:left">score(X, y[, sample_weight])</td>
-<td style="text-align:left">Returns the mean accuracy on the given test data and labels.</td>
-</tr>
-<tr>
-<td style="text-align:left">set_params(**params)</td>
-<td style="text-align:left">Set the parameters of this estimator.</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;学习了决策树算法之后又接触到了随机森林，随机森林可以说是决策树算法的集成加强版。从分类上来说，随机森林属于机器学习中的集成学习，所谓集成学习，顾名思义就是集成一些方法一起来学习，随机森林就是集成很多决策树来实现其分类或者回归的功能。&lt;/p&gt;
     
     </summary>
     
