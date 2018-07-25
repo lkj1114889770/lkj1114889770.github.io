@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-07T15:58:30.963Z</updated>
+  <updated>2018-07-25T14:45:55.926Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,18 +16,238 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>TensorFlow输入数据处理框架</title>
+    <link href="http://yoursite.com/2018/07/25/Tensorflow%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%A1%86%E6%9E%B6/"/>
+    <id>http://yoursite.com/2018/07/25/Tensorflow输入数据处理框架/</id>
+    <published>2018-07-25T13:55:36.000Z</published>
+    <updated>2018-07-25T14:45:55.926Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Tensoflow提供了一种统一的数据格式来存储数据，这个格式就是TFrecords，基于TFrecords我们构建一个完整的TensorFlow输入数据处理框架，以COCO数据集为例，介绍了COCO数据集的TFrecords文件制作，以及读取解析的过程，以此来介绍一个构建文件处理框架的过程。</p>
+<a id="more"></a>
+<h2 id="TFrecords格式介绍"><a href="#TFrecords格式介绍" class="headerlink" title="TFrecords格式介绍"></a>TFrecords格式介绍</h2><p>TFrecords是一种二进制文件，通过tf.train.Example Protocol Buffer的格式存储数据，以下的代码给出了tf.train.Example的定义。</p>
+<pre><code>message Example {
+    Features features = 1;
+};
+message Features {
+    map&lt;string, Feature&gt; feature = 1;
+};
+message Feature {
+    oneof kind {
+    BytesList bytes_list = 1;
+    FloatList float_list = 2;
+    Int64List int64_list = 3;
+}
+};
+</code></pre><p>tf.train.Example包含了一个从属性名称到取值的字典，其中属性名称为一个字符串，属性取值可以是字符串(BytesList)，实数列表(FloatList)或者整数列表(Int64List），比如将解码前的图像存为一个字符串，将lable存为整数列表，或者将bounding box存为实数列表。</p>
+<h2 id="COCO数据集的TFrecords文件制作"><a href="#COCO数据集的TFrecords文件制作" class="headerlink" title="COCO数据集的TFrecords文件制作"></a>COCO数据集的TFrecords文件制作</h2><p>COCO数据集是微软做的一个比较大的数据集，可以用来做图像的recognition、segmentation、captioning，我用来做物体检测识别。官方也提供了API操作数据集（<a href="https://github.com/cocodataset/cocoapi" title="https://github.com/cocodataset/cocoapi" target="_blank" rel="external">https://github.com/cocodataset/cocoapi</a>）。根据链接介绍下载安装python的API后，就可以开始Tfrecords的文件制作了。</p>
+<pre><code>from pycocotools.coco import COCO
+import tensorflow as tf
+import numpy as np
+from PIL import Image
+from time import time
+import os
+
+dataDir=&apos;/home/zju/lkj/data/COCO Dataset&apos;
+dataType=&apos;train2017&apos;
+annFile=&apos;{}/annotations/instances_{}.json&apos;.format(dataDir,dataType)
+
+classes = [&apos;backpack&apos;, &apos;umbrella&apos;, &apos;handbag&apos;, &apos;tie&apos;, &apos;suitcase&apos;, &apos;bottle&apos;, &apos;wine glass&apos;, &apos;cup&apos;, &apos;fork&apos;, &apos;knife&apos;,
+            &apos;spoon&apos;, &apos;bowl&apos;, &apos;banana&apos;, &apos;apple&apos;, &apos;sandwich&apos;, &apos;orange&apos;, &apos;broccoli&apos;, &apos;carrot&apos;, &apos;hot dog&apos;,
+            &apos;donut&apos;, &apos;cake&apos;, &apos;chair&apos;, &apos;couch&apos;, &apos;potted plant&apos;, &apos;bed&apos;, &apos;dining table&apos;, &apos;toilet&apos;, &apos;tv&apos;, &apos;laptop&apos;,
+            &apos;mouse&apos;, &apos;remote&apos;, &apos;keyboard&apos;, &apos;cell phone&apos;, &apos;microwave&apos;, &apos;oven&apos;, &apos;toaster&apos;, &apos;sink&apos;, &apos;refrigerator&apos;,
+            &apos;book&apos;, &apos;clock&apos;, &apos;vase&apos;, &apos;scissors&apos;, &apos;teddy bear&apos;, &apos;hair drier&apos;, &apos;toothbrush&apos;]
+
+# initialize COCO api for instance annotations
+coco = COCO(annFile)
+classesId = coco.getCatIds(classes)
+imgIds = coco.getImgIds()
+img_filters=[]
+for imgId in imgIds:
+    Anns = coco.loadAnns(coco.getAnnIds(imgIds=imgId))
+    annIds = list(map(lambda x:x[&apos;category_id&apos;],Anns))
+    for annId in annIds:
+        if annId in classesId:
+            img_filters.append(imgId)
+img_filters = set(img_filters)
+
+
+# 归一化
+# size: 图片大小
+# box：[x,y,w,h]
+# return 归一化结果
+def convert(size,box):
+    dw = 1./size[0]
+    dh = 1./size[1]
+    x = box[0]+box[2]/2.0
+    y = box[1]+box[3]/2.0
+    x = x*dw
+    w = box[2]*dw
+    y = y*dh
+    h = box[3]*dh
+    return [x,y,w,h]
+
+
+def convert_img(img_id):
+    img_id_str = str(img_id).zfill(12)
+    img_path = &apos;{}/{}/{}.jpg&apos;.format(dataDir, dataType, img_id_str)
+    image = Image.open(img_path)
+    resized_image = image.resize((416, 416), Image.BICUBIC)
+    image_data = np.array(resized_image, dtype=&apos;float32&apos;) / 255
+    if image_data.size != 519168: # 不为3通道
+        return False
+    img_raw = image_data.tobytes()
+    return img_raw
+
+def convert_annotation(image_id):
+    img_info = coco.loadImgs(image_id)[0]  # 读入的是照片的详细信息，而非图像信息, 返回的是list，只有1个id输入时，取0
+    w = int(img_info[&apos;width&apos;])
+    h = int(img_info[&apos;height&apos;])
+    bboxes = []
+    Anns = coco.loadAnns(ids=coco.getAnnIds(imgIds=image_id))
+    i = 0
+    for Ann in Anns:
+        if i&gt;29:
+            break
+        iscrowd = Ann[&apos;iscrowd&apos;]
+        if iscrowd == 1:
+            continue
+        if Ann[&apos;category_id&apos;] not in classesId:
+            continue
+        cls_id = classesId.index(Ann[&apos;category_id&apos;])  # 取新的编号
+        bbox = Ann[&apos;bbox&apos;]
+        bb = convert((w, h), bbox) + [cls_id]
+        bboxes.extend(bb)
+        i = i + 1
+
+    if len(bboxes) &lt; 30*5:
+        bboxes = bboxes + [0, 0, 0, 0, 0]*(30-int(len(bboxes)/5))
+    return np.array(bboxes, dtype=np.float32).flatten().tolist()
+
+filename = os.path.join(&apos;train2017&apos;+&apos;.tfrecords&apos;)
+writer = tf.python_io.TFRecordWriter(filename)
+i=0
+start = time()
+for imgId in img_filters:
+    xywhc = convert_annotation(imgId)
+    img_raw = convert_img(imgId)
+    if img_raw:
+        example = tf.train.Example(features=tf.train.Features(feature={
+            &apos;xywhc&apos;:
+                    tf.train.Feature(float_list=tf.train.FloatList(value=xywhc)),
+            &apos;img&apos;:
+                    tf.train.Feature(bytes_list=tf.train.BytesList(value=[img_raw])),
+            }))
+        writer.write(example.SerializeToString())
+        # 显示制作进度，剩余时间
+        if i%100==99:
+            t = time()-start
+            print(i,&apos;t={:0.4f}s/100 step&apos;.format(t),&apos;  left time={:0.4f}s&apos;.format((len(img_filters)-i)*t/100))
+            start = time()
+        i = i+1
+print(&apos;Done!&apos;)
+writer.close()
+</code></pre><p>下面分段对代码进行介绍，这个数据制作是应用于物品检查与分割，并且只有部分物品，所以在程序开头有classes列举（总共45种，完整的COCO数据集包含91种）。COCO数据集中混有灰度图，所以在reshape的时候会一直报错，刚开始还一直想不清楚为什么，后来遍历原始数据集才发现有灰度图的存在，所以reshape成416*416*3会报错,所以程序有一个判断是否为3通道：</p>
+<pre><code>image = Image.open(img_path)
+resized_image = image.resize((416, 416), Image.BICUBIC)
+image_data = np.array(resized_image, dtype=&apos;float32&apos;) / 255
+if image_data.size != 519168: # 不为3通道
+    return False
+</code></pre><p>图像读取后转换成字符串(BytesList):</p>
+<pre><code>img_raw = image_data.tobytes()
+</code></pre><p>bounding box转换成实数列表(FloatList):</p>
+<pre><code>return np.array(bboxes, dtype=np.float32).flatten().tolist()
+</code></pre><p>基于此，核心的构建部分为：</p>
+<pre><code>example = tf.train.Example(features=tf.train.Features(feature={
+    &apos;xywhc&apos;:
+            tf.train.Feature(float_list=tf.train.FloatList(value=xywhc)),
+    &apos;img&apos;:
+            tf.train.Feature(bytes_list=tf.train.BytesList(value=[img_raw])),
+    }))
+writer.write(example.SerializeToString())
+</code></pre><h2 id="TFrecords文件读取解析"><a href="#TFrecords文件读取解析" class="headerlink" title="TFrecords文件读取解析"></a>TFrecords文件读取解析</h2><p>对应构建时候的数据格式，进行解析，可以加一些程序对于读取后的图像文件的一些进一步处理，比如图像增强</p>
+<pre><code>def parser(example):
+    features = {
+                &apos;xywhc&apos;: tf.FixedLenFeature([150], tf.float32),
+                &apos;img&apos;: tf.FixedLenFeature((), tf.string)}
+    feats = tf.parse_single_example(example, features)
+    coord = feats[&apos;xywhc&apos;]
+    coord = tf.reshape(coord, [30, 5])
+
+    img = tf.decode_raw(feats[&apos;img&apos;], tf.float32)
+    img = tf.reshape(img, [416, 416, 3])
+    img = tf.image.resize_images(img, [cfg.train.image_resized, cfg.train.image_resized])
+    rnd = tf.less(tf.random_uniform(shape=[], minval=0, maxval=2), 1)
+    # 添加对于读取后的图像文件的一些进一步处理，图像增强
+    def flip_img_coord(_img, _coord):
+        zeros = tf.constant([[0, 0, 0, 0, 0]]*30, tf.float32)
+        img_flipped = tf.image.flip_left_right(_img)
+        idx_invalid = tf.reduce_all(tf.equal(coord, 0), axis=-1)
+        coord_temp = tf.concat([tf.minimum(tf.maximum(1 - _coord[:, :1], 0), 1),
+                               _coord[:, 1:]], axis=-1)
+        coord_flipped = tf.where(idx_invalid, zeros, coord_temp)
+        return img_flipped, coord_flipped
+
+    img, coord = tf.cond(rnd, lambda: (tf.identity(img), tf.identity(coord)), lambda: flip_img_coord(img, coord))
+
+    img = tf.image.random_hue(img, max_delta=0.1)
+    img = tf.image.random_contrast(img, lower=0.8, upper=1.2)
+    img = tf.image.random_brightness(img, max_delta=0.1)
+    img = tf.image.random_saturation(img, lower=0.8, upper=1.2)
+    img = tf.minimum(img, 1.0)
+    img = tf.maximum(img, 0.0)
+    return img, coord
+</code></pre><p>然后构建一个data_pipeline来作为训练数据的输入框架：</p>
+<pre><code>def data_pipeline(file_tfrecords, batch_size):
+    dt = tf.data.TFRecordDataset(file_tfrecords)
+    dt = dt.map(parser, num_parallel_calls=4)
+    dt = dt.prefetch(batch_size)
+    dt = dt.shuffle(buffer_size=20*batch_size)
+    dt = dt.repeat()
+    dt = dt.batch(batch_size)
+    iterator = dt.make_one_shot_iterator()
+    imgs, true_boxes = iterator.get_next()
+
+    return imgs, true_boxes
+</code></pre><p>测试一下整个数据输入模块：</p>
+<pre><code>file_path = &apos;train2007.tfrecords&apos;
+imgs, true_boxes = data_pipeline(file_path, cfg.batch_size)
+sess = tf.Session()
+imgs_, true_boxes_ = sess.run([imgs, true_boxes])
+print(imgs_.shape, true_boxes_.shape)
+for imgs_i, boxes_ in zip(imgs_, true_boxes_):
+    valid = (np.sum(boxes_, axis=-1) &gt; 0).tolist()
+    print([cfg.names[int(idx)] for idx in boxes_[:, 4][valid].tolist()])
+    plt.figure()
+    plt.imshow(imgs_i)
+plt.show()
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Tensoflow提供了一种统一的数据格式来存储数据，这个格式就是TFrecords，基于TFrecords我们构建一个完整的TensorFlow输入数据处理框架，以COCO数据集为例，介绍了COCO数据集的TFrecords文件制作，以及读取解析的过程，以此来介绍一个构建文件处理框架的过程。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="深度学习" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="TensorFlow" scheme="http://yoursite.com/tags/TensorFlow/"/>
+    
+  </entry>
+  
+  <entry>
     <title>表扬一下pycharm</title>
     <link href="http://yoursite.com/2018/07/07/%E8%A1%A8%E6%89%AC%E4%B8%80%E4%B8%8Bpycharm/"/>
     <id>http://yoursite.com/2018/07/07/表扬一下pycharm/</id>
     <published>2018-07-07T15:43:06.000Z</published>
-    <updated>2018-07-07T15:58:30.963Z</updated>
+    <updated>2018-07-07T16:02:15.579Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>难得写一篇记录心情博客，表扬一下pycharm，拯救了一下我从大喜到大悲的悲伤，再回到大喜的刺激，其实就是发现了pycharm的一个记录修改过程的功能。</p>
 <a id="more"></a>
 <p><img src="https://i.imgur.com/Hh7lDmv.png" alt=""></p>
 <p>炼丹过程中参数修改频繁，还忘了备份已经效果比较好的参数，结果改的调不回去了，本来还有个理想的结果，现在越来越差，真实欲哭无泪，直到发现了上面的那个功能，pycharm是真的优秀，按这样点开，就能发现一天的修改过程，如下图</p>
 <p><img src="https://i.imgur.com/ppmhT6f.png" alt=""></p>
-<p>可以点开看到一整天的修改历史，和现有版本进行对比，还可以导出修改历史。嗯，真的是良心IDE，特此表扬，以资鼓励。</p>
+<p>可以点开看到修改历史，和现有版本进行对比，还可以导出修改历史。嗯，真的是良心IDE，特此表扬，以资鼓励。</p>
 ]]></content>
     
     <summary type="html">
@@ -1861,71 +2081,6 @@ gender_submission.to_csv(&apos;gender_submission.csv&apos;, index=None)
     <summary type="html">
     
       &lt;p&gt;&lt;a href=&quot;https://www.kaggle.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Kaggle&lt;/a&gt;是一个数据分析建模的应用竞赛平台，学习了机器学习的算法，这是个很好的应用平台。Predict survival on the Titanic作为kaggle入门级别的比赛，也是我接触kaggle的第一个实践项目，最后的结果虽然不够优秀，仅Top20%左右，但是还是将第一次的实践过程mark一下。&lt;br&gt;&lt;img src=&quot;https://i.imgur.com/FEDyFse.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据处理—Encoding Categorical Value</title>
-    <link href="http://yoursite.com/2017/08/30/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E2%80%94Encoding-Categorical-Value/"/>
-    <id>http://yoursite.com/2017/08/30/数据处理—Encoding-Categorical-Value/</id>
-    <published>2017-08-30T07:41:09.000Z</published>
-    <updated>2017-09-01T09:38:38.246Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。<br><a id="more"></a></p>
-<h2 id="Data-Set"><a href="#Data-Set" class="headerlink" title="Data Set"></a>Data Set</h2><p>数据集假设为：</p>
-<pre><code>import pandas as pd  
-df = pd.DataFrame([  
-            [&apos;green&apos;, &apos;M&apos;, 11],   
-            [&apos;red&apos;, &apos;L&apos;, 22],   
-            [&apos;blue&apos;, &apos;XL&apos;, 33]])  
-
-df.columns = [&apos;color&apos;, &apos;size&apos;, &apos;prize&apos;] 
-</code></pre><blockquote>
-<pre><code>  color size  prize 
-0  green    M   11             
-1    red    L   22  
-2   blue   XL   33
-</code></pre></blockquote>
-<h2 id="Replace"><a href="#Replace" class="headerlink" title="Replace"></a>Replace</h2><p>一种方法是使用DataFrame的自带函数功能，替换函数replace。</p>
-<pre><code>encoding_num={&quot;color&quot;:{&quot;green&quot;:0,&quot;red&quot;:1,&quot;blue&quot;:2},&quot;size&quot;:{&quot;M&quot;:0,&quot;L&quot;:1,&quot;XL&quot;:2}}
-df.replace(encoding_num,inplace=True)
-
-df
-Out: 
-   color  size  prize
-0      0     0   10.1
-1      1     1   13.5
-2      2     2   15.3
-</code></pre><h2 id="One-Hot-Encoding"><a href="#One-Hot-Encoding" class="headerlink" title="One Hot Encoding"></a>One Hot Encoding</h2><p>One-hot Encoding，又称为一位有效编码，即对每个状态采取一位进行编码。假设某个特征有N个特征值，则需要N位进行编码，且任意时候只有一位有效。</p>
-<pre><code>pd.get_dummies(df)
-Out[28]: 
-   prize  color_blue  color_green  color_red  size_L  size_M  size_XL
-0     11           0            1          0       0       1        0
-1     22           0            0          1       1       0        0
-2     33           1            0          0       0       0        1
-</code></pre><p>这种编码方式弊端就是，当某个特征对应特征值很多时，就需要很多位进行编码，使得数据列数过大。</p>
-<h2 id="Label-Encoding"><a href="#Label-Encoding" class="headerlink" title="Label Encoding"></a>Label Encoding</h2><p>这种编码方式，主要是基于pandas的Categorical模块，将某一列转换成category类型，然后使用category value来编码。</p>
-<pre><code>df[&quot;color&quot;]=df[&quot;color&quot;].astype(&apos;category&apos;)
-df[&quot;size&quot;]=df[&quot;size&quot;].astype(&apos;category&apos;)
-df[&quot;color&quot;]=df[&quot;color&quot;].cat.codes
-df[&quot;size&quot;]=df[&quot;size&quot;].cat.codes
-
-df
-Out[37]: 
-   color  size  prize
-0      1     1     11
-1      2     0     22
-2      0     2     33
-</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。&lt;br&gt;
     
     </summary>
     
