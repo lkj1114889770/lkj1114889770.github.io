@@ -21,6 +21,10 @@
 <li>bg_img.tar.gz [8.9G]：压缩的图像文件（需要使用使用imnames.cp中的过滤），链接<a href="http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz" title="http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz" target="_blank" rel="external">http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz</a>：</li>
 <li>imnames.cp[180K]：已过滤文件的名称，即，这些文件不包含文本,链接：<a href="http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp" title="http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp" target="_blank" rel="external">http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp</a></li>
 </ul>
+<h2 id="一些实现结果样例"><a href="#一些实现结果样例" class="headerlink" title="一些实现结果样例"></a>一些实现结果样例</h2><p><img src="img/img_1.jpg"></p>
+<p><img src="img/img_2.jpg"></p>
+<p><img src="img/img_3.jpg"></p>
+<p><img src="img/img_4.jpg"></p>
 <p>详细实现代码可参见个人github。</p>
 ]]></content>
       
