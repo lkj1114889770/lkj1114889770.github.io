@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="机器学习," />
+  <meta name="keywords" content="OCR," />
 
 
 
@@ -96,18 +96,18 @@
 
 
 
-<meta name="description" content="在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。">
-<meta name="keywords" content="机器学习">
+<meta name="description" content="文本识别数据集需要大量的数据，特别是对于中文来说，中文字相对英文26个字母来说，更加复杂，数量多得多，所以需要有体量比较大的数据集才能训练得到不错的效果，目前也有一些合成的方法，VGG组就提出SynthText方法合成自然场景下的文本图片，github上有作者给出的官方代码，也有国内大神改写的中文版本代码。但是生成的速度非常慢，而且生成机制有点复杂，总是报错，短时间内还没解决。我的需求场景仅仅是识">
+<meta name="keywords" content="OCR">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据处理—Encoding Categorical Value">
-<meta property="og:url" content="http://yoursite.com/2017/08/30/数据处理—Encoding-Categorical-Value/index.html">
+<meta property="og:title" content="Synthesize image for Chinese text recognition">
+<meta property="og:url" content="http://yoursite.com/2018/09/12/Synthesize image for Chinese text recognition/index.html">
 <meta property="og:site_name" content="听歌的小孩">
-<meta property="og:description" content="在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。">
+<meta property="og:description" content="文本识别数据集需要大量的数据，特别是对于中文来说，中文字相对英文26个字母来说，更加复杂，数量多得多，所以需要有体量比较大的数据集才能训练得到不错的效果，目前也有一些合成的方法，VGG组就提出SynthText方法合成自然场景下的文本图片，github上有作者给出的官方代码，也有国内大神改写的中文版本代码。但是生成的速度非常慢，而且生成机制有点复杂，总是报错，短时间内还没解决。我的需求场景仅仅是识">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-01T09:38:38.246Z">
+<meta property="og:updated_time" content="2018-09-12T08:28:43.422Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据处理—Encoding Categorical Value">
-<meta name="twitter:description" content="在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。">
+<meta name="twitter:title" content="Synthesize image for Chinese text recognition">
+<meta name="twitter:description" content="文本识别数据集需要大量的数据，特别是对于中文来说，中文字相对英文26个字母来说，更加复杂，数量多得多，所以需要有体量比较大的数据集才能训练得到不错的效果，目前也有一些合成的方法，VGG组就提出SynthText方法合成自然场景下的文本图片，github上有作者给出的官方代码，也有国内大神改写的中文版本代码。但是生成的速度非常慢，而且生成机制有点复杂，总是报错，短时间内还没解决。我的需求场景仅仅是识">
 
 
 
@@ -136,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/30/数据处理—Encoding-Categorical-Value/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/12/Synthesize image for Chinese text recognition/"/>
 
 
 
 
 
-  <title>数据处理—Encoding Categorical Value | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Synthesize image for Chinese text recognition | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -296,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/30/数据处理—Encoding-Categorical-Value/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/12/Synthesize image for Chinese text recognition/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="听歌的小孩">
@@ -313,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数据处理—Encoding Categorical Value</h1>
+          <h1 class="post-title" itemprop="name headline">Synthesize image for Chinese text recognition</h1>
         
 
         <div class="post-meta">
@@ -325,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-30T15:41:09+08:00">
-                2017-08-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-12T15:49:30+08:00">
+                2018-09-12
               </time>
             
 
@@ -363,52 +363,24 @@
       
 
       
-        <p>在机器学习的数据处理中，常常有些特征的值为类型变量（categorical variable），即这些特征对应的值是一些文本，为了便于后期的模型建立，常常将这些文本属性的值转换成数值，即对categorical variable的编码处理。<br><a id="more"></a></p>
-<h2 id="Data-Set"><a href="#Data-Set" class="headerlink" title="Data Set"></a>Data Set</h2><p>数据集假设为：</p>
-<pre><code>import pandas as pd  
-df = pd.DataFrame([  
-            [&apos;green&apos;, &apos;M&apos;, 11],   
-            [&apos;red&apos;, &apos;L&apos;, 22],   
-            [&apos;blue&apos;, &apos;XL&apos;, 33]])  
+        <p>文本识别数据集需要大量的数据，特别是对于中文来说，中文字相对英文26个字母来说，更加复杂，数量多得多，所以需要有体量比较大的数据集才能训练得到不错的效果，目前也有一些合成的方法，VGG组就提出<a href="http://www.robots.ox.ac.uk/~vgg/data/scenetext/" target="_blank" rel="external">SynthText</a>方法合成自然场景下的文本图片，github上有作者给出的<a href="https://github.com/ankush-me/SynthText" target="_blank" rel="external">官方代码</a>，也有国内大神改写的<a href="https://github.com/JarveeLee/SynthText_Chinese_version" target="_blank" rel="external">中文版本代码</a>。但是生成的速度非常慢，而且生成机制有点复杂，总是报错，短时间内还没解决。我的需求场景仅仅是识别文字，并没有涉及到检测部分，所以不需要完整的场景图片，所以提出一种方法来合成中文文本图片用于文本识别，分享一下实现思路。</p>
+<a id="more"></a>
+<h2 id="主要思路"><a href="#主要思路" class="headerlink" title="主要思路"></a>主要思路</h2><p>借鉴了SynthText的方法，而且包括语料库、图像背景图、字体、以及色彩模型文件，都是来源于@JarveeLee的中文版代码中的文件。</p>
+<ol>
+<li>读取语料库，此处来源为一些童话故事txt，</li>
+<li>随机取一段字符串，满足所需长度，再随机选择字体、字号大小</li>
+<li>在提供的背景图中，随机取一张图，计算裁剪图的Lab值标准差（标准差越小图像色彩分布就不会太过丰富。太过花哨），小于设定的阈值则再根据字体字号计算出的文本尺寸，在原图上进行随机裁剪，可以以一定概率使文本在最红图片中有一定偏移；可以以一定概率随机产生竖直文本。</li>
+<li>通过聚类的方法，分析裁剪后图的色彩分布，在色彩模型提供的色彩库中选择与当前裁剪图像色彩偏差大的作为文本颜色，这样最终构成合成图片</li>
+</ol>
+<h2 id="构建方法"><a href="#构建方法" class="headerlink" title="构建方法"></a>构建方法</h2><p>主要实现代码只有一个文件，其他都是合成需要的文件，合成命令：</p>
+<pre><code>python gen_dataset.py
+</code></pre><p>newsgroup:文本来源的语料<br>models/colors_new.cp:从III-5K数据集学习到的色彩模型<br>fonts：包含合成时所需字体<br>所需图片bg_img来源于VGG组合成synth_80k时所用的图片集</p>
+<ul>
+<li>bg_img.tar.gz [8.9G]：压缩的图像文件（需要使用使用imnames.cp中的过滤），链接<a href="http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz" title="http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz" target="_blank" rel="external">http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz</a>：</li>
+<li>imnames.cp[180K]：已过滤文件的名称，即，这些文件不包含文本,链接：<a href="http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp" title="http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp" target="_blank" rel="external">http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp</a></li>
+</ul>
+<p>详细实现代码可参见个人github。</p>
 
-df.columns = [&apos;color&apos;, &apos;size&apos;, &apos;prize&apos;] 
-</code></pre><blockquote>
-<pre><code>  color size  prize 
-0  green    M   11             
-1    red    L   22  
-2   blue   XL   33
-</code></pre></blockquote>
-<h2 id="Replace"><a href="#Replace" class="headerlink" title="Replace"></a>Replace</h2><p>一种方法是使用DataFrame的自带函数功能，替换函数replace。</p>
-<pre><code>encoding_num={&quot;color&quot;:{&quot;green&quot;:0,&quot;red&quot;:1,&quot;blue&quot;:2},&quot;size&quot;:{&quot;M&quot;:0,&quot;L&quot;:1,&quot;XL&quot;:2}}
-df.replace(encoding_num,inplace=True)
-
-df
-Out: 
-   color  size  prize
-0      0     0   10.1
-1      1     1   13.5
-2      2     2   15.3
-</code></pre><h2 id="One-Hot-Encoding"><a href="#One-Hot-Encoding" class="headerlink" title="One Hot Encoding"></a>One Hot Encoding</h2><p>One-hot Encoding，又称为一位有效编码，即对每个状态采取一位进行编码。假设某个特征有N个特征值，则需要N位进行编码，且任意时候只有一位有效。</p>
-<pre><code>pd.get_dummies(df)
-Out[28]: 
-   prize  color_blue  color_green  color_red  size_L  size_M  size_XL
-0     11           0            1          0       0       1        0
-1     22           0            0          1       1       0        0
-2     33           1            0          0       0       0        1
-</code></pre><p>这种编码方式弊端就是，当某个特征对应特征值很多时，就需要很多位进行编码，使得数据列数过大。</p>
-<h2 id="Label-Encoding"><a href="#Label-Encoding" class="headerlink" title="Label Encoding"></a>Label Encoding</h2><p>这种编码方式，主要是基于pandas的Categorical模块，将某一列转换成category类型，然后使用category value来编码。</p>
-<pre><code>df[&quot;color&quot;]=df[&quot;color&quot;].astype(&apos;category&apos;)
-df[&quot;size&quot;]=df[&quot;size&quot;].astype(&apos;category&apos;)
-df[&quot;color&quot;]=df[&quot;color&quot;].cat.codes
-df[&quot;size&quot;]=df[&quot;size&quot;].cat.codes
-
-df
-Out[37]: 
-   color  size  prize
-0      1     1     11
-1      2     0     22
-2      0     2     33
-</code></pre>
       
     </div>
     
@@ -425,7 +397,7 @@ Out[37]:
       
         <div class="post-tags">
           
-            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+            <a href="/tags/OCR/" rel="tag"># OCR</a>
           
         </div>
       
@@ -438,8 +410,8 @@ Out[37]:
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/24/从决策树到随机森林/" rel="next" title="从决策树到随机森林">
-                <i class="fa fa-chevron-left"></i> 从决策树到随机森林
+              <a href="/2018/07/25/Tensorflow输入数据处理框架/" rel="next" title="TensorFlow输入数据处理框架">
+                <i class="fa fa-chevron-left"></i> TensorFlow输入数据处理框架
               </a>
             
           </div>
@@ -447,10 +419,6 @@ Out[37]:
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/12/kaggle入门：Predict-survival-on-the-Titanic/" rel="prev" title="kaggle入门：Predict survival on the Titanic">
-                kaggle入门：Predict survival on the Titanic <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -657,7 +625,7 @@ Out[37]:
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Set"><span class="nav-number">1.</span> <span class="nav-text">Data Set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Replace"><span class="nav-number">2.</span> <span class="nav-text">Replace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#One-Hot-Encoding"><span class="nav-number">3.</span> <span class="nav-text">One Hot Encoding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Label-Encoding"><span class="nav-number">4.</span> <span class="nav-text">Label Encoding</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要思路"><span class="nav-number">1.</span> <span class="nav-text">主要思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建方法"><span class="nav-number">2.</span> <span class="nav-text">构建方法</span></a></li></ol></div>
             
 
           </div>
