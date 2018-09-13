@@ -11,7 +11,7 @@
 <ol>
 <li>读取语料库，此处来源为一些童话故事txt，</li>
 <li>随机取一段字符串，满足所需长度，再随机选择字体、字号大小</li>
-<li>在提供的背景图中，随机取一张图，计算裁剪图的Lab值标准差（标准差越小图像色彩分布就不会太过丰富。太过花哨），小于设定的阈值则再根据字体字号计算出的文本尺寸，在原图上进行随机裁剪，可以以一定概率使文本在最红图片中有一定偏移；可以以一定概率随机产生竖直文本。</li>
+<li>在提供的背景图中，随机取一张图，计算裁剪图的Lab值标准差（标准差越小图像色彩分布就不会太过丰富、太过花哨），小于设定的阈值则再根据字体字号计算出的文本尺寸，在原图上进行随机裁剪，可以以一定概率使文本在最红图片中有一定偏移；可以以一定概率随机产生竖直文本。</li>
 <li>通过聚类的方法，分析裁剪后图的色彩分布，在色彩模型提供的色彩库中选择与当前裁剪图像色彩偏差大的作为文本颜色，这样最终构成合成图片</li>
 </ol>
 <h2 id="构建方法"><a href="#构建方法" class="headerlink" title="构建方法"></a>构建方法</h2><p>主要实现代码只有一个文件，其他都是合成需要的文件，合成命令：</p>
@@ -21,10 +21,10 @@
 <li>bg_img.tar.gz [8.9G]：压缩的图像文件（需要使用使用imnames.cp中的过滤），链接<a href="http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz" title="http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz" target="_blank" rel="external">http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz</a>：</li>
 <li>imnames.cp[180K]：已过滤文件的名称，即，这些文件不包含文本,链接：<a href="http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp" title="http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp" target="_blank" rel="external">http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp</a></li>
 </ul>
-<h2 id="一些实现结果样例"><a href="#一些实现结果样例" class="headerlink" title="一些实现结果样例"></a>一些实现结果样例</h2><p><img src="img/img_1.jpg" alt=""></p>
-<p><img src="img/img_2.jpg" alt=""></p>
-<p><img src="img/img_3.jpg" alt=""></p>
-<p><img src="img/img_4.jpg" alt=""></p>
+<h2 id="一些实现结果样例"><a href="#一些实现结果样例" class="headerlink" title="一些实现结果样例"></a>一些实现结果样例</h2><p><img src="/img/img_1.jpg" alt=""></p>
+<p><img src="/img/img_2.jpg" alt=""></p>
+<p><img src="/img/img_3.jpg" alt=""></p>
+<p><img src="/img/img_4.jpg" alt=""></p>
 <p>详细实现代码可参见个人github。</p>
 ]]></content>
       
