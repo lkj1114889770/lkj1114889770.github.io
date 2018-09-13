@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://yoursite.com/img/img_2.jpg">
 <meta property="og:image" content="http://yoursite.com/img/img_3.jpg">
 <meta property="og:image" content="http://yoursite.com/img/img_4.jpg">
-<meta property="og:updated_time" content="2018-09-13T05:38:44.806Z">
+<meta property="og:updated_time" content="2018-09-13T05:51:06.993Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Synthesize image for Chinese text recognition">
 <meta name="twitter:description" content="文本识别数据集需要大量的数据，特别是对于中文来说，中文字相对英文26个字母来说，更加复杂，数量多得多，所以需要有体量比较大的数据集才能训练得到不错的效果，目前也有一些合成的方法，VGG组就提出SynthText方法合成自然场景下的文本图片，github上有作者给出的官方代码，也有国内大神改写的中文版本代码。但是生成的速度非常慢，而且生成机制有点复杂，总是报错，短时间内还没解决。我的需求场景仅仅是识">
@@ -381,7 +381,7 @@
 <pre><code>python gen_dataset.py
 </code></pre><p>newsgroup:文本来源的语料<br>models/colors_new.cp:从III-5K数据集学习到的色彩模型<br>fonts：包含合成时所需字体<br>所需图片bg_img来源于VGG组合成synth_80k时所用的图片集</p>
 <ul>
-<li>bg_img.tar.gz [8.9G]：压缩的图像文件（需要使用使用imnames.cp中的过滤），链接<a href="http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz" title="http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz" target="_blank" rel="external">http://zeus.robots.ox.ac.uk/textspot/static/db/ bg_img.tar.gz</a>：</li>
+<li>bg_img.tar.gz [8.9G]：压缩的图像文件（需要使用使用imnames.cp中的过滤），链接<a href="http://zeus.robots.ox.ac.uk/textspot/static/db/bg_img.tar.gz" title="http://zeus.robots.ox.ac.uk/textspot/static/db/bg_img.tar.gz" target="_blank" rel="external">http://zeus.robots.ox.ac.uk/textspot/static/db/bg_img.tar.gz</a></li>
 <li>imnames.cp[180K]：已过滤文件的名称，即，这些文件不包含文本,链接：<a href="http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp" title="http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp" target="_blank" rel="external">http://zeus.robots.ox.ac.uk/textspot/static/db/imnames.cp</a></li>
 </ul>
 <h2 id="一些实现结果样例"><a href="#一些实现结果样例" class="headerlink" title="一些实现结果样例"></a>一些实现结果样例</h2><p><img src="/img/img_1.jpg" alt=""></p>
