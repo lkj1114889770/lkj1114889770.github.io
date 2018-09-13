@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-09-13T05:12:23.561Z</updated>
+  <updated>2018-09-13T05:38:44.806Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2018/09/12/Synthesize%20image%20for%20Chinese%20text%20recognition/"/>
     <id>http://yoursite.com/2018/09/12/Synthesize image for Chinese text recognition/</id>
     <published>2018-09-12T07:49:30.000Z</published>
-    <updated>2018-09-13T05:12:23.561Z</updated>
+    <updated>2018-09-13T05:38:44.806Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>文本识别数据集需要大量的数据，特别是对于中文来说，中文字相对英文26个字母来说，更加复杂，数量多得多，所以需要有体量比较大的数据集才能训练得到不错的效果，目前也有一些合成的方法，VGG组就提出<a href="http://www.robots.ox.ac.uk/~vgg/data/scenetext/" target="_blank" rel="external">SynthText</a>方法合成自然场景下的文本图片，github上有作者给出的<a href="https://github.com/ankush-me/SynthText" target="_blank" rel="external">官方代码</a>，也有国内大神改写的<a href="https://github.com/JarveeLee/SynthText_Chinese_version" target="_blank" rel="external">中文版本代码</a>。但是生成的速度非常慢，而且生成机制有点复杂，总是报错，短时间内还没解决。我的需求场景仅仅是识别文字，并没有涉及到检测部分，所以不需要完整的场景图片，所以提出一种方法来合成中文文本图片用于文本识别，分享一下实现思路。</p>
 <a id="more"></a>
@@ -42,7 +42,7 @@
 <p><img src="/img/img_2.jpg" alt=""></p>
 <p><img src="/img/img_3.jpg" alt=""></p>
 <p><img src="/img/img_4.jpg" alt=""></p>
-<p>详细实现代码可参见个人github。</p>
+<p>详细实现代码可参见个人<a href="https://github.com/lkj1114889770/Synth_Chinese_OCR_dataset" target="_blank" rel="external">github</a>。</p>
 ]]></content>
     
     <summary type="html">
