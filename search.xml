@@ -7,14 +7,14 @@
       <url>/2018/09/20/Mask%20R-CNN%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>之前一直在做目标检测这块，最近了解了一下语义分割，其实是目标检测更细致的任务，在图像中做到像素级的分割，包括目标检测和准确的像素分割，所以说是结合了之前目标检测的任务（classification and localization），以及语义分割（将像素点分类到特定的所属类别），首先拜读的就是17年何凯明大神的论文<a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="external">Mask R-CNN</a>，在此做一个学习笔记。<br><a id="more"></a></p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Mask R-CNN是在faster R-CNN的classification branch和bounding box regression branch基础上，增加了一个segmentation mask branch，以像素到像素的方法来预测分割掩码（segmentation mask），如下图所示。</p>
-<p><img src="/img/Mask_R-CNN/figure_1.jpg" alt=""></p>
+<p><img src="/img/Mask_R-CNN/figure_1.png" alt=""></p>
 <p>Faster R-CNN由于RoI pooling，没有办法做到输入和输出之间的像素到像素的对齐(pixel-to-pixel)，为了解决这个问题，Mask R-CNN提出了一个RoiAlign层，可以极大地提高掩码的准确率；同时解耦掩码预测和分类预测，为每个类都独立地预测二进制掩码，这样不会跨类别竞争。最终运行速度可达5 FPS左右。</p>
 <h2 id="Mask-R-CNN"><a href="#Mask-R-CNN" class="headerlink" title="Mask R-CNN"></a>Mask R-CNN</h2><p>Mask R-CNN和faster R-CNN类似，具有两个阶段，第一阶段是RPN，第二阶段出了预测类别和检测框的偏移外，还能够为每个RoI输出二进制掩码，这三个输出都是并行输出的。此外对每一个RoI提出了multi task：<br>L=L<em>cls</em>+L<em>box</em>+L<em>mask</em><br>Lcls和Lbox和之前faster RCNN中定义的一样，掩码分支对于每个RoI的输出维度为Km2，即K个分辨率为m×m的二进制掩码，每个类别一个，K为类别数量。对每个像素应用sigmod，Lmask为平均二进制交叉熵损失，对于真实类别为k的RoI，仅在第k个掩码上计算Lmask，其他掩码输出不计入损失。</p>
-<p><img src="/img/Mask_R-CNN/figure_2.jpg" alt=""></p>
+<p><img src="/img/Mask_R-CNN/figure_2.png" alt=""></p>
 <h3 id="Mask-Representation"><a href="#Mask-Representation" class="headerlink" title="Mask Representation"></a>Mask Representation</h3><p>掩码用来表述目标在图片中的像素位置，在mask R-CNN中通过卷积的方法，提供了像素到像素的对应来解决。具体来说，使用FCN的方法为每一个RoI预测一个m x m的掩码，与使用FC层预测掩码的方式不同，全卷积的方法需要更少的参数，预测也会更加准确。这种像素到像素的行为需要RoI特征，为了更好地与原图进行对齐，来准确地对应原图的像素关系，这里就提出了一个很关键的模块，RoIAlign层。</p>
 <h3 id="RoIAlign"><a href="#RoIAlign" class="headerlink" title="RoIAlign"></a>RoIAlign</h3><p>这个网络层主要是为了更好地与原图像素进行对齐，对之前faster R-CNN使用RoI Pooling操作中两次量化造成的区域不匹配(mis-aligment)问题进行了改进，所以在这里就不得不提一下RoI的局限性，借鉴了<a href="http://blog.leanote.com/post/afanti/b5f4f526490b" target="_blank" rel="external">一篇博客</a>的详细介绍。</p>
 <h4 id="RoI-pooling的局限性"><a href="#RoI-pooling的局限性" class="headerlink" title="RoI pooling的局限性"></a>RoI pooling的局限性</h4><p><strong>Faster R-CNN的网络框架</strong></p>
-<p><img src="/img/Mask_R-CNN/figure_3.jpg" alt=""></p>
+<p><img src="/img/Mask_R-CNN/figure_3.png" alt=""></p>
 <p>由上图可以看到，RoI pooling位于RPN、Feature map和classification and regression之间，针对RPN输出的RoI，将其resize到统一的大小，首先将RoI映射到feature map对应的位置，将映射的区域划分为k x k个单元，对每个单元进行maxpooling，这样就得到统一大小k x k的输出了,期间就存在两次量化的过程</p>
 <ol>
 <li>将候选框量化为整数点坐标值</li>
@@ -28,9 +28,9 @@
 <li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
 </ol>
 <p>第三步的操作，论文也说的很清楚，这个固定位置指的是每一个单元(bin)中按照固定规则确定的位置，比如，如果采样点数是1，那么就是这个单元的中心点。如果采样点数是4，那么就是把这个单元平均分割成四个小方块以后它们分别的中心点。显然这些采样点的坐标通常是浮点数，所以需要使用插值的方法得到它的像素值。下图的例子中，虚线为特征图，实线为RoI，这里假设RoI分割成2 x 2的单元，在每个单元换分为4个小方块后，每个小方块的中心作为采样点，即图中的点，但是这些点的坐标一般来说是浮点数，采用双线性插值的方法来获得像素值，这样就不存在量化过程，很好地解决了misAligment问题。</p>
-<p><img src="/img/Mask_R-CNN/figure_4.jpg" alt=""></p>
+<p><img src="/img/Mask_R-CNN/figure_4.png" alt=""></p>
 <h3 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h3><p>Mask R-CNN使用”网络-深度-特征输出层”的方式命名底下层卷积网络。我们评估了深度为50或101层的ResNet25和ResNeXt26网络。使用ResNet的Faster R-CNN从第四阶段的最终卷积层提取特征，我们称之为C4。例如，使用ResNet-50的下层网络由ResNet-50-C4表示。<br>Mask R-CNN扩展了 ResNet和FPN中提出的Faster R-CNN的上层网络。详细信息如下图所示：（上层网络架构：我们扩展了两种现有的Faster R-CNN上层网络架构，分别添加了一个掩码分支。图中数字表示分辨率和通道数，箭头表示卷积、反卷积或全连接层（可以通过上下文推断，卷积减小维度，反卷积增加维度。）所有的卷积都是3×3的，除了输出层，是<br>1×1的。反卷积是2×2的，步进为2，,隐藏层使用ReLU。左中，“res5”表示ResNet的第五阶段，简单起见，我们修改了第一个卷积操作，使用7×7<br>，步长为1的RoI代替14×14，步长为2的RoI25。右图中的“×4”表示堆叠的4个连续的卷积。）</p>
-<p><img src="/img/Mask_R-CNN/figure_5.jpg" alt=""></p>
+<p><img src="/img/Mask_R-CNN/figure_5.png" alt=""></p>
 ]]></content>
       
         
