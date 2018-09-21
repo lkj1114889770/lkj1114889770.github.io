@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-09-13T05:51:06.993Z</updated>
+  <updated>2018-09-21T02:06:43.459Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,61 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Mask R-CNN学习笔记</title>
+    <link href="http://yoursite.com/2018/09/20/Mask%20R-CNN%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2018/09/20/Mask R-CNN学习笔记/</id>
+    <published>2018-09-20T07:54:57.000Z</published>
+    <updated>2018-09-21T02:06:43.459Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>之前一直在做目标检测这块，最近了解了一下语义分割，其实是目标检测更细致的任务，在图像中做到像素级的分割，包括目标检测和准确的像素分割，所以说是结合了之前目标检测的任务（classification and localization），以及语义分割（将像素点分类到特定的所属类别），首先拜读的就是17年何凯明大神的论文<a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="external">Mask R-CNN</a>，在此做一个学习笔记。<br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Mask R-CNN是在faster R-CNN的classification branch和bounding box regression branch基础上，增加了一个segmentation mask branch，以像素到像素的方法来预测分割掩码（segmentation mask），如下图所示。</p>
+<p><img src="/img/Mask_R-CNN/figure_1.jpg" alt=""></p>
+<p>Faster R-CNN由于RoI pooling，没有办法做到输入和输出之间的像素到像素的对齐(pixel-to-pixel)，为了解决这个问题，Mask R-CNN提出了一个RoiAlign层，可以极大地提高掩码的准确率；同时解耦掩码预测和分类预测，为每个类都独立地预测二进制掩码，这样不会跨类别竞争。最终运行速度可达5 FPS左右。</p>
+<h2 id="Mask-R-CNN"><a href="#Mask-R-CNN" class="headerlink" title="Mask R-CNN"></a>Mask R-CNN</h2><p>Mask R-CNN和faster R-CNN类似，具有两个阶段，第一阶段是RPN，第二阶段出了预测类别和检测框的偏移外，还能够为每个RoI输出二进制掩码，这三个输出都是并行输出的。此外对每一个RoI提出了multi task：<br>L=L<em>cls</em>+L<em>box</em>+L<em>mask</em><br>Lcls和Lbox和之前faster RCNN中定义的一样，掩码分支对于每个RoI的输出维度为Km2，即K个分辨率为m×m的二进制掩码，每个类别一个，K为类别数量。对每个像素应用sigmod，Lmask为平均二进制交叉熵损失，对于真实类别为k的RoI，仅在第k个掩码上计算Lmask，其他掩码输出不计入损失。</p>
+<p><img src="/img/Mask_R-CNN/figure_2.jpg" alt=""></p>
+<h3 id="Mask-Representation"><a href="#Mask-Representation" class="headerlink" title="Mask Representation"></a>Mask Representation</h3><p>掩码用来表述目标在图片中的像素位置，在mask R-CNN中通过卷积的方法，提供了像素到像素的对应来解决。具体来说，使用FCN的方法为每一个RoI预测一个m x m的掩码，与使用FC层预测掩码的方式不同，全卷积的方法需要更少的参数，预测也会更加准确。这种像素到像素的行为需要RoI特征，为了更好地与原图进行对齐，来准确地对应原图的像素关系，这里就提出了一个很关键的模块，RoIAlign层。</p>
+<h3 id="RoIAlign"><a href="#RoIAlign" class="headerlink" title="RoIAlign"></a>RoIAlign</h3><p>这个网络层主要是为了更好地与原图像素进行对齐，对之前faster R-CNN使用RoI Pooling操作中两次量化造成的区域不匹配(mis-aligment)问题进行了改进，所以在这里就不得不提一下RoI的局限性，借鉴了<a href="http://blog.leanote.com/post/afanti/b5f4f526490b" target="_blank" rel="external">一篇博客</a>的详细介绍。</p>
+<h4 id="RoI-pooling的局限性"><a href="#RoI-pooling的局限性" class="headerlink" title="RoI pooling的局限性"></a>RoI pooling的局限性</h4><p><strong>Faster R-CNN的网络框架</strong></p>
+<p><img src="/img/Mask_R-CNN/figure_3.jpg" alt=""></p>
+<p>由上图可以看到，RoI pooling位于RPN、Feature map和classification and regression之间，针对RPN输出的RoI，将其resize到统一的大小，首先将RoI映射到feature map对应的位置，将映射的区域划分为k x k个单元，对每个单元进行maxpooling，这样就得到统一大小k x k的输出了,期间就存在两次量化的过程</p>
+<ol>
+<li>将候选框量化为整数点坐标值</li>
+<li>将量化后的边界区域分割成k x k个单元（bin),对每一个单元的边界进行量化。</li>
+</ol>
+<p>RoIPooling 采用的是 INTER_NEAREST（即最近邻插值） ，即在resize时，对于 缩放后坐标不能刚好为整数 的情况，采用了 粗暴的四舍五入，相当于选取离目标点最近的点。，经过这样两次量化就出现了边界不匹配的问题了(misaligment),候选框和最开始回归出来的已经有很大偏差了。</p>
+<h4 id="RoIAlign-1"><a href="#RoIAlign-1" class="headerlink" title="RoIAlign"></a>RoIAlign</h4><p>Mask R-CNN将最邻近插值换成了双线性插值，这样就有了RoIAlign，主要流程为：</p>
+<ol>
+<li>遍历每一个候选区域，保持浮点数边界不做量化。</li>
+<li>将候选区域分割成k x k个单元，每个单元的边界也不做量化。</li>
+<li>在每个单元中计算固定四个坐标位置，用双线性内插的方法计算出这四个位置的值，然后进行最大池化操作。</li>
+</ol>
+<p>第三步的操作，论文也说的很清楚，这个固定位置指的是每一个单元(bin)中按照固定规则确定的位置，比如，如果采样点数是1，那么就是这个单元的中心点。如果采样点数是4，那么就是把这个单元平均分割成四个小方块以后它们分别的中心点。显然这些采样点的坐标通常是浮点数，所以需要使用插值的方法得到它的像素值。下图的例子中，虚线为特征图，实线为RoI，这里假设RoI分割成2 x 2的单元，在每个单元换分为4个小方块后，每个小方块的中心作为采样点，即图中的点，但是这些点的坐标一般来说是浮点数，采用双线性插值的方法来获得像素值，这样就不存在量化过程，很好地解决了misAligment问题。</p>
+<p><img src="/img/Mask_R-CNN/figure_4.jpg" alt=""></p>
+<h3 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h3><p>Mask R-CNN使用”网络-深度-特征输出层”的方式命名底下层卷积网络。我们评估了深度为50或101层的ResNet25和ResNeXt26网络。使用ResNet的Faster R-CNN从第四阶段的最终卷积层提取特征，我们称之为C4。例如，使用ResNet-50的下层网络由ResNet-50-C4表示。<br>Mask R-CNN扩展了 ResNet和FPN中提出的Faster R-CNN的上层网络。详细信息如下图所示：（上层网络架构：我们扩展了两种现有的Faster R-CNN上层网络架构，分别添加了一个掩码分支。图中数字表示分辨率和通道数，箭头表示卷积、反卷积或全连接层（可以通过上下文推断，卷积减小维度，反卷积增加维度。）所有的卷积都是3×3的，除了输出层，是<br>1×1的。反卷积是2×2的，步进为2，,隐藏层使用ReLU。左中，“res5”表示ResNet的第五阶段，简单起见，我们修改了第一个卷积操作，使用7×7<br>，步长为1的RoI代替14×14，步长为2的RoI25。右图中的“×4”表示堆叠的4个连续的卷积。）</p>
+<p><img src="/img/Mask_R-CNN/figure_5.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;之前一直在做目标检测这块，最近了解了一下语义分割，其实是目标检测更细致的任务，在图像中做到像素级的分割，包括目标检测和准确的像素分割，所以说是结合了之前目标检测的任务（classification and localization），以及语义分割（将像素点分类到特定的所属类别），首先拜读的就是17年何凯明大神的论文&lt;a href=&quot;https://arxiv.org/abs/1703.06870&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Mask R-CNN&lt;/a&gt;，在此做一个学习笔记。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="语义分割" scheme="http://yoursite.com/tags/%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2/"/>
+    
+      <category term="深度学习" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="CV" scheme="http://yoursite.com/tags/CV/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Synthesize image for Chinese text recognition</title>
     <link href="http://yoursite.com/2018/09/12/Synthesize%20image%20for%20Chinese%20text%20recognition/"/>
     <id>http://yoursite.com/2018/09/12/Synthesize image for Chinese text recognition/</id>
     <published>2018-09-12T07:49:30.000Z</published>
-    <updated>2018-09-13T05:51:06.993Z</updated>
+    <updated>2018-09-13T08:11:07.917Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>文本识别数据集需要大量的数据，特别是对于中文来说，中文字相对英文26个字母来说，更加复杂，数量多得多，所以需要有体量比较大的数据集才能训练得到不错的效果，目前也有一些合成的方法，VGG组就提出<a href="http://www.robots.ox.ac.uk/~vgg/data/scenetext/" target="_blank" rel="external">SynthText</a>方法合成自然场景下的文本图片，github上有作者给出的<a href="https://github.com/ankush-me/SynthText" target="_blank" rel="external">官方代码</a>，也有国内大神改写的<a href="https://github.com/JarveeLee/SynthText_Chinese_version" target="_blank" rel="external">中文版本代码</a>。但是生成的速度非常慢，而且生成机制有点复杂，总是报错，短时间内还没解决。我的需求场景仅仅是识别文字，并没有涉及到检测部分，所以不需要完整的场景图片，所以提出一种方法来合成中文文本图片用于文本识别，分享一下实现思路。</p>
 <a id="more"></a>
@@ -28,7 +78,7 @@
 <ol>
 <li>读取语料库，此处来源为一些童话故事txt，</li>
 <li>随机取一段字符串，满足所需长度，再随机选择字体、字号大小</li>
-<li>在提供的背景图中，随机取一张图，计算裁剪图的Lab值标准差（标准差越小图像色彩分布就不会太过丰富、太过花哨），小于设定的阈值则再根据字体字号计算出的文本尺寸，在原图上进行随机裁剪，可以以一定概率使文本在最红图片中有一定偏移；可以以一定概率随机产生竖直文本。</li>
+<li>在提供的背景图中，随机取一张图，计算裁剪图的Lab值标准差（标准差越小图像色彩分布就不会太过丰富、太过花哨），小于设定的阈值则再根据字体字号计算出的文本尺寸，在原图上进行随机裁剪，可以以一定概率使文本在最终图片中有一定偏移；可以以一定概率随机产生竖直文本。</li>
 <li>通过聚类的方法，分析裁剪后图的色彩分布，在色彩模型提供的色彩库中选择与当前裁剪图像色彩偏差大的作为文本颜色，这样最终构成合成图片</li>
 </ol>
 <h2 id="构建方法"><a href="#构建方法" class="headerlink" title="构建方法"></a>构建方法</h2><p>主要实现代码只有一个文件，其他都是合成需要的文件，合成命令：</p>
@@ -307,7 +357,7 @@ plt.show()
     <link href="http://yoursite.com/2018/06/15/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%BD%91%E7%BB%9C%E4%B9%8BYOLO%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>http://yoursite.com/2018/06/15/目标检测网络之YOLO学习笔记/</id>
     <published>2018-06-15T06:59:34.000Z</published>
-    <updated>2018-07-06T02:10:26.670Z</updated>
+    <updated>2018-09-20T08:01:32.814Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>YOLO是一种全新的，与R-CNN思想截然不同的目标检测的方法。R-CNN系列网络是通过proposal region产生可能包含目标物体的bounding box，再通分类器判断是否包含物品以及物品类别，用regression对bounding的坐标、大小进行修正。YOLO则是一种end to end的方式，用一个神经网络，实现了预测出bounding box 的坐标、box中包含物体的置信度和物体的probabilities，因此检测速度更快，训练相对更加简单，当然相对来说也带来一些其他缺点。<br><a id="more"></a></p>
 <p>YOLO项目主页<a href="https://pjreddie.com/yolo/" target="_blank" rel="external">地址</a><br>YOLO1 <a href="https://arxiv.org/abs/1506.02640" target="_blank" rel="external">论文</a><br>YOLO2 <a href="https://arxiv.org/abs/1612.08242" target="_blank" rel="external">论文</a><br>YOLO3 <a href="https://pjreddie.com/media/files/papers/YOLOv3.pdf" target="_blank" rel="external">论文</a></p>
@@ -544,6 +594,8 @@ def build(self, feat_ex, res18, res10):
     
       <category term="深度学习" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
+      <category term="CV" scheme="http://yoursite.com/tags/CV/"/>
+    
       <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
     
   </entry>
@@ -591,7 +643,7 @@ python setup.py install
     <link href="http://yoursite.com/2018/04/20/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(R-CNN%E7%B3%BB%E5%88%97)/"/>
     <id>http://yoursite.com/2018/04/20/基于深度学习的目标检测技术学习笔记(R-CNN系列)/</id>
     <published>2018-04-20T03:03:17.000Z</published>
-    <updated>2018-07-06T01:43:59.027Z</updated>
+    <updated>2018-09-20T08:01:31.233Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>图像的目标检测（object detection）主要包括两个任务，一是要标注出目标物体的位置（localization），而是要识别出目标物体的类别（classification）。通俗来说，就是解决图像中多个目标在哪里，是什么的一个问题。这个问题的涉及，主要是目前参加了天池大赛的一个目标识别方面的问题，所以阅读了一些相关方面的文献，在此做一个学习总结，主要来介绍R-CNN（Regions with CNN features）系列的算法。<br><a id="more"></a></p>
 <p>传统的目标检测算法一般是基于滑动窗口选中图中的某一部分作为候选区域，然后提取候选区域的特征，利用分类器（如常见的SVM)进行识别。2014年提出的region proposal+CNN代替传统目标检测使用的滑动窗口+特征工程的方法，设计了R-CNN算法，开启了基于深度学习的目标检测的大门。</p>
@@ -649,6 +701,8 @@ python setup.py install
     
     
       <category term="深度学习" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="CV" scheme="http://yoursite.com/tags/CV/"/>
     
       <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
     
@@ -1865,42 +1919,6 @@ def train(self):
       <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="无监督学习" scheme="http://yoursite.com/tags/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>朴素贝叶斯分类</title>
-    <link href="http://yoursite.com/2017/09/19/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB/"/>
-    <id>http://yoursite.com/2017/09/19/朴素贝叶斯分类/</id>
-    <published>2017-09-19T12:36:16.000Z</published>
-    <updated>2017-09-19T13:16:18.084Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>贝叶斯算法是分类算法的一种，算法的核心是概率论中的贝叶斯定理，而朴素贝叶斯则是贝叶斯分类算法中最简单的一种。<br><a id="more"></a></p>
-<h2 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h2><p>贝叶斯算法的核心就是贝叶斯定理：</p>
-<p><img src="https://i.imgur.com/Mc59jtP.png" alt=""></p>
-<p>而在分类算法中，B为某个类别，A为特征，P(B|A)为某个待分类个体的特征取不同类别的概率，显然是计算取不同类别的概率，取最大概率作为该个体的分类类别；上式右边的三个式子的取值通常可以根据已知数据集即训练集求取。</p>
-<h2 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h2><p>朴素贝叶斯的“朴素”体现在样本的各个特征都是条件独立的，这样就极大地简化了算法，当然这是一个比较强的条件，在实际应用中不一定符合。算法流程如下：</p>
-<ol>
-<li>样本x的特征集合{a1,a2,…am}</li>
-<li>所有分类类别取值{y1,y2,…yn}</li>
-<li>计算所有P(y1|x),P(y2|x)….,P(yn|x)</li>
-<li>取3中最大概率对应的分类为x的分类</li>
-</ol>
-<p>根据贝叶斯定理，可以转换成求解：</p>
-<p><img src="https://i.imgur.com/rRISY1C.png" alt=""></p>
-<p>因为特征之间的独立性，那么有：</p>
-<p><img src="https://i.imgur.com/4NRfZsa.png" alt=""></p>
-<p>而对于P(yi)可以从样本中得到，分母特征的取值概率通常对于一组特定的特征组合为常数，可以不用求解，至此完成了朴素贝叶斯算法的介绍。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;贝叶斯算法是分类算法的一种，算法的核心是概率论中的贝叶斯定理，而朴素贝叶斯则是贝叶斯分类算法中最简单的一种。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
