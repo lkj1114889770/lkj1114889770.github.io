@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="语义分割,深度学习,CV," />
+  <meta name="keywords" content="深度学习,CV,语义分割," />
 
 
 
@@ -97,7 +97,7 @@
 
 
 <meta name="description" content="之前一直在做目标检测这块，最近了解了一下语义分割，其实是目标检测更细致的任务，在图像中做到像素级的分割，包括目标检测和准确的像素分割，所以说是结合了之前目标检测的任务（classification and localization），以及语义分割（将像素点分类到特定的所属类别），首先拜读的就是17年何凯明大神的论文Mask R-CNN，在此做一个学习笔记。">
-<meta name="keywords" content="语义分割,深度学习,CV">
+<meta name="keywords" content="深度学习,CV,语义分割">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mask R-CNN学习笔记">
 <meta property="og:url" content="http://yoursite.com/2018/09/20/Mask R-CNN学习笔记/index.html">
@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://yoursite.com/img/Mask_R-CNN/figure_3.png">
 <meta property="og:image" content="http://yoursite.com/img/Mask_R-CNN/figure_4.png">
 <meta property="og:image" content="http://yoursite.com/img/Mask_R-CNN/figure_5.png">
-<meta property="og:updated_time" content="2018-09-21T02:14:49.847Z">
+<meta property="og:updated_time" content="2018-09-21T02:22:38.439Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mask R-CNN学习笔记">
 <meta name="twitter:description" content="之前一直在做目标检测这块，最近了解了一下语义分割，其实是目标检测更细致的任务，在图像中做到像素级的分割，包括目标检测和准确的像素分割，所以说是结合了之前目标检测的任务（classification and localization），以及语义分割（将像素点分类到特定的所属类别），首先拜读的就是17年何凯明大神的论文Mask R-CNN，在此做一个学习笔记。">
@@ -393,7 +393,7 @@
 </ol>
 <p>第三步的操作，论文也说的很清楚，这个固定位置指的是每一个单元(bin)中按照固定规则确定的位置，比如，如果采样点数是1，那么就是这个单元的中心点。如果采样点数是4，那么就是把这个单元平均分割成四个小方块以后它们分别的中心点。显然这些采样点的坐标通常是浮点数，所以需要使用插值的方法得到它的像素值。下图的例子中，虚线为特征图，实线为RoI，这里假设RoI分割成2 x 2的单元，在每个单元换分为4个小方块后，每个小方块的中心作为采样点，即图中的点，但是这些点的坐标一般来说是浮点数，采用双线性插值的方法来获得像素值，这样就不存在量化过程，很好地解决了misAligment问题。</p>
 <p><img src="/img/Mask_R-CNN/figure_4.png" alt=""></p>
-<h3 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h3><p>Mask R-CNN使用”网络-深度-特征输出层”的方式命名底下层卷积网络。我们评估了深度为50或101层的ResNet25和ResNeXt26网络。使用ResNet的Faster R-CNN从第四阶段的最终卷积层提取特征，我们称之为C4。例如，使用ResNet-50的下层网络由ResNet-50-C4表示。<br>Mask R-CNN扩展了 ResNet和FPN中提出的Faster R-CNN的上层网络。详细信息如下图所示：（上层网络架构：我们扩展了两种现有的Faster R-CNN上层网络架构，分别添加了一个掩码分支。图中数字表示分辨率和通道数，箭头表示卷积、反卷积或全连接层（可以通过上下文推断，卷积减小维度，反卷积增加维度。）所有的卷积都是3×3的，除了输出层，是<br>1×1的。反卷积是2×2的，步进为2，,隐藏层使用ReLU。左中，“res5”表示ResNet的第五阶段，简单起见，我们修改了第一个卷积操作，使用7×7<br>，步长为1的RoI代替14×14，步长为2的RoI25。右图中的“×4”表示堆叠的4个连续的卷积。）</p>
+<h3 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h3><p>Mask R-CNN使用”网络-深度-特征输出层”的方式命名底下层卷积网络。我们评估了深度为50或101层的ResNet25和ResNeXt26网络。使用ResNet的Faster R-CNN从第四阶段的最终卷积层提取特征，我们称之为C4。例如，使用ResNet-50的下层网络由ResNet-50-C4表示。<br>Mask R-CNN扩展了 ResNet和FPN中提出的Faster R-CNN的上层网络。详细信息如下图所示：（上层网络架构：我们扩展了两种现有的Faster R-CNN上层网络架构，分别添加了一个掩码分支。图中数字表示分辨率和通道数，箭头表示卷积、反卷积或全连接层（可以通过上下文推断，卷积减小维度，反卷积增加维度。）所有的卷积都是3×3的，除了输出层，是1×1的。反卷积是2×2的，步进为2，,隐藏层使用ReLU。左中，“res5”表示ResNet的第五阶段，简单起见，我们修改了第一个卷积操作，使用7×7，步长为1的RoI代替14×14，步长为2的RoI25。右图中的“×4”表示堆叠的4个连续的卷积。）</p>
 <p><img src="/img/Mask_R-CNN/figure_5.png" alt=""></p>
 
       
@@ -412,11 +412,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/语义分割/" rel="tag"># 语义分割</a>
-          
             <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
           
             <a href="/tags/CV/" rel="tag"># CV</a>
+          
+            <a href="/tags/语义分割/" rel="tag"># 语义分割</a>
           
         </div>
       
@@ -438,6 +438,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/26/CornerNet-将目标检测转为关键点预测/" rel="prev" title="CornerNet:将目标检测转为关键点预测">
+                CornerNet:将目标检测转为关键点预测 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -543,7 +547,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

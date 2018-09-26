@@ -3,6 +3,71 @@
   
     
     <entry>
+      <title><![CDATA[CornerNet:将目标检测转为关键点预测]]></title>
+      <url>/2018/09/26/CornerNet-%E5%B0%86%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E8%BD%AC%E4%B8%BA%E5%85%B3%E9%94%AE%E7%82%B9%E9%A2%84%E6%B5%8B/</url>
+      <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>论文链接：<a href="https://arxiv.org/abs/1808.01244" target="_blank" rel="external">https://arxiv.org/abs/1808.01244</a><br>代码链接：<a href="https://github.com/umich-vl/CornerNet" target="_blank" rel="external">https://github.com/umich-vl/CornerNet
+</a></p>
+<p>CornerNet是ECCV2018上的一篇文章，与以往的Anchor机制的目标检测方法不同，这篇文章借鉴了人体关键点检测的思路，将目标检测转为关键点检测（Dectecting Objects as Paired Keypoints），是一种不一样的新思路，阅读了这篇文章，做个笔记。<br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>目前目标检测算法的主要思路还是设置大量的Anchor作为预选框，通过训练的方式获取最后的bounding box，这样就带来两个问题：</p>
+<ol>
+<li>大量的Anchor只有少部分和gt有比较大的overlap，从而带来正负样本巨大的不均衡的问题，减慢训练过程</li>
+<li>Anchor的设置本身也是需要超参数的(形状、个数怎么设置)，在multi-scale的时候会更加明显。</li>
+</ol>
+<p>作者因此提出了一种新的one-stage解决方法，将目标检测转为一堆关键点检测，the top-left corner 和bottom-right corner，使用卷积神经网络来为一个类别预测heatmap获取top-left corners,同样预测另一个heatmap获取bottom-right corners,还预测embedding vector对顶点进行分组，确定是否属于同一个目标，如下图所示。</p>
+<p><img src="/img/CornerNet/figure_1.png" alt=""></p>
+<p>另一个创新点是提出了corner pooling，一种为了更好地获取corner的新的pooling layer。以top-left corner pooling 为例，如下图所示对每个channel，分别提取特征图的水平和垂直方向的最大值，然后求和。</p>
+<p><img src="/img/CornerNet/figure_2.png" alt=""></p>
+<p>论文认为corner pooling之所以有效，是因为（1）目标定位框的中心难以确定，和边界框的4条边相关，但是每个顶点只与边界框的两条边相关，所以corner 更容易提取。（2）顶点更有效提供离散的边界空间，实用O(wh)顶点可以表示O(w2h2) anchor boxes。</p>
+<h2 id="CornetNet"><a href="#CornetNet" class="headerlink" title="CornetNet"></a>CornetNet</h2><p>CornerNet使用CNNs来预测两组heatmaps为每个物品类别来表示corner的位置，使用embedding vector来表示corner是否属于同一个物品，同时为了产生更加紧密的bounding box，也预测了offset。通过heatmap, embedding vector，offsets,通过后处理的方法就可以获得最后的bounding box。作者提出的算法总体框架如下图所示：</p>
+<p><img src="/img/CornerNet/figure_3.png" alt=""></p>
+<p>使用了hourglass network作为backbone network，紧接的两个模块分别用于预测top-left corners和bottom-right corners，每一个模块有独立的corner pooling，然后得到heatmaps, embeddings, offsets.</p>
+<h3 id="Detecting-Corners"><a href="#Detecting-Corners" class="headerlink" title="Detecting Corners"></a>Detecting Corners</h3><p>论文预测了两组heatmap，每一个heatmap包含C channels(C是目标类别，不包括background),每一个channel是二进制mask，表示相应的corner位置。</p>
+<p><img src="/img/CornerNet/figure_4.png" alt=""></p>
+<p>对于每个顶点，只有一个groun truth，其他位置都是负样本。在训练过程中为了减少负样本数量，在每个gt顶点设定的半径r区域内都是正样本，如上图所示，半径r的确定根据所学的Iou决定。使用unnormalized 2D Gaussian来减少的半径r范围内的loss，基本思想就是构造高斯函数，中心就是gt位置，离这个中心越远衰减得越厉害，即：</p>
+<p><img src="/img/CornerNet/figure_5.png" alt=""></p>
+<p>pcij表示类别为c，坐标是（i,j）的预测热点图，ycij表示相应位置的ground-truth，是经过2D Gaussian的输出值，用来调整权值，论文提出变体Focal loss表示检测目标的损失函数：</p>
+<p><img src="/img/CornerNet/figure_6.png" alt=""></p>
+<p>由于采样过程中的量化带来的misaligment，预测offset来调整corner的位置：</p>
+<p><img src="/img/CornerNet/figure_7.png" alt=""></p>
+<p>训练中用smooth L1 Loss来计算：</p>
+<p><img src="/img/CornerNet/figure_8.png" alt=""></p>
+<h3 id="Grouping-Corner"><a href="#Grouping-Corner" class="headerlink" title="Grouping Corner"></a>Grouping Corner</h3><p>这个部分是用来决定一对corner是否来自同一object。具体的做法就是对卷积特征进行embedding（1x1的conv），得到corner的embedding vector，我们希望同属于同一个object的一对 corner的距离尽可能小，不属于的距离尽可能大！所以有两个loss，push loss和pull loss，从名字上来说，pull吧同一个目标的corner拉近，push把不同目标的推远。</p>
+<p><img src="/img/CornerNet/figure_9.png" alt=""></p>
+<p>etk,elk分别是属于 top-left corner和botto-right corner的embedding，ek是他们的平均值，△在论文中设置为1.</p>
+<h3 id="Corner-Pooling"><a href="#Corner-Pooling" class="headerlink" title="Corner Pooling"></a>Corner Pooling</h3><p><img src="/img/CornerNet/figure_10.png" alt=""></p>
+<p>为了检测某一个点是否是corner，需要从行和列分别检查，以top-left这个点为例，计算过程分为三部分：</p>
+<ol>
+<li>从上到下做max pooling</li>
+<li>从右到左做max pooling</li>
+<li>然后合并（相加）<br>如下图中，从下往上计算，每一列都能得到一个单调非递减的结果，相当于对corner的先验做了编码。对于object来说，如果要去找最上边的位置，需要从下到上检查这一列的最大值，最大值的位置是corner的可能存在的位置。</li>
+</ol>
+<p><img src="/img/CornerNet/figure_11.png" alt=""></p>
+<p>实际计算公式为：</p>
+<p><img src="/img/CornerNet/figure_12.png" alt=""></p>
+<p>这样整个预测框架如下图所示：</p>
+<p><img src="/img/CornerNet/figure_13.png" alt=""></p>
+<h3 id="Predict-details"><a href="#Predict-details" class="headerlink" title="Predict details"></a>Predict details</h3><ol>
+<li>在corner heatmap上用3x3的max poolings做NMS，选择top 100的top-left和top 100的bottom-right</li>
+<li>通过预测的offset来调整位置</li>
+<li>计算top-left和bottom-right的embedding 的L1 distance，筛掉距离大于0.5或者是不属于同一类别的一对corner。</li>
+<li>计算top-left和bottom-right的score的平均值作为最终的score。</li>
+</ol>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 深度学习 </tag>
+            
+            <tag> 目标检测 </tag>
+            
+            <tag> CV </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Mask R-CNN学习笔记]]></title>
       <url>/2018/09/20/Mask%20R-CNN%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>之前一直在做目标检测这块，最近了解了一下语义分割，其实是目标检测更细致的任务，在图像中做到像素级的分割，包括目标检测和准确的像素分割，所以说是结合了之前目标检测的任务（classification and localization），以及语义分割（将像素点分类到特定的所属类别），首先拜读的就是17年何凯明大神的论文<a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="external">Mask R-CNN</a>，在此做一个学习笔记。<br><a id="more"></a></p>
@@ -29,18 +94,18 @@
 </ol>
 <p>第三步的操作，论文也说的很清楚，这个固定位置指的是每一个单元(bin)中按照固定规则确定的位置，比如，如果采样点数是1，那么就是这个单元的中心点。如果采样点数是4，那么就是把这个单元平均分割成四个小方块以后它们分别的中心点。显然这些采样点的坐标通常是浮点数，所以需要使用插值的方法得到它的像素值。下图的例子中，虚线为特征图，实线为RoI，这里假设RoI分割成2 x 2的单元，在每个单元换分为4个小方块后，每个小方块的中心作为采样点，即图中的点，但是这些点的坐标一般来说是浮点数，采用双线性插值的方法来获得像素值，这样就不存在量化过程，很好地解决了misAligment问题。</p>
 <p><img src="/img/Mask_R-CNN/figure_4.png" alt=""></p>
-<h3 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h3><p>Mask R-CNN使用”网络-深度-特征输出层”的方式命名底下层卷积网络。我们评估了深度为50或101层的ResNet25和ResNeXt26网络。使用ResNet的Faster R-CNN从第四阶段的最终卷积层提取特征，我们称之为C4。例如，使用ResNet-50的下层网络由ResNet-50-C4表示。<br>Mask R-CNN扩展了 ResNet和FPN中提出的Faster R-CNN的上层网络。详细信息如下图所示：（上层网络架构：我们扩展了两种现有的Faster R-CNN上层网络架构，分别添加了一个掩码分支。图中数字表示分辨率和通道数，箭头表示卷积、反卷积或全连接层（可以通过上下文推断，卷积减小维度，反卷积增加维度。）所有的卷积都是3×3的，除了输出层，是<br>1×1的。反卷积是2×2的，步进为2，,隐藏层使用ReLU。左中，“res5”表示ResNet的第五阶段，简单起见，我们修改了第一个卷积操作，使用7×7<br>，步长为1的RoI代替14×14，步长为2的RoI25。右图中的“×4”表示堆叠的4个连续的卷积。）</p>
+<h3 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h3><p>Mask R-CNN使用”网络-深度-特征输出层”的方式命名底下层卷积网络。我们评估了深度为50或101层的ResNet25和ResNeXt26网络。使用ResNet的Faster R-CNN从第四阶段的最终卷积层提取特征，我们称之为C4。例如，使用ResNet-50的下层网络由ResNet-50-C4表示。<br>Mask R-CNN扩展了 ResNet和FPN中提出的Faster R-CNN的上层网络。详细信息如下图所示：（上层网络架构：我们扩展了两种现有的Faster R-CNN上层网络架构，分别添加了一个掩码分支。图中数字表示分辨率和通道数，箭头表示卷积、反卷积或全连接层（可以通过上下文推断，卷积减小维度，反卷积增加维度。）所有的卷积都是3×3的，除了输出层，是1×1的。反卷积是2×2的，步进为2，,隐藏层使用ReLU。左中，“res5”表示ResNet的第五阶段，简单起见，我们修改了第一个卷积操作，使用7×7，步长为1的RoI代替14×14，步长为2的RoI25。右图中的“×4”表示堆叠的4个连续的卷积。）</p>
 <p><img src="/img/Mask_R-CNN/figure_5.png" alt=""></p>
 ]]></content>
       
         
         <tags>
             
-            <tag> 语义分割 </tag>
-            
             <tag> 深度学习 </tag>
             
             <tag> CV </tag>
+            
+            <tag> 语义分割 </tag>
             
         </tags>
         
@@ -549,9 +614,9 @@ def build(self, feat_ex, res18, res10):
             
             <tag> 深度学习 </tag>
             
-            <tag> CV </tag>
-            
             <tag> 目标检测 </tag>
+            
+            <tag> CV </tag>
             
         </tags>
         
@@ -641,9 +706,9 @@ python setup.py install
             
             <tag> 深度学习 </tag>
             
-            <tag> CV </tag>
-            
             <tag> 目标检测 </tag>
+            
+            <tag> CV </tag>
             
         </tags>
         
