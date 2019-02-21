@@ -96,18 +96,21 @@
 
 
 
-<meta name="description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括元素（数据域）和指向该元素之后元素的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个元素和下一个元素的指针；如果让链表最后一个元素指向第一个元素，就构成了循环链表。 一些例子">
+<meta name="description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个节点和下一个节点的指针；如果让链表最后一个节点指向第一个节点，就构成了循环链表。 一些例子">
 <meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构之链表">
 <meta property="og:url" content="http://yoursite.com/2019/02/21/数据结构之链表/index.html">
 <meta property="og:site_name" content="听歌的小孩">
-<meta property="og:description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括元素（数据域）和指向该元素之后元素的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个元素和下一个元素的指针；如果让链表最后一个元素指向第一个元素，就构成了循环链表。 一些例子">
+<meta property="og:description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个节点和下一个节点的指针；如果让链表最后一个节点指向第一个节点，就构成了循环链表。 一些例子">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-21T09:11:21.476Z">
+<meta property="og:image" content="http://yoursite.com/img/LinkedList/reverseList1.png">
+<meta property="og:image" content="http://yoursite.com/img/LinkedList/reverseList2.png">
+<meta property="og:updated_time" content="2019-02-21T12:15:15.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构之链表">
-<meta name="twitter:description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括元素（数据域）和指向该元素之后元素的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个元素和下一个元素的指针；如果让链表最后一个元素指向第一个元素，就构成了循环链表。 一些例子">
+<meta name="twitter:description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个节点和下一个节点的指针；如果让链表最后一个节点指向第一个节点，就构成了循环链表。 一些例子">
+<meta name="twitter:image" content="http://yoursite.com/img/LinkedList/reverseList1.png">
 
 
 
@@ -361,7 +364,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  224
+                  1.1k
                 </span>
               
 
@@ -386,22 +389,98 @@
       
 
       
-        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>链表由一系列的不必在内存中连续的结构组成，每一个结构包括元素（数据域）和指向该元素之后元素的指针（指针域）构成。</p>
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。</p>
 <pre><code>struct Node{
     int value;
     Node *next;
 }
-</code></pre><p>上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个元素和下一个元素的指针；如果让链表最后一个元素指向第一个元素，就构成了循环链表。</p>
+</code></pre><p>上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个节点和下一个节点的指针；如果让链表最后一个节点指向第一个节点，就构成了循环链表。</p>
 <h2 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h2><a id="more"></a>
-<h3 id="插入元素"><a href="#插入元素" class="headerlink" title="插入元素"></a>插入元素</h3><p>在p之后插入值为i的元素</p>
+<h3 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a>插入节点</h3><p>在p之后插入值为i的节点</p>
 <pre><code>void insert(Node *p, int i){
     Node* node = new Node;
     node-&gt;value = i;
     node-&gt;next = p-&gt;next;
     p-&gt;next = node;
 }
-</code></pre><h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><p>删除某个元素p时，只需要用p后一个元素覆盖p当前元素：</p>
-<p>void delete(NOde *p){<br>    p-&gt;value = p-&gt;next-&gt;value;<br>    p-&gt;next = p-&gt;next-&gt;next;<br>}</p>
+</code></pre><h3 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h3><p>删除某个节点p时，只需要用p后一个节点覆盖p当前节点：</p>
+<pre><code>void delete(NOde *p){
+    p-&gt;value = p-&gt;next-&gt;value;
+    p-&gt;next = p-&gt;next-&gt;next;
+}
+</code></pre><h3 id="找出倒数第k个节点"><a href="#找出倒数第k个节点" class="headerlink" title="找出倒数第k个节点"></a>找出倒数第k个节点</h3><p>采用连个指针p1,p2，p1先走k步，然后p1和p2一起走，当p1到达节点终点时，p2即指向倒数第k个节点。</p>
+<pre><code>Node* findk(Node* head, int k){
+    Node *p1 = head;
+    Node *p2 = head;
+    for(int i=0;i&lt;k;i++){
+        if(p1==NULL) return NULL;
+        p1=p1-&gt;next;
+    }
+    while(p1-&gt;next !=NULL &amp;&amp; p2-&gt;next != NULL){
+        p1=p1-&gt;next;
+        p2=p2-&gt;next;
+    }
+    return p2;
+}
+</code></pre><p>同样的道理，如果要找出链表的中间节点，可以令p1和p2分别以前进2步、前进1步的速度遍历，当p1到达节点终点时，p2即指向终点节点。</p>
+<h3 id="判断是否有环"><a href="#判断是否有环" class="headerlink" title="判断是否有环"></a>判断是否有环</h3><p>直观的判断是，存在环路的时候，一直遍历都不会遇到NULL节点，但是由于不知道链表的长度吗，所以采用这种判断不知道多久才能终止。转化成一个追及问题，如果有环，那么两个遍历速度不一致的指针一定会相遇，采用类似上面，有两个指针pslow，pfast,pslow每次走一步，pfast每次走两步，若是有环，pfast就能追上pslow，否则pfast会碰到NULL。</p>
+<pre><code>bool isLoop(Node* head){
+    if(head==NULL) return false;
+    Node* pfast = head;
+    Node* pslow = head;
+    while(pfast!=NULL){
+        if(pfast-&gt;next==NULL) return false;
+        pslow = pslow-&gt;next;
+        pfast = pfast-&gt;next-&gt;next;
+        if(pfast==pslow) return true;
+    }
+    return false;
+}
+</code></pre><h3 id="反向遍历"><a href="#反向遍历" class="headerlink" title="反向遍历"></a>反向遍历</h3><p>可以采用先将链表存在栈中，然后先进后出即为反向遍历：</p>
+<pre><code>void reverse(Node* head){
+    stack&lt;Node*&gt; nodestack;
+    Node* p = head;
+    while(p!=NULL){
+        nodestack.push(p);
+        p=p-&gt;next;
+    }
+    while(!nodestack.empty()){
+        cout&lt;&lt;nodestack.top().value&lt;&lt;endl;
+        nodestack.pop();
+    }
+}
+</code></pre><p>或者是采用递归的方法：</p>
+<pre><code>void reverse(Node* head){
+    if(head!=NULL){
+        if(head-&gt;next!=NULL){
+            reverse(head-&gt;next);
+        }
+        cout&lt;&lt;head-&gt;value&lt;&lt;endl;
+    }
+}
+</code></pre><h3 id="链表反转"><a href="#链表反转" class="headerlink" title="链表反转"></a>链表反转</h3><p>采用就地反转法，有一篇博客讲的很清楚<a href="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" title="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" target="_blank" rel="external">https://www.cnblogs.com/byrhuangqiang/p/4311336.html</a>，这里就转载一下人家的方法，主要思路就是把当前链表的下一个节点PCur插入到头结点dummy的下一个节点中，就地反转。<br>dummy-&gt;1-&gt;2-&gt;3-&gt;4-&gt;5的就地反转过程：<br>dummy-&gt;2-&gt;1-&gt;3-&gt;4-&gt;5<br>dummy-&gt;3-&gt;2-&gt;1-&gt;4-&gt;5<br>dummy-&gt;4&gt;-3-&gt;2-&gt;1-&gt;5<br>dummy-&gt;5-&gt;4-&gt;3-&gt;2-&gt;1</p>
+<p>初始状态为：</p>
+<p><img src="/img/LinkedList/reverseList1.png" alt=""></p>
+<p>pCur指向每一次需要反转的节点，将prev对应的节点连接到下一个需要反转的节点，将pCur连接的当前需要反转的节点作为插入到dummy之后，即移到了头部，调整pCur指向下一个需要反转的节点，这样循环直到下一个需要反转的节点为NULL，其动态过程如下图：</p>
+<p><img src="/img/LinkedList/reverseList2.png" alt=""></p>
+<pre><code>Node* reverseList(Node* head){
+    if(head==NULL) return head;
+    Node* dummy = new Node;
+    dummy-&gt;next = head;
+    Node* prev = dummy-&gt;next;
+    Node* pCur = prev-&gt;next;
+    while(pCur!=NULL){
+        prev-&gt;next = pCur-&gt;next;
+        pCur-&gt;next = dummy-&gt;next;
+        dummy-&gt;next = pCur;
+        pCur = prev-&gt;next;
+    }
+    return dummy-&gt;next;
+}
+</code></pre><h3 id="链表相交"><a href="#链表相交" class="headerlink" title="链表相交"></a>链表相交</h3><p>两个链表相交，则相交之后必重合，从交点到末尾节点均相同。那么如果两个链表p1，p2相交的话，首先假设获得链表的长度分别为m，n，那么让较长的先走|m-n|步，再同步走的话，如果两个链表相交，那么p1，p2指针必定会相撞。</p>
+<font face="黑体" color="black" size="4"><strong>参考</strong></font>
+
+<p><a href="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" title="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" target="_blank" rel="external">https://www.cnblogs.com/byrhuangqiang/p/4311336.html</a><br><a href="https://www.cnblogs.com/byonecry/p/4458821.html" title="https://www.cnblogs.com/byonecry/p/4458821.html" target="_blank" rel="external">https://www.cnblogs.com/byonecry/p/4458821.html</a></p>
 
       
     </div>
@@ -647,7 +726,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些例子"><span class="nav-number">2.</span> <span class="nav-text">一些例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入元素"><span class="nav-number">2.1.</span> <span class="nav-text">插入元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除元素"><span class="nav-number">2.2.</span> <span class="nav-text">删除元素</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些例子"><span class="nav-number">2.</span> <span class="nav-text">一些例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入节点"><span class="nav-number">2.1.</span> <span class="nav-text">插入节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除节点"><span class="nav-number">2.2.</span> <span class="nav-text">删除节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找出倒数第k个节点"><span class="nav-number">2.3.</span> <span class="nav-text">找出倒数第k个节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断是否有环"><span class="nav-number">2.4.</span> <span class="nav-text">判断是否有环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向遍历"><span class="nav-number">2.5.</span> <span class="nav-text">反向遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表反转"><span class="nav-number">2.6.</span> <span class="nav-text">链表反转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表相交"><span class="nav-number">2.7.</span> <span class="nav-text">链表相交</span></a></li></ol></li></ol></div>
             
 
           </div>
