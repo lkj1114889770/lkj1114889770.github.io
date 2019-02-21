@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-02-21T12:26:03.638Z</updated>
+  <updated>2019-02-21T12:34:48.006Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2019/02/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E9%93%BE%E8%A1%A8/"/>
     <id>http://yoursite.com/2019/02/21/数据结构之链表/</id>
     <published>2019-02-21T07:37:15.000Z</published>
-    <updated>2019-02-21T12:26:03.638Z</updated>
+    <updated>2019-02-21T12:34:48.006Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。</p>
 <pre><code>struct Node{
@@ -93,9 +93,9 @@
 }
 </code></pre><h3 id="链表反转"><a href="#链表反转" class="headerlink" title="链表反转"></a>链表反转</h3><p>采用就地反转法，有一篇博客讲的很清楚<a href="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" title="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" target="_blank" rel="external">https://www.cnblogs.com/byrhuangqiang/p/4311336.html</a>，这里就转载一下人家的方法，主要思路就是把当前链表的下一个节点PCur插入到头结点dummy的下一个节点中，就地反转。<br>dummy-&gt;1-&gt;2-&gt;3-&gt;4-&gt;5的就地反转过程：<br>dummy-&gt;2-&gt;1-&gt;3-&gt;4-&gt;5<br>dummy-&gt;3-&gt;2-&gt;1-&gt;4-&gt;5<br>dummy-&gt;4&gt;-3-&gt;2-&gt;1-&gt;5<br>dummy-&gt;5-&gt;4-&gt;3-&gt;2-&gt;1</p>
 <p>初始状态为：</p>
-<p><img src="/img/LinkedList/reverseList1.png" width="400" hegiht="200" align="center"></p>
+<p><img src="/img/LinkedList/reverseList1.png" width="300" hegiht="150" align="center"></p>
 <p>pCur指向每一次需要反转的节点，将prev对应的节点连接到下一个需要反转的节点，将pCur连接的当前需要反转的节点作为插入到dummy之后，即移到了头部，调整pCur指向下一个需要反转的节点，这样循环直到下一个需要反转的节点为NULL，其动态过程如下图：</p>
-<p><img src="/img/LinkedList/reverseList2.png" width="400" hegiht="600" align="center"></p>
+<p><img src="/img/LinkedList/reverseList2.png" width="300" hegiht="450" align="center"></p>
 <pre><code>Node* reverseList(Node* head){
     if(head==NULL) return head;
     Node* dummy = new Node;

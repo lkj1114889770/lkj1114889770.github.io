@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/img/LinkedList/reverseList1.png">
 <meta property="og:image" content="http://yoursite.com/img/LinkedList/reverseList2.png">
-<meta property="og:updated_time" content="2019-02-21T12:26:03.638Z">
+<meta property="og:updated_time" content="2019-02-21T12:34:48.006Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构之链表">
 <meta name="twitter:description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个节点和下一个节点的指针；如果让链表最后一个节点指向第一个节点，就构成了循环链表。 一些例子">
@@ -460,9 +460,9 @@
 }
 </code></pre><h3 id="链表反转"><a href="#链表反转" class="headerlink" title="链表反转"></a>链表反转</h3><p>采用就地反转法，有一篇博客讲的很清楚<a href="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" title="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" target="_blank" rel="external">https://www.cnblogs.com/byrhuangqiang/p/4311336.html</a>，这里就转载一下人家的方法，主要思路就是把当前链表的下一个节点PCur插入到头结点dummy的下一个节点中，就地反转。<br>dummy-&gt;1-&gt;2-&gt;3-&gt;4-&gt;5的就地反转过程：<br>dummy-&gt;2-&gt;1-&gt;3-&gt;4-&gt;5<br>dummy-&gt;3-&gt;2-&gt;1-&gt;4-&gt;5<br>dummy-&gt;4&gt;-3-&gt;2-&gt;1-&gt;5<br>dummy-&gt;5-&gt;4-&gt;3-&gt;2-&gt;1</p>
 <p>初始状态为：</p>
-<p><img src="/img/LinkedList/reverseList1.png" width="400" hegiht="200" align="center"></p>
+<p><img src="/img/LinkedList/reverseList1.png" width="300" hegiht="150" align="center"></p>
 <p>pCur指向每一次需要反转的节点，将prev对应的节点连接到下一个需要反转的节点，将pCur连接的当前需要反转的节点作为插入到dummy之后，即移到了头部，调整pCur指向下一个需要反转的节点，这样循环直到下一个需要反转的节点为NULL，其动态过程如下图：</p>
-<p><img src="/img/LinkedList/reverseList2.png" width="400" hegiht="600" align="center"></p>
+<p><img src="/img/LinkedList/reverseList2.png" width="300" hegiht="450" align="center"></p>
 <pre><code>Node* reverseList(Node* head){
     if(head==NULL) return head;
     Node* dummy = new Node;
