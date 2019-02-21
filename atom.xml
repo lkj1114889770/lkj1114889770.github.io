@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-02-21T08:40:06.943Z</updated>
+  <updated>2019-02-21T09:11:21.476Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,13 +20,35 @@
     <link href="http://yoursite.com/2019/02/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E9%93%BE%E8%A1%A8/"/>
     <id>http://yoursite.com/2019/02/21/数据结构之链表/</id>
     <published>2019-02-21T07:37:15.000Z</published>
-    <updated>2019-02-21T08:40:06.943Z</updated>
+    <updated>2019-02-21T09:11:21.476Z</updated>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>链表由一系列的不必在内存中连续的结构组成，每一个结构包括元素（数据域）和指向该元素之后元素的指针（指针域）构成。</p>
+<pre><code>struct Node{
+    int value;
+    Node *next;
+}
+</code></pre><p>上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个元素和下一个元素的指针；如果让链表最后一个元素指向第一个元素，就构成了循环链表。</p>
+<h2 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h2><a id="more"></a>
+<h3 id="插入元素"><a href="#插入元素" class="headerlink" title="插入元素"></a>插入元素</h3><p>在p之后插入值为i的元素</p>
+<pre><code>void insert(Node *p, int i){
+    Node* node = new Node;
+    node-&gt;value = i;
+    node-&gt;next = p-&gt;next;
+    p-&gt;next = node;
+}
+</code></pre><h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><p>删除某个元素p时，只需要用p后一个元素覆盖p当前元素：</p>
+<p>void delete(NOde *p){<br>    p-&gt;value = p-&gt;next-&gt;value;<br>    p-&gt;next = p-&gt;next-&gt;next;<br>}</p>
+]]></content>
     
     <summary type="html">
     
-      &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla
+      &lt;h2 id=&quot;定义&quot;&gt;&lt;a href=&quot;#定义&quot; class=&quot;headerlink&quot; title=&quot;定义&quot;&gt;&lt;/a&gt;定义&lt;/h2&gt;&lt;p&gt;链表由一系列的不必在内存中连续的结构组成，每一个结构包括元素（数据域）和指向该元素之后元素的指针（指针域）构成。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;struct Node{
+    int value;
+    Node *next;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个元素和下一个元素的指针；如果让链表最后一个元素指向第一个元素，就构成了循环链表。&lt;/p&gt;
+&lt;h2 id=&quot;一些例子&quot;&gt;&lt;a href=&quot;#一些例子&quot; class=&quot;headerlink&quot; title=&quot;一些例子&quot;&gt;&lt;/a&gt;一些例子&lt;/h2&gt;
     
     </summary>
     
@@ -113,9 +135,9 @@
     <link href="http://yoursite.com/2018/09/20/Mask%20R-CNN%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>http://yoursite.com/2018/09/20/Mask R-CNN学习笔记/</id>
     <published>2018-09-20T07:54:57.000Z</published>
-    <updated>2018-10-05T12:58:35.356Z</updated>
+    <updated>2019-02-21T08:58:25.714Z</updated>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>论文链接：<a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="external">https://arxiv.org/abs/1703.06870</a><br>源码链接：<a href="https://github.com/matterport/Mask_RCNN" target="_blank" rel="external">https://github.com/matterport/Mask_RCNN</a><br>之前一直在做目标检测这块，最近了解了一下语义分割，其实是目标检测更细致的任务，在图像中做到像素级的分割，包括目标检测和准确的像素分割，所以说是结合了之前目标检测的任务（classification and localization），以及语义分割（将像素点分类到特定的所属类别），首先拜读的就是17年何凯明大神的论文<a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="external">Mask R-CNN</a>，并且阅读了keras版本的实现<a href="https://github.com/matterport/Mask_RCNN" target="_blank" rel="external">代码</a>，在此做一个学习笔记，<br><a id="more"></a></p>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>论文链接：<a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="external">https://arxiv.org/abs/1703.06870</a><br>源码链接：<a href="https://github.com/matterport/Mask_RCNN" target="_blank" rel="external">https://github.com/matterport/Mask_RCNN</a><br>之前一直在做目标检测这块，最近了解了一下实例分割，其实是目标检测更细致的任务，在图像中做到像素级的分割，包括目标检测和准确的像素分割，所以说是结合了之前目标检测的任务（classification and localization），以及语义分割（将像素点分类到特定的所属类别），首先拜读的就是17年何凯明大神的论文<a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="external">Mask R-CNN</a>，并且阅读了keras版本的实现<a href="https://github.com/matterport/Mask_RCNN" target="_blank" rel="external">代码</a>，在此做一个学习笔记，<br><a id="more"></a></p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Mask R-CNN是在faster R-CNN的classification branch和bounding box regression branch基础上，增加了一个segmentation mask branch，以像素到像素的方法来预测分割掩码（segmentation mask），如下图所示。</p>
 <p><img src="/img/Mask_R-CNN/figure_1.png" alt=""></p>
 <p>Faster R-CNN由于RoI pooling，没有办法做到输入和输出之间的像素到像素的对齐(pixel-to-pixel)，为了解决这个问题，Mask R-CNN提出了一个RoiAlign层，可以极大地提高掩码的准确率；同时解耦掩码预测和分类预测，为每个类都独立地预测二进制掩码，这样不会跨类别竞争。最终运行速度可达5 FPS左右。</p>
@@ -525,7 +547,7 @@ box_indices = tf.stop_gradient(box_indices)
     
     <summary type="html">
     
-      &lt;p&gt;论文链接：&lt;a href=&quot;https://arxiv.org/abs/1703.06870&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://arxiv.org/abs/1703.06870&lt;/a&gt;&lt;br&gt;源码链接：&lt;a href=&quot;https://github.com/matterport/Mask_RCNN&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/matterport/Mask_RCNN&lt;/a&gt;&lt;br&gt;之前一直在做目标检测这块，最近了解了一下语义分割，其实是目标检测更细致的任务，在图像中做到像素级的分割，包括目标检测和准确的像素分割，所以说是结合了之前目标检测的任务（classification and localization），以及语义分割（将像素点分类到特定的所属类别），首先拜读的就是17年何凯明大神的论文&lt;a href=&quot;https://arxiv.org/abs/1703.06870&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Mask R-CNN&lt;/a&gt;，并且阅读了keras版本的实现&lt;a href=&quot;https://github.com/matterport/Mask_RCNN&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;代码&lt;/a&gt;，在此做一个学习笔记，&lt;br&gt;
+      &lt;p&gt;论文链接：&lt;a href=&quot;https://arxiv.org/abs/1703.06870&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://arxiv.org/abs/1703.06870&lt;/a&gt;&lt;br&gt;源码链接：&lt;a href=&quot;https://github.com/matterport/Mask_RCNN&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/matterport/Mask_RCNN&lt;/a&gt;&lt;br&gt;之前一直在做目标检测这块，最近了解了一下实例分割，其实是目标检测更细致的任务，在图像中做到像素级的分割，包括目标检测和准确的像素分割，所以说是结合了之前目标检测的任务（classification and localization），以及语义分割（将像素点分类到特定的所属类别），首先拜读的就是17年何凯明大神的论文&lt;a href=&quot;https://arxiv.org/abs/1703.06870&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Mask R-CNN&lt;/a&gt;，并且阅读了keras版本的实现&lt;a href=&quot;https://github.com/matterport/Mask_RCNN&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;代码&lt;/a&gt;，在此做一个学习笔记，&lt;br&gt;
     
     </summary>
     
@@ -534,7 +556,7 @@ box_indices = tf.stop_gradient(box_indices)
     
       <category term="CV" scheme="http://yoursite.com/tags/CV/"/>
     
-      <category term="语义分割" scheme="http://yoursite.com/tags/%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2/"/>
+      <category term="实例分割" scheme="http://yoursite.com/tags/%E5%AE%9E%E4%BE%8B%E5%88%86%E5%89%B2/"/>
     
   </entry>
   
