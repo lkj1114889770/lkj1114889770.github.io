@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="爬虫," />
+  <meta name="keywords" content="算法,数据结构," />
 
 
 
@@ -96,23 +96,18 @@
 
 
 
-<meta name="description" content="正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。">
-<meta name="keywords" content="爬虫">
+<meta name="description" content="查找是针对符号表（有时也称之为字典或者索引）存储的键(key)值(value)信息，按照指定的键来查找信息，在这里就对常见的查找算法以及实现高效查找的符号表数据结构进行介绍。">
+<meta name="keywords" content="算法,数据结构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="12306车次查询与短信提醒">
-<meta property="og:url" content="http://yoursite.com/2017/10/02/12306车次查询与短信提醒/index.html">
+<meta property="og:title" content="数据结构与算法之查找">
+<meta property="og:url" content="http://yoursite.com/2019/02/26/数据结构与算法之查找/index.html">
 <meta property="og:site_name" content="听歌的小孩">
-<meta property="og:description" content="正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。">
+<meta property="og:description" content="查找是针对符号表（有时也称之为字典或者索引）存储的键(key)值(value)信息，按照指定的键来查找信息，在这里就对常见的查找算法以及实现高效查找的符号表数据结构进行介绍。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/DzxBB97.png">
-<meta property="og:image" content="https://i.imgur.com/fGEXVjb.png">
-<meta property="og:image" content="https://i.imgur.com/PESBfPR.png">
-<meta property="og:image" content="https://i.imgur.com/PpUZ7Qk.png">
-<meta property="og:updated_time" content="2017-10-02T05:35:41.814Z">
+<meta property="og:updated_time" content="2019-02-26T09:11:12.905Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="12306车次查询与短信提醒">
-<meta name="twitter:description" content="正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。">
-<meta name="twitter:image" content="https://i.imgur.com/DzxBB97.png">
+<meta name="twitter:title" content="数据结构与算法之查找">
+<meta name="twitter:description" content="查找是针对符号表（有时也称之为字典或者索引）存储的键(key)值(value)信息，按照指定的键来查找信息，在这里就对常见的查找算法以及实现高效查找的符号表数据结构进行介绍。">
 
 
 
@@ -141,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/02/12306车次查询与短信提醒/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/02/26/数据结构与算法之查找/"/>
 
 
 
 
 
-  <title>12306车次查询与短信提醒 | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>数据结构与算法之查找 | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -305,7 +300,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/02/12306车次查询与短信提醒/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/26/数据结构与算法之查找/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="听歌的小孩">
@@ -322,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">12306车次查询与短信提醒</h1>
+          <h1 class="post-title" itemprop="name headline">数据结构与算法之查找</h1>
         
 
         <div class="post-meta">
@@ -334,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-02T10:33:05+08:00">
-                2017-10-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-26T15:42:27+08:00">
+                2019-02-26
               </time>
             
 
@@ -366,7 +361,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  963
+                  339
                 </span>
               
 
@@ -391,71 +386,18 @@
       
 
       
-        <p>正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。</p>
-<p><img src="https://i.imgur.com/DzxBB97.png" alt=""></p>
+        <p>查找是针对符号表（有时也称之为字典或者索引）存储的键(key)值(value)信息，按照指定的键来查找信息，在这里就对常见的查找算法以及实现高效查找的符号表数据结构进行介绍。</p>
 <a id="more"></a>
-<p>首先打开12306的查票页面<a href="https://kyfw.12306.cn/otn/leftTicket/init" target="_blank" rel="external">https://kyfw.12306.cn/otn/leftTicket/init </a>输入出发地和目的地进行搜索。<br>下面就是常见的套路，对于谷歌浏览器按F12打开开发者工具，获取查询的时候的数据信息。按下查询之后，可以发现有两个数据请求：</p>
-<p><img src="https://i.imgur.com/fGEXVjb.png" alt=""></p>
-<p>显然第二个请求返回数据含有我们需要的车次信息，因此根据第二个请求的header来封装我们requests.get时候的请求包，以及如何封装cookies也可见之前的<a href="http://blog.lkj666.top/2017/08/08/也看战狼2：爬取豆瓣影评做词云/#more" target="_blank" rel="external">爬虫博客</a>。</p>
-<pre><code>url = &apos;https://kyfw.12306.cn/otn/leftTicket/queryX?leftTicketDTO.train_date=2017-10-08&amp;leftTicketDTO.from_station=YTG&amp;leftTicketDTO.to_station=HZH&amp;purpose_codes=ADULT&apos;
-headers = {
-    &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.9&apos;,
-    &apos;Accept-Language&apos;: &apos;zh-CN,zh;q=0.9&apos;,
-    &apos;Host&apos;: &apos;kyfw.12306.cn&apos;,
-    &quot;User-Agent&quot;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3218.0 Safari/537.36&apos;,
+<h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><p>二分查找针对的是有序的符号表，如果是无序的首先就要进行排序操作。其基本思想很简单，首先将key和中间键比较，如果相等则返回其索引；如果小于中间键则在左半部分同样取中间键进行比较；大于则在右半部分取中间键进行比较。</p>
+<pre><code>在N个键的有序符号表中进行二分查找最多需要（*logN*+1次比较），算法复杂度为*O(logN)*.
+</code></pre><h2 id="二叉查找树"><a href="#二叉查找树" class="headerlink" title="二叉查找树"></a>二叉查找树</h2><p>二叉查找树（Binary Search Tree）每个节点都含有一个可比较大小的键，每个节点都含有两个链接（有点类似于链表的扩展），基本定义为：</p>
+<pre><code>class Node{
+    Key key;  // 键
+    Value val;  // 值
+    Node left,right;  // 指向子树的链接
+    int N;  // 以该节点为根的子数节点总数
 }
-</code></pre><p>由于12306网站还有SSL验证，所以用常规的方法去get数据都会有SSLError，最简单的处理方式就是直接忽略这个验证。</p>
-<pre><code>a = requests.get(url, cookies=cookies,headers=headers,verify = False)
-</code></pre><p>12306网站在访问的时候经常有时候请求不到数据，这个时候需要进行判别，以防止后续处理信息报错，有计算机网络知识就知道，正常的http response的状态code就是会返回200，可以据此来判别。</p>
-<pre><code>while (a.status_code !=200):
-    time.sleep(10)
-    a = requests.get(url, cookies=cookies, headers=headers, verify=False)
-</code></pre><p>对返回的车次信息进行查看，返回的信息类似于json格式的文件，车次信息包含在里面。</p>
-<p><img src="https://i.imgur.com/PESBfPR.png" alt=""></p>
-<p>通过json.load进行读取后返回字典格式文件，取出其中的车次此案次，存为csv文件后用excel打开，以便更加直观地分析。</p>
-<p><img src="https://i.imgur.com/PpUZ7Qk.png" alt=""></p>
-<pre><code>data = json.loads(a.content.decode(&apos;utf-8&apos;,&apos;ignore&apos;))
-train_infos = data[&apos;data&apos;][&apos;result&apos;]
-train_infos_csv=[]
-infos = train_infos
-for info in infos:
-    train_infos_csv.append((info.replace(&apos;|&apos;,&apos;,&apos;))+&apos;\n&apos;)
-f = open(&apos;train_infos.csv&apos;,&apos;w&apos;)
-for info in train_infos_csv:
-    f.write(info)
-
-f.close()
-csv_reader = csv.reader(open(&apos;train_infos.csv&apos;))
-</code></pre><p>下面需要取出所需要的信息，我要的是高铁或者动车的二等座，再进行一次过滤：</p>
-<pre><code>HSR_infos=[]
-for info in csv_reader:
-    if(&apos;G&apos; in info[3]):
-        HSR_infos.append(info)
-    elif(&apos;D&apos; in info[3]):
-        HSR_infos.append(info)
-
-Ticket_avaliable=&apos;&apos;
-for info in HSR_infos:
-    if(info[-6] != u&apos;无&apos;):
-        Ticket_avaliable=Ticket_avaliable + info[3] +&apos;,&apos;
-Body=u&apos;这些车次还有票&apos; + Ticket_avaliable
-if(Ticket_avaliable ==&apos;&apos;):
-    print(u&apos;好悲伤，没票了&apos;)
-    time.sleep(5)
-else:
-    print(Body)
-    messeage = client.messages.create(to=To, from_=From, body=Body)
-    time.sleep(600)
-</code></pre><p>上面的client.messages.create就是发送短信模块，需要用到Twilio，首先需要到Twilio官方网站注册之后账号，有账户的SID 和TOKEN后进行配置，就能发送了</p>
-<pre><code>SID = &apos;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&apos;
-TOKEN = &apos;xxxxxxxxxxxxxxxxxxxxxxxxxxxxx&apos;
-client = Client(SID,TOKEN)
-To = &apos;+86xxxxxxxxxxxxxxx&apos;
-From = &apos;xxxxxxxxxxxxxx&apos;
-Body = u&apos;啦啦啦啦啦&apos;
-messeage = client.messages.create(to=To,from_=From,body=Body)
-</code></pre><p>上面的xxxx部分都需要根据自己的账户替换自己的信息。<br>这样就实现了有票自动提醒，由于Twilio接收短信比较麻烦，所以没法通过短信终止程序，只能在查到票之后先终止运行10分钟，其实可以考虑通过邮件来控制程序，这个还是比较好操作的。</p>
-<p>完整代码可见<a href="https://github.com/lkj1114889770/WebScraping/tree/master/12306_Webscraping" target="_blank" rel="external">Github</a>.</p>
+</code></pre><p>具有的一条最重要的性质为<strong>：每个节点的键都大于左子树的任意节点键值，并且小于右子树任意节点键值。</strong></p>
 
       
     </div>
@@ -473,7 +415,9 @@ messeage = client.messages.create(to=To,from_=From,body=Body)
       
         <div class="post-tags">
           
-            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
           
         </div>
       
@@ -486,8 +430,8 @@ messeage = client.messages.create(to=To,from_=From,body=Body)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/30/自组织特征映射神经网络（SOM）/" rel="next" title="自组织特征映射神经网络（SOM）">
-                <i class="fa fa-chevron-left"></i> 自组织特征映射神经网络（SOM）
+              <a href="/2019/02/21/数据结构之链表/" rel="next" title="数据结构之链表">
+                <i class="fa fa-chevron-left"></i> 数据结构之链表
               </a>
             
           </div>
@@ -495,10 +439,6 @@ messeage = client.messages.create(to=To,from_=From,body=Body)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/20/下完这场雨/" rel="prev" title="下完这场雨">
-                下完这场雨 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -573,8 +513,17 @@ messeage = client.messages.create(to=To,from_=From,body=Body)
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -686,6 +635,22 @@ messeage = client.messages.create(to=To,from_=From,body=Body)
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找"><span class="nav-number">1.</span> <span class="nav-text">二分查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">2.</span> <span class="nav-text">二叉查找树</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
