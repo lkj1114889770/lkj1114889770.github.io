@@ -104,10 +104,18 @@
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="查找是针对符号表（有时也称之为字典或者索引）存储的键(key)值(value)信息，按照指定的键来查找信息，在这里就对常见的查找算法以及实现高效查找的符号表数据结构进行介绍。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-26T09:11:12.905Z">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.2.2.png">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.2.4.png">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.2.6.png">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.2.13.png">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.3.1.png">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.3.10.png">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.3.11.png">
+<meta property="og:updated_time" content="2019-02-26T12:07:13.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构与算法之查找">
 <meta name="twitter:description" content="查找是针对符号表（有时也称之为字典或者索引）存储的键(key)值(value)信息，按照指定的键来查找信息，在这里就对常见的查找算法以及实现高效查找的符号表数据结构进行介绍。">
+<meta name="twitter:image" content="http://yoursite.com/img/search/figure3.2.2.png">
 
 
 
@@ -361,7 +369,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  339
+                  869
                 </span>
               
 
@@ -389,7 +397,7 @@
         <p>查找是针对符号表（有时也称之为字典或者索引）存储的键(key)值(value)信息，按照指定的键来查找信息，在这里就对常见的查找算法以及实现高效查找的符号表数据结构进行介绍。</p>
 <a id="more"></a>
 <h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><p>二分查找针对的是有序的符号表，如果是无序的首先就要进行排序操作。其基本思想很简单，首先将key和中间键比较，如果相等则返回其索引；如果小于中间键则在左半部分同样取中间键进行比较；大于则在右半部分取中间键进行比较。</p>
-<pre><code>在N个键的有序符号表中进行二分查找最多需要（*logN*+1次比较），算法复杂度为*O(logN)*.
+<pre><code>**在N个键的有序符号表中进行二分查找最多需要（logN+1）次比较），算法复杂度为O(logN).**
 </code></pre><h2 id="二叉查找树"><a href="#二叉查找树" class="headerlink" title="二叉查找树"></a>二叉查找树</h2><p>二叉查找树（Binary Search Tree）每个节点都含有一个可比较大小的键，每个节点都含有两个链接（有点类似于链表的扩展），基本定义为：</p>
 <pre><code>class Node{
     Key key;  // 键
@@ -397,8 +405,26 @@
     Node left,right;  // 指向子树的链接
     int N;  // 以该节点为根的子数节点总数
 }
-</code></pre><p>具有的一条最重要的性质为<strong>：每个节点的键都大于左子树的任意节点键值，并且小于右子树任意节点键值。</strong></p>
-
+</code></pre><p><img src="/img/search/figure3.2.2.png" alt=""></p>
+<p>具有的一条最重要的性质为<strong>：每个节点的键都大于左子树的任意节点键值，并且小于右子树任意节点键值。</strong></p>
+<h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><p><img src="/img/search/figure3.2.4.png" alt=""></p>
+<p>在二叉查找树中查找，可以采用递归的方法：如果树是空的，则查找未命中；如果被查找键和根节点的键相等，则查找命中；否则就递归地再适当的子树中查找，如果被查找的键较小就选择左子树，较大就选择右子树。</p>
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><p>插入操作和查找类似：如果树是空的，就返回含有该键值对的新节点；如果被查找的键小于根节点的键，就继续在左子树插入该键，否则在右子树插入该键。</p>
+<p><img src="/img/search/figure3.2.6.png" alt=""></p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>从二叉树中删除一个元素如图3.2.13，总结来说，就是在被删除元素的右子树中不断检索左子树，作为后继节点替换被删除元素，从而达到删除对应元素的目的。</p>
+<p><img src="/img/search/figure3.2.13.png" alt=""></p>
+<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>二叉查找树实现良好的性能依赖于其中键的分布足够随机以能够消除长路径。最坏的情况下，N个节点都存在于一个查找路径上，查找增长数量级为N，平均查找2lnN=1.39lgN.</p>
+<h2 id="平衡查找树"><a href="#平衡查找树" class="headerlink" title="平衡查找树"></a>平衡查找树</h2><p>平衡查找树含有N个节点，且能保持树高为~lgN,这样就能保证所有查找在lgN次内比较结束。</p>
+<h3 id="2-3查找树"><a href="#2-3查找树" class="headerlink" title="2-3查找树"></a>2-3查找树</h3><p>一棵2-3查找树由以下节点组成：</p>
+<ol>
+<li>2-节点，含有一个键和两个链接，左链接的子树小于该节点，有链接的子树大于该节点。</li>
+<li>3-节点，含有两个个键和三个链接，除左右链接外，还有一个中链接，指向键都位于两个键之间的树。</li>
+</ol>
+<p><img src="/img/search/figure3.3.1.png" alt=""></p>
+<p><strong>因为包括3节点，所以可以保持平衡性，即任意一条路径长度都相同，在这种情况下，插入算法都是局部变换，除了相关的节点和链接之外，不必修改其他节点。在一棵大小为N的2-3树种，查找和插入操作访问的节点不超过lgN个。</strong></p>
+<p><img src="/img/search/figure3.3.10.png" alt=""></p>
+<p><img src="/img/search/figure3.3.11.png" alt=""></p>
+<h3 id="红黑二叉查找树"><a href="#红黑二叉查找树" class="headerlink" title="红黑二叉查找树"></a>红黑二叉查找树</h3>
       
     </div>
     
@@ -645,7 +671,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找"><span class="nav-number">1.</span> <span class="nav-text">二分查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">2.</span> <span class="nav-text">二叉查找树</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找"><span class="nav-number">1.</span> <span class="nav-text">二分查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">2.</span> <span class="nav-text">二叉查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找"><span class="nav-number">2.1.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能分析"><span class="nav-number">2.4.</span> <span class="nav-text">性能分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平衡查找树"><span class="nav-number">3.</span> <span class="nav-text">平衡查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3查找树"><span class="nav-number">3.1.</span> <span class="nav-text">2-3查找树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#红黑二叉查找树"><span class="nav-number">3.2.</span> <span class="nav-text">红黑二叉查找树</span></a></li></ol></li></ol></div>
             
 
           </div>
