@@ -111,7 +111,15 @@
 <meta property="og:image" content="http://yoursite.com/img/search/figure3.3.1.png">
 <meta property="og:image" content="http://yoursite.com/img/search/figure3.3.10.png">
 <meta property="og:image" content="http://yoursite.com/img/search/figure3.3.11.png">
-<meta property="og:updated_time" content="2019-02-26T12:07:13.487Z">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.3.12.png">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.3.15.png">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.3.17.png">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.3.21.png">
+<meta property="og:image" content="http://yoursite.com/img/search/figure3.3.24.png">
+<meta property="og:image" content="http://yoursite.com/img/search/table3.3.1.png">
+<meta property="og:image" content="http://yoursite.com/img/search/table3.4.3.png">
+<meta property="og:image" content="http://yoursite.com/img/search/1.png">
+<meta property="og:updated_time" content="2019-02-26T12:48:55.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构与算法之查找">
 <meta name="twitter:description" content="查找是针对符号表（有时也称之为字典或者索引）存储的键(key)值(value)信息，按照指定的键来查找信息，在这里就对常见的查找算法以及实现高效查找的符号表数据结构进行介绍。">
@@ -369,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  869
+                  1.7k
                 </span>
               
 
@@ -424,7 +432,32 @@
 <p><strong>因为包括3节点，所以可以保持平衡性，即任意一条路径长度都相同，在这种情况下，插入算法都是局部变换，除了相关的节点和链接之外，不必修改其他节点。在一棵大小为N的2-3树种，查找和插入操作访问的节点不超过lgN个。</strong></p>
 <p><img src="/img/search/figure3.3.10.png" alt=""></p>
 <p><img src="/img/search/figure3.3.11.png" alt=""></p>
-<h3 id="红黑二叉查找树"><a href="#红黑二叉查找树" class="headerlink" title="红黑二叉查找树"></a>红黑二叉查找树</h3>
+<h3 id="红黑二叉查找树"><a href="#红黑二叉查找树" class="headerlink" title="红黑二叉查找树"></a>红黑二叉查找树</h3><p>红黑二叉查找树的思想是用标准的二叉查找树（完全由2-节点构成）和一些额外的信息（替换3-节点）。树种包括两种链接：红链接将两个2-节点链接构成一个3-节点，黑链接即是2-3树中的普通链接。</p>
+<p><img src="/img/search/figure3.3.12.png" alt=""></p>
+<p>红黑树是满足下列条件的二叉查找树“</p>
+<ul>
+<li>红链接均为左链接；</li>
+<li>没有任何节点同时和两条红链接相接；</li>
+<li>树是完美黑色平衡的，任意空链接到根节点的路径上的黑链接数量相同。</li>
+</ul>
+<p><img src="/img/search/figure3.3.15.png" alt=""></p>
+<p><strong>某些插入操作之后可能出现右红链接或者两条连续的红链接，这时候就需要进行旋转，以保证红黑树的有序性和完美平衡性。</strong></p>
+<p><img src="/img/search/figure3.3.17.png" alt=""></p>
+<p>如果左右节点均为红色，需要进行颜色转换：</p>
+<p><img src="/img/search/figure3.3.21.png" alt=""></p>
+<p>一个完整的红黑树构造轨迹如图3.3.24：</p>
+<p><img src="/img/search/figure3.3.24.png" alt=""></p>
+<p><img src="/img/search/table3.3.1.png" alt=""></p>
+<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>散列表（也称之为哈希表）将键作为数组索引，从而可以快速访问任意键的值。散列表的算法主要分为两步：用<strong>散列函数（哈希函数）</strong>将键转化为数组的索引；针对多个键散列到同一个索引值的情况，<strong>处理碰撞冲突</strong>。<br><strong>直接定址</strong>与<strong>解决冲突</strong>是哈希表的两大特点，其思想很简单，如果所有的键都是整数，那么就可以使用一个简单的无序数组来实现：将键作为索引，值即为其对应的值，这样就可以快速访问任意键的值。散列表是一个在时间和空间上做出权衡的经典例子。如果没有内存限制，那么可以直接将键作为数组的索引。那么所有的查找时间复杂度为O(1)；如果没有时间限制，那么我们可以使用无序数组并进行顺序查找，这样只需要很少的内存。哈希表使用了适度的时间和空间来在这两个极端之间找到了平衡。只需要调整散列函数函数算法即可在时间和空间上做出取舍。</p>
+<h3 id="基于拉链法的散列表"><a href="#基于拉链法的散列表" class="headerlink" title="基于拉链法的散列表"></a>基于拉链法的散列表</h3><p>基于拉链法的散列表采用链表的数据结构，数组中元素为链表，将散列值相同的键值保存在一个链表中。</p>
+<p><img src="/img/search/table3.4.3.png" alt=""></p>
+<h3 id="基于线性探测法的散列表"><a href="#基于线性探测法的散列表" class="headerlink" title="基于线性探测法的散列表"></a>基于线性探测法的散列表</h3><p>这种方法会用一个比较大一点的并行数组来保存键值对，一个保存键，一个保存值，解决碰撞的策略也是极其简单粗暴：当碰撞发生时（一个散列表的值已经被另一个不同的键占用），直接检查散列表的下一位置（索引值加1），不同则继续查找（到数组结尾时折回开头），直到找到该键或者遇到一个空元素，这时保存值。</p>
+<p><img src="/img/search/1.png" alt=""></p>
+<p>Hash（key） = key % 10（表长）；<br>89放入9的位置；18放入8的位置；49与89冲突，往后加到尾了就再回到头，0的位置为空放入；58与18冲突，往后加有89，再加有49，再加就放入1的位置；9与89冲突一直加到2的位置放入。<br>Hash（key） + 0，Hash（key）+1，……</p>
+<p><font face="微软雅黑" color="black" size="4"><strong>参考</strong></font><br>《算法（第4版》，本篇博客大部分图的出于此书。</p>
+<p><a href="https://blog.csdn.net/sayhello_world/article/details/77200009" target="_blank" rel="external">https://blog.csdn.net/sayhello_world/article/details/77200009</a></p>
+<p><a href="https://blog.csdn.net/simplehap/article/details/70577454" target="_blank" rel="external">https://blog.csdn.net/simplehap/article/details/70577454</a></p>
+
       
     </div>
     
@@ -671,7 +704,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找"><span class="nav-number">1.</span> <span class="nav-text">二分查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">2.</span> <span class="nav-text">二叉查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找"><span class="nav-number">2.1.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能分析"><span class="nav-number">2.4.</span> <span class="nav-text">性能分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平衡查找树"><span class="nav-number">3.</span> <span class="nav-text">平衡查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3查找树"><span class="nav-number">3.1.</span> <span class="nav-text">2-3查找树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#红黑二叉查找树"><span class="nav-number">3.2.</span> <span class="nav-text">红黑二叉查找树</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找"><span class="nav-number">1.</span> <span class="nav-text">二分查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">2.</span> <span class="nav-text">二叉查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找"><span class="nav-number">2.1.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能分析"><span class="nav-number">2.4.</span> <span class="nav-text">性能分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平衡查找树"><span class="nav-number">3.</span> <span class="nav-text">平衡查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3查找树"><span class="nav-number">3.1.</span> <span class="nav-text">2-3查找树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#红黑二叉查找树"><span class="nav-number">3.2.</span> <span class="nav-text">红黑二叉查找树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散列表"><span class="nav-number">4.</span> <span class="nav-text">散列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于拉链法的散列表"><span class="nav-number">4.1.</span> <span class="nav-text">基于拉链法的散列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于线性探测法的散列表"><span class="nav-number">4.2.</span> <span class="nav-text">基于线性探测法的散列表</span></a></li></ol></li></ol></div>
             
 
           </div>
