@@ -104,15 +104,15 @@
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/DzxBB97.png">
-<meta property="og:image" content="https://i.imgur.com/fGEXVjb.png">
-<meta property="og:image" content="https://i.imgur.com/PESBfPR.png">
-<meta property="og:image" content="https://i.imgur.com/PpUZ7Qk.png">
-<meta property="og:updated_time" content="2017-10-02T05:35:41.814Z">
+<meta property="og:image" content="http://yoursite.com/img/12306/1.png">
+<meta property="og:image" content="http://yoursite.com/img/12306/2.png">
+<meta property="og:image" content="http://yoursite.com/img/12306/3.png">
+<meta property="og:image" content="http://yoursite.com/img/12306/4.png">
+<meta property="og:updated_time" content="2019-03-19T09:03:28.942Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="12306车次查询与短信提醒">
 <meta name="twitter:description" content="正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。">
-<meta name="twitter:image" content="https://i.imgur.com/DzxBB97.png">
+<meta name="twitter:image" content="http://yoursite.com/img/12306/1.png">
 
 
 
@@ -392,10 +392,10 @@
 
       
         <p>正值国庆，不想出去玩看人，也无法在实验室知识的海洋里遨游整个假期，就干脆回家，无奈却买不到回来的票（国庆真是堪比春运啊），只能买到途径站的票。12306官方给的自动刷新车票的系统太渣，经常自己卡死停掉，因此想到用python爬取12306网站车票信息，利用Twilio在有票的情况下短信通知我。</p>
-<p><img src="https://i.imgur.com/DzxBB97.png" alt=""></p>
+<p><img src="/img/12306/1.png" alt=""></p>
 <a id="more"></a>
 <p>首先打开12306的查票页面<a href="https://kyfw.12306.cn/otn/leftTicket/init" target="_blank" rel="external">https://kyfw.12306.cn/otn/leftTicket/init </a>输入出发地和目的地进行搜索。<br>下面就是常见的套路，对于谷歌浏览器按F12打开开发者工具，获取查询的时候的数据信息。按下查询之后，可以发现有两个数据请求：</p>
-<p><img src="https://i.imgur.com/fGEXVjb.png" alt=""></p>
+<p><img src="/img/12306/2.png" alt=""></p>
 <p>显然第二个请求返回数据含有我们需要的车次信息，因此根据第二个请求的header来封装我们requests.get时候的请求包，以及如何封装cookies也可见之前的<a href="http://blog.lkj666.top/2017/08/08/也看战狼2：爬取豆瓣影评做词云/#more" target="_blank" rel="external">爬虫博客</a>。</p>
 <pre><code>url = &apos;https://kyfw.12306.cn/otn/leftTicket/queryX?leftTicketDTO.train_date=2017-10-08&amp;leftTicketDTO.from_station=YTG&amp;leftTicketDTO.to_station=HZH&amp;purpose_codes=ADULT&apos;
 headers = {
@@ -411,9 +411,9 @@ headers = {
     time.sleep(10)
     a = requests.get(url, cookies=cookies, headers=headers, verify=False)
 </code></pre><p>对返回的车次信息进行查看，返回的信息类似于json格式的文件，车次信息包含在里面。</p>
-<p><img src="https://i.imgur.com/PESBfPR.png" alt=""></p>
+<p><img src="/img/12306/3.png" alt=""></p>
 <p>通过json.load进行读取后返回字典格式文件，取出其中的车次此案次，存为csv文件后用excel打开，以便更加直观地分析。</p>
-<p><img src="https://i.imgur.com/PpUZ7Qk.png" alt=""></p>
+<p><img src="/img/12306/4.png" alt=""></p>
 <pre><code>data = json.loads(a.content.decode(&apos;utf-8&apos;,&apos;ignore&apos;))
 train_infos = data[&apos;data&apos;][&apos;result&apos;]
 train_infos_csv=[]

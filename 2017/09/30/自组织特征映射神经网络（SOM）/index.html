@@ -104,14 +104,14 @@
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="自组织特征映射神经网络（SOM）设计思想基于人体大脑，外界信息输入时，大脑皮层对应区域的部分神经元会产生兴奋，位置临近的神经云也会有相近的刺激。大脑神经元的这种特点，不是先天安排好的，而是通过后天的自学习组织形成的。芬兰Helsinki大学的Kohonen教授提出了一种成为自组织特征映射的神经网络模型。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://appwk.baidu.com/naapi/doc/view?ih=584&o=png_6_0_0_436_680_396_210_876_1252.5&iw=1100&ix=0&iy=414&aimw=1100&rn=1&doc_id=d6e8e02c647d27284b735162&pn=1&sign=b919aed799fa017c1e7f322b49ebb944&type=1&app_ver=2.9.8.2&ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&bid=1&app_ua=IncredibleS&uid=&cuid=&fr=3&Bdi_bear=WIFI&from=3_10000&bduss=&pid=1&screen=800_800&sys_ver=2.3.7">
-<meta property="og:image" content="https://i.imgur.com/JtGnkfW.png">
-<meta property="og:image" content="https://i.imgur.com/KSlpNem.png">
-<meta property="og:updated_time" content="2017-09-30T05:53:29.316Z">
+<meta property="og:image" content="http://yoursite.com/img/som/1.png">
+<meta property="og:image" content="http://yoursite.com/img/som/2.png">
+<meta property="og:image" content="http://yoursite.com/img/som/3.png">
+<meta property="og:updated_time" content="2019-03-19T09:05:15.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自组织特征映射神经网络（SOM）">
 <meta name="twitter:description" content="自组织特征映射神经网络（SOM）设计思想基于人体大脑，外界信息输入时，大脑皮层对应区域的部分神经元会产生兴奋，位置临近的神经云也会有相近的刺激。大脑神经元的这种特点，不是先天安排好的，而是通过后天的自学习组织形成的。芬兰Helsinki大学的Kohonen教授提出了一种成为自组织特征映射的神经网络模型。">
-<meta name="twitter:image" content="http://appwk.baidu.com/naapi/doc/view?ih=584&o=png_6_0_0_436_680_396_210_876_1252.5&iw=1100&ix=0&iy=414&aimw=1100&rn=1&doc_id=d6e8e02c647d27284b735162&pn=1&sign=b919aed799fa017c1e7f322b49ebb944&type=1&app_ver=2.9.8.2&ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&bid=1&app_ua=IncredibleS&uid=&cuid=&fr=3&Bdi_bear=WIFI&from=3_10000&bduss=&pid=1&screen=800_800&sys_ver=2.3.7">
+<meta name="twitter:image" content="http://yoursite.com/img/som/1.png">
 
 
 
@@ -392,7 +392,7 @@
       
         <p>自组织特征映射神经网络（SOM）设计思想基于人体大脑，外界信息输入时，大脑皮层对应区域的部分神经元会产生兴奋，位置临近的神经云也会有相近的刺激。大脑神经元的这种特点，不是先天安排好的，而是通过后天的自学习组织形成的。芬兰Helsinki大学的Kohonen教授提出了一种成为自组织特征映射的神经网络模型。<br><a id="more"></a></p>
 <h2 id="SOM介绍"><a href="#SOM介绍" class="headerlink" title="SOM介绍"></a>SOM介绍</h2><p>SOM与kmeans算法有点相似，其基本思想也是，将距离小的个体集合划分为同一类别，而将距离大的个体划分为不同的类别。</p>
-<p><img src="http://appwk.baidu.com/naapi/doc/view?ih=584&amp;o=png_6_0_0_436_680_396_210_876_1252.5&amp;iw=1100&amp;ix=0&amp;iy=414&amp;aimw=1100&amp;rn=1&amp;doc_id=d6e8e02c647d27284b735162&amp;pn=1&amp;sign=b919aed799fa017c1e7f322b49ebb944&amp;type=1&amp;app_ver=2.9.8.2&amp;ua=bd_800_800_IncredibleS_2.9.8.2_2.3.7&amp;bid=1&amp;app_ua=IncredibleS&amp;uid=&amp;cuid=&amp;fr=3&amp;Bdi_bear=WIFI&amp;from=3_10000&amp;bduss=&amp;pid=1&amp;screen=800_800&amp;sys_ver=2.3.7" alt="SOM结构图"></p>
+<p><img src="/img/som/1.png" alt=""></p>
 <p>从结构上看，SOM比较简单，只有两层，输入层和竞争层，只有输入层到竞争层的权重向量需要训练，不同于其他神经网络，竞争层同层之间的神经元还有侧向连接，在学习的过程中还会相互影响。竞争层神经元的竞争通过神经元对应的权重向量和输入样本的距离比较，距离最近的神经元成为获胜节点。</p>
 <p>常见的相互连接的调整方式有以下几种</p>
 <ol>
@@ -400,7 +400,7 @@
 <li>大礼帽函数：墨西哥草帽函数的简化，如图b所示。</li>
 <li>厨师帽函数：大礼帽函数的简化，如图c所示。</li>
 </ol>
-<p><img src="https://i.imgur.com/JtGnkfW.png" alt=""></p>
+<p><img src="/img/som/2.png" alt=""></p>
 <h2 id="SOM算法学习过程"><a href="#SOM算法学习过程" class="headerlink" title="SOM算法学习过程"></a>SOM算法学习过程</h2><h3 id="网络初始化"><a href="#网络初始化" class="headerlink" title="网络初始化"></a>网络初始化</h3><p>输入层网络节点数与输入样本维度（列数）相同，通常需要进行数据归一化，常见的方法是标准归一化。<br>竞争层网络根据数据维度以及分类类别数来确定，二维数据和4种分类的话<br>，竞争层含4个节点，但是权重矩阵为4X2，权重矩阵的初始化一般·随机给一个0-1之间的随机值。对于分类类别数目不清楚的情况，可以定义竞争层多于可能的实际分类的节点，这样最后训练结果中不对应分类结果的节点始终不会收到刺激而兴奋，即抑制。</p>
 <p>学习率会影响收敛速度，一般定义一个动态的学习率，随迭代次数增加而递减。优胜邻域半径也定义为一个动态收缩的，随着迭代次数增加而递减。</p>
 <pre><code># 学习率和学习半径函数    
@@ -455,7 +455,7 @@ def train(self):
     self.classLabel = mat(self.classLabel)        
 </code></pre><p>具体实现代码可见：<a href="https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/SOM" target="_blank" rel="external">https://github.com/lkj1114889770/Machine-Leanring-Algorithm/tree/master/SOM</a></p>
 <p>针对数据集的分类结果：</p>
-<p><img src="https://i.imgur.com/KSlpNem.png" alt=""></p>
+<p><img src="/img/som/3.png" alt=""></p>
 <p><strong><br>参考文献：</strong></p>
 <ol>
 <li>《机器学习算法与编程实践》 郑捷著；</li>

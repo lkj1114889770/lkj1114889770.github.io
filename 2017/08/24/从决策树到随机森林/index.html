@@ -104,12 +104,12 @@
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="学习了决策树算法之后又接触到了随机森林，随机森林可以说是决策树算法的集成加强版。从分类上来说，随机森林属于机器学习中的集成学习，所谓集成学习，顾名思义就是集成一些方法一起来学习，随机森林就是集成很多决策树来实现其分类或者回归的功能。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://i.imgur.com/Q9qFsle.png">
-<meta property="og:updated_time" content="2017-08-30T07:36:17.078Z">
+<meta property="og:image" content="http://yoursite.com/img/randomtree/1.png">
+<meta property="og:updated_time" content="2019-03-19T09:16:39.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从决策树到随机森林">
 <meta name="twitter:description" content="学习了决策树算法之后又接触到了随机森林，随机森林可以说是决策树算法的集成加强版。从分类上来说，随机森林属于机器学习中的集成学习，所谓集成学习，顾名思义就是集成一些方法一起来学习，随机森林就是集成很多决策树来实现其分类或者回归的功能。">
-<meta name="twitter:image" content="http://i.imgur.com/Q9qFsle.png">
+<meta name="twitter:image" content="http://yoursite.com/img/randomtree/1.png">
 
 
 
@@ -390,7 +390,7 @@
       
         <p>学习了决策树算法之后又接触到了随机森林，随机森林可以说是决策树算法的集成加强版。从分类上来说，随机森林属于机器学习中的集成学习，所谓集成学习，顾名思义就是集成一些方法一起来学习，随机森林就是集成很多决策树来实现其分类或者回归的功能。</p>
 <a id="more"></a>
-<h2 id="随机森林之“森林”"><a href="#随机森林之“森林”" class="headerlink" title="随机森林之“森林”"></a>随机森林之“森林”</h2><p>“森林”表示有很多决策树，每棵决策树都是一个分类器，对于一个输入测试样本，经过森林中的每棵树都会有相应的预测值或者标签，而最终的结果就取决于这些树之间的投票结果作为最终预测结果。每棵随机树都是一个弱分类器，但是通过投票选择，最终组成一个强分类器。<br><img src="http://i.imgur.com/Q9qFsle.png" alt=""></p>
+<h2 id="随机森林之“森林”"><a href="#随机森林之“森林”" class="headerlink" title="随机森林之“森林”"></a>随机森林之“森林”</h2><p>“森林”表示有很多决策树，每棵决策树都是一个分类器，对于一个输入测试样本，经过森林中的每棵树都会有相应的预测值或者标签，而最终的结果就取决于这些树之间的投票结果作为最终预测结果。每棵随机树都是一个弱分类器，但是通过投票选择，最终组成一个强分类器。<br><img src="/img/randomtree/1.png" alt=""></p>
 <h2 id="随机森林之“随机”"><a href="#随机森林之“随机”" class="headerlink" title="随机森林之“随机”"></a>随机森林之“随机”</h2><p>随机森林的随机体现在两个地方：一个是构建单棵决策树时的样本选择随机，一个是决策树分裂的时候选择的特征集随机。</p>
 <ol>
 <li>假设有N个样本，那么构建某一棵随机数时，放回抽样选择N个样本，称为bootstrap，这样每棵树的训练集都是不同的，当然也会包括重复样本。</li>

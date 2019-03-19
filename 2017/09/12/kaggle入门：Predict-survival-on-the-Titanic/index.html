@@ -104,18 +104,18 @@
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="Kaggle是一个数据分析建模的应用竞赛平台，学习了机器学习的算法，这是个很好的应用平台。Predict survival on the Titanic作为kaggle入门级别的比赛，也是我接触kaggle的第一个实践项目，最后的结果虽然不够优秀，仅Top20%左右，但是还是将第一次的实践过程mark一下。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/FEDyFse.jpg">
-<meta property="og:image" content="https://i.imgur.com/Dt77VZG.png">
-<meta property="og:image" content="https://i.imgur.com/CAp7eKj.png">
-<meta property="og:image" content="https://i.imgur.com/1PG3g2x.png">
-<meta property="og:image" content="https://i.imgur.com/C9tiryu.png">
-<meta property="og:image" content="https://i.imgur.com/8CZL0cP.png">
-<meta property="og:image" content="https://i.imgur.com/jOHX4b4.png">
-<meta property="og:updated_time" content="2017-09-12T06:25:24.274Z">
+<meta property="og:image" content="http://yoursite.com/img/titanic/1.jpg">
+<meta property="og:image" content="http://yoursite.com/img/titanic/2.png">
+<meta property="og:image" content="http://yoursite.com/img/titanic/3.png">
+<meta property="og:image" content="http://yoursite.com/img/titanic/4.png">
+<meta property="og:image" content="http://yoursite.com/img/titanic/5.png">
+<meta property="og:image" content="http://yoursite.com/img/titanic/6.png">
+<meta property="og:image" content="http://yoursite.com/img/titanic/7.png">
+<meta property="og:updated_time" content="2019-03-19T09:12:50.170Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kaggle入门：Predict survival on the Titanic">
 <meta name="twitter:description" content="Kaggle是一个数据分析建模的应用竞赛平台，学习了机器学习的算法，这是个很好的应用平台。Predict survival on the Titanic作为kaggle入门级别的比赛，也是我接触kaggle的第一个实践项目，最后的结果虽然不够优秀，仅Top20%左右，但是还是将第一次的实践过程mark一下。">
-<meta name="twitter:image" content="https://i.imgur.com/FEDyFse.jpg">
+<meta name="twitter:image" content="http://yoursite.com/img/titanic/1.jpg">
 
 
 
@@ -394,7 +394,7 @@
       
 
       
-        <p><a href="https://www.kaggle.com/" target="_blank" rel="external">Kaggle</a>是一个数据分析建模的应用竞赛平台，学习了机器学习的算法，这是个很好的应用平台。Predict survival on the Titanic作为kaggle入门级别的比赛，也是我接触kaggle的第一个实践项目，最后的结果虽然不够优秀，仅Top20%左右，但是还是将第一次的实践过程mark一下。<br><img src="https://i.imgur.com/FEDyFse.jpg" alt=""></p>
+        <p><a href="https://www.kaggle.com/" target="_blank" rel="external">Kaggle</a>是一个数据分析建模的应用竞赛平台，学习了机器学习的算法，这是个很好的应用平台。Predict survival on the Titanic作为kaggle入门级别的比赛，也是我接触kaggle的第一个实践项目，最后的结果虽然不够优秀，仅Top20%左右，但是还是将第一次的实践过程mark一下。<br><img src="/img/titanic/1.jpg" alt=""></p>
 <a id="more"></a>
 <h2 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h2><p>从kaggle的网站上下载好比赛数据（train.csv和test.csv），泰坦尼克号问题就是根据乘客的个人信息，分析是否能够活下来，训练集提供了乘客信息以及存活状况，测试集仅提供信息，需要预测能否存活，其实就是一个二分类问题。</p>
 <p>下面读入训练集数据，开始初步分析。</p>
@@ -431,7 +431,7 @@ plt.ylabel(u&quot;密度&quot;)
 plt.title(u&quot;从年龄看获救情况&quot;)
 plt.legend((u&quot;未获救&quot;,u&quot;获救&quot;),loc=&apos;best&apos;)
 plt.show()
-</code></pre><p><img src="https://i.imgur.com/Dt77VZG.png" alt=""></p>
+</code></pre><p><img src="/img/titanic/2.png" alt=""></p>
 <p>年龄越小，获救的概率还是越高的，小孩还是要优先嘛。</p>
 <pre><code>#看看各乘客等级的获救情况
 fig = plt.figure()
@@ -445,7 +445,7 @@ plt.title(u&quot;各乘客等级的获救情况&quot;)
 plt.xlabel(u&quot;乘客等级&quot;) 
 plt.ylabel(u&quot;人数&quot;) 
 plt.show()
-</code></pre><p><img src="https://i.imgur.com/CAp7eKj.png" alt=""></p>
+</code></pre><p><img src="/img/titanic/3.png" alt=""></p>
 <p>船舱等级越高，获救概率也是越高，还是上层社会的人容易获救啊。</p>
 <pre><code>#看看各性别的获救情况
 fig = plt.figure()
@@ -459,7 +459,7 @@ plt.title(u&quot;按性别看获救情况&quot;)
 plt.xlabel(u&quot;性别&quot;) 
 plt.ylabel(u&quot;人数&quot;)
 plt.show()
-</code></pre><p><img src="https://i.imgur.com/1PG3g2x.png" alt=""></p>
+</code></pre><p><img src="/img/titanic/4.png" alt=""></p>
 <p>女性获救概率更高，嗯，Lady first.</p>
 <p>姓名中含有一些称谓信息，也代表着乘客的身份以及社会地位。</p>
 <pre><code>data_train.groupby(data_train[&apos;Name&apos;].apply(lambda x: x.split(&apos;, &apos;)[1]).apply(lambda x: x.split(&apos;.&apos;)[0]))[&apos;Survived&apos;].mean()
@@ -496,7 +496,7 @@ plt.title(u&quot;有无船舱号的获救情况&quot;)
 plt.xlabel(u&quot;船舱号有无&quot;) 
 plt.ylabel(u&quot;人数&quot;) 
 plt.show()
-</code></pre><p><img src="https://i.imgur.com/C9tiryu.png" alt=""></p>
+</code></pre><p><img src="/img/titanic/5.png" alt=""></p>
 <p>看起来有船舱号的人获救概率高一点。</p>
 <pre><code>#信息中Embarked登船港口的影响
 fig = plt.figure()
@@ -510,7 +510,7 @@ plt.title(u&quot;不同登船港口的获救情况&quot;)
 plt.xlabel(u&quot;乘客等级&quot;) 
 plt.ylabel(u&quot;人数&quot;) 
 plt.show()
-</code></pre><p><img src="https://i.imgur.com/8CZL0cP.png" alt=""></p>
+</code></pre><p><img src="/img/titanic/6.png" alt=""></p>
 <p>C港口获救概率高一点。</p>
 <h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><p>下面就需要对训练集以及测试集的数据进行处理，以便算法的处理。</p>
 <pre><code>data_test = pd.read_csv(&apos;test.csv&apos;)
@@ -599,7 +599,7 @@ clf.fit(X_train, Y_train)
 Y_test = clf.predict(X_test)
 gender_submission = pd.DataFrame({&apos;PassengerId&apos;:data_test.iloc[:,0],&apos;Survived&apos;:Y_test})
 gender_submission.to_csv(&apos;gender_submission.csv&apos;, index=None)
-</code></pre><h2 id="submission"><a href="#submission" class="headerlink" title="submission"></a>submission</h2><p>将保存的gender_submission.csv文件提交到kaggle，得到的0.79904，毕竟第一次实践，进入了Top20%，虽然不够优秀，也还可以，算法继续学习之后还待改进。<br><img src="https://i.imgur.com/jOHX4b4.png" alt=""></p>
+</code></pre><h2 id="submission"><a href="#submission" class="headerlink" title="submission"></a>submission</h2><p>将保存的gender_submission.csv文件提交到kaggle，得到的0.79904，毕竟第一次实践，进入了Top20%，虽然不够优秀，也还可以，算法继续学习之后还待改进。<br><img src="/img/titanic/7.png" alt=""></p>
 
       
     </div>

@@ -104,29 +104,29 @@
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="最近的机器学习算法学习到了主成分分析（PCA），在人脸识别中对样本数据进行了降维，借此对特征值分解（EVD）、奇异值分解（SVD）进行了梳理整理。 特征值分解（EVD)矩阵是一种线性变换，比如矩阵Ax=y中，矩阵A将向量x线性变换到另一个矩阵y，这个过程中包含3类效应：旋转、缩放以及投影。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/s5t13lw.png">
-<meta property="og:image" content="http://img.blog.csdn.net/20140118132422328">
-<meta property="og:image" content="https://i.imgur.com/GMLZwPD.png">
-<meta property="og:image" content="http://img.blog.csdn.net/20150123124108372?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhvbmdrZWppbmd3YW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="https://i.imgur.com/LLiUV34.png">
-<meta property="og:image" content="https://i.imgur.com/2SkuNLs.png">
-<meta property="og:image" content="https://i.imgur.com/5abYT6K.png">
-<meta property="og:image" content="https://i.imgur.com/Jstukbo.png">
-<meta property="og:image" content="https://i.imgur.com/Gp5sZub.png">
-<meta property="og:image" content="https://i.imgur.com/FbOWs0v.png">
-<meta property="og:image" content="https://i.imgur.com/TUH2piG.png">
-<meta property="og:image" content="https://i.imgur.com/kckZiod.png">
-<meta property="og:image" content="https://i.imgur.com/fKT2IuH.png">
-<meta property="og:image" content="https://i.imgur.com/t8KFr7N.png">
-<meta property="og:image" content="https://i.imgur.com/dRX80IG.png">
-<meta property="og:image" content="https://i.imgur.com/KFs2TqU.png">
-<meta property="og:image" content="https://i.imgur.com/MsufQmF.png">
-<meta property="og:image" content="https://i.imgur.com/N9dKJmz.png">
-<meta property="og:updated_time" content="2017-11-01T12:34:49.152Z">
+<meta property="og:image" content="http://yoursite.com/img/svd/1.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/111.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/2.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/112.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/3.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/4.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/5.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/6.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/7.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/8.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/9.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/10.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/11.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/12.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/13.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/14.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/15.png">
+<meta property="og:image" content="http://yoursite.com/img/svd/16.png">
+<meta property="og:updated_time" content="2019-03-19T08:48:36.061Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EVD、SVD以及PCA整理">
 <meta name="twitter:description" content="最近的机器学习算法学习到了主成分分析（PCA），在人脸识别中对样本数据进行了降维，借此对特征值分解（EVD）、奇异值分解（SVD）进行了梳理整理。 特征值分解（EVD)矩阵是一种线性变换，比如矩阵Ax=y中，矩阵A将向量x线性变换到另一个矩阵y，这个过程中包含3类效应：旋转、缩放以及投影。">
-<meta name="twitter:image" content="https://i.imgur.com/s5t13lw.png">
+<meta name="twitter:image" content="http://yoursite.com/img/svd/1.png">
 
 
 
@@ -407,31 +407,31 @@
       
         <p>最近的机器学习算法学习到了主成分分析（PCA），在人脸识别中对样本数据进行了降维，借此对特征值分解（EVD）、奇异值分解（SVD）进行了梳理整理。</p>
 <h2 id="特征值分解（EVD"><a href="#特征值分解（EVD" class="headerlink" title="特征值分解（EVD)"></a>特征值分解（EVD)</h2><p>矩阵是一种线性变换，比如矩阵Ax=y中，矩阵A将向量x线性变换到另一个矩阵y，这个过程中包含3类效应：旋转、缩放以及投影。<br><a id="more"></a></p>
-<p>对角矩阵对应缩放，比如<img src="https://i.imgur.com/s5t13lw.png" alt=""></p>
+<p>对角矩阵对应缩放，比如<img src="/img/svd/1.png" alt=""></p>
 <p>其对应的线性变换如下：</p>
-<p><img alt="" src="http://img.blog.csdn.net/20140118132422328"></p>
+<p><img alt="" src="/img/svd/111.png"></p>
 <p>对与正交矩阵来说，对应的是向量的旋转，比如将向量OA从正交基e1e2中,到另一组正交基为e1’e2’中，</p>
-<p><img src="https://i.imgur.com/GMLZwPD.png" alt=""><br><img alt="" src="http://img.blog.csdn.net/20150123124108372?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhvbmdrZWppbmd3YW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></p>
+<p><img src="/img/svd/2.png" alt=""><br><img alt="" src="/img/svd/112.png"></p>
 <p>当矩阵A与x维度不一样时，得到的y的维度也与x不一样，即存在投影变换。</p>
 <p>考虑一种特殊矩阵，对称阵的特征值分解，其实在机器学习中也经常是对XX’求特征向量，也就是对称阵。</p>
-<p><img src="https://i.imgur.com/LLiUV34.png" alt=""></p>
+<p><img src="/img/svd/3.png" alt=""></p>
 <p>其中：</p>
-<p><img src="https://i.imgur.com/2SkuNLs.png" alt=""></p>
-<p><img src="https://i.imgur.com/5abYT6K.png" alt=""></p>
+<p><img src="/img/svd/4.png" alt=""></p>
+<p><img src="/img/svd/5.png" alt=""></p>
 <p>这个时候用到对称阵的特性，U为正交矩阵，其逆矩阵等于转置。</p>
-<p><img src="https://i.imgur.com/Jstukbo.png" alt=""></p>
+<p><img src="/img/svd/6.png" alt=""></p>
 <p>即矩阵A将向量X转移到了U这组基的空间上，再进行缩放，而后又通过U正交基进行旋转，所以只有缩放，没有旋转和投影。</p>
 <h2 id="奇异值分解（SVD"><a href="#奇异值分解（SVD" class="headerlink" title="奇异值分解（SVD)"></a>奇异值分解（SVD)</h2><p>奇异值分解其实类似于特征值分解，不过奇异值分解适用于更一般的矩阵，而不是方阵。</p>
-<div align="center"><br>    <img src="https://i.imgur.com/Gp5sZub.png" width="250" height="50"><br></div>
+<div align="center"><br>    <img src="/img/svd/7.png" width="250" height="50"><br></div>
 
 <p>U、V都是一组正交基，表示一个向量从V这组正交基旋转到U这组正交基，同时也在每个方向进行缩放。</p>
 <p>奇异值和特征值对应为：</p>
-<p><img src="https://i.imgur.com/FbOWs0v.png" alt=""></p>
+<p><img src="/img/svd/8.png" alt=""></p>
 <p>v即为式子中的右奇异向量，同时也可以得到：</p>
-<p><img src="https://i.imgur.com/TUH2piG.png" alt=""></p>
+<p><img src="/img/svd/9.png" alt=""></p>
 <p>在奇异值按从小到大排序的情况下，很多情况下，前面部分的奇异值就占所有奇异值和的99%以上，所以我们可以取前r个奇异值来近似描述矩阵，可以用来数据降维。</p>
-<p><div align="center"><br>    <img src="https://i.imgur.com/kckZiod.png" width="250" height="50"><br></div><br>这样可以还原出A矩阵，减少数据存储。<br>下面看如何利用SVD降维：</p>
-<p><div align="center"><br>    <img src="https://i.imgur.com/fKT2IuH.png" width="300" height="200"><br></div><br>从而将A’从n <em> m降到n </em> r</p>
+<p><div align="center"><br>    <img src="/img/svd/10.png" width="250" height="50"><br></div><br>这样可以还原出A矩阵，减少数据存储。<br>下面看如何利用SVD降维：</p>
+<p><div align="center"><br>    <img src="/img/svd/11.png" width="300" height="200"><br></div><br>从而将A’从n <em> m降到n </em> r</p>
 <p>SVD常用于推荐系统，有基于用户的协同过滤（User CF)和基于物品的协同过滤（Item CF)。这里给出一个Item CF实现。</p>
 <p>网上找的一个实现代码，找不到出处了。。。</p>
 <pre><code>#coding=utf-8
@@ -515,15 +515,15 @@ def recommend(dataMat,user,N=5,simMeas=cosSim,estMethod=svdEst,percentage=0.9):
 testdata=loadExData()
 print(recommend(testdata,1,N=3,percentage=0.8))#对编号为1的用户推荐评分较高的3件商品
 </code></pre><h2 id="主成分分析（PCA）"><a href="#主成分分析（PCA）" class="headerlink" title="主成分分析（PCA）"></a>主成分分析（PCA）</h2><p>PCA也常用于数据降维，特别是在人脸识别对于图像数据的处理中，得到了广泛的运用。数据降维的原则是使得数据维度减小，即行向量方差尽可能大，但是同时信息保留最多，就要求行向量之间相关性尽量小，即行向量之间协方差为0.<br>对于数据：</p>
-<p><img src="https://i.imgur.com/t8KFr7N.png" alt=""></p>
+<p><img src="/img/svd/12.png" alt=""></p>
 <p>标准化处理先：</p>
-<p><img src="https://i.imgur.com/dRX80IG.png" alt=""></p>
+<p><img src="/img/svd/13.png" alt=""></p>
 <p>那么协方差矩阵：</p>
-<p><img src="https://i.imgur.com/KFs2TqU.png" alt=""></p>
+<p><img src="/img/svd/14.png" alt=""></p>
 <p>希望降维后协方差矩阵对角元素极可能大，非对角元素尽可能为0，即成为对角矩阵，则可对X进行线性变换，Y=QX,那么：</p>
-<p><img src="https://i.imgur.com/MsufQmF.png" alt=""></p>
+<p><img src="/img/svd/15.png" alt=""></p>
 <p>所以，Q为CX的特征向量，其方差为特征值，进行降维一般取前r个特征值对应的特征向量，转换结果为：</p>
-<p><img src="https://i.imgur.com/N9dKJmz.png" alt=""></p>
+<p><img src="/img/svd/16.png" alt=""></p>
 <p>另一种证明方式可见：<a href="http://blog.csdn.net/zhongkejingwang/article/details/42264479" target="_blank" rel="external">http://blog.csdn.net/zhongkejingwang/article/details/42264479</a></p>
 
       

@@ -104,28 +104,28 @@
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="很久没有更新博客了，最近刚做完数据挖掘的大作业，选了一个电影数据集挖掘的课题，做了一个推荐系统，在这里简单地记录一下。电影推荐系统数据集来源于kaggle上的MovieLens完整的45,000条数据，电影数据包括2017年7月前发布的电影，包括270,000个用户的超过26,000,000条评论，以及从GroupLens官方网站获得的评分。基于此电影数据集，完成下面的数据挖掘目标。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/jBazUei.png">
-<meta property="og:image" content="https://i.imgur.com/SdNwqOI.png">
-<meta property="og:image" content="https://i.imgur.com/oroLVyE.png">
-<meta property="og:image" content="https://i.imgur.com/ZuPNuyb.png">
-<meta property="og:image" content="https://i.imgur.com/YasOosa.png">
-<meta property="og:image" content="https://i.imgur.com/Nd6D8YN.jpg">
-<meta property="og:image" content="https://i.imgur.com/UMbWZN9.png">
-<meta property="og:image" content="https://i.imgur.com/upDJLWF.png">
-<meta property="og:image" content="https://i.imgur.com/Fckk4jq.png">
-<meta property="og:image" content="https://i.imgur.com/5mNPVdG.png">
-<meta property="og:image" content="https://i.imgur.com/JemBXZC.png">
-<meta property="og:image" content="https://i.imgur.com/Zj6DD9w.png">
-<meta property="og:image" content="https://i.imgur.com/gc43bcW.png">
-<meta property="og:image" content="https://i.imgur.com/MRt6hwJ.png">
-<meta property="og:image" content="https://i.imgur.com/wgzL9uA.png">
-<meta property="og:image" content="https://i.imgur.com/bFDYLcO.png">
-<meta property="og:image" content="https://i.imgur.com/qF14GhU.png">
-<meta property="og:updated_time" content="2018-01-11T07:10:43.912Z">
+<meta property="og:image" content="http://yoursite.com/img/movie/1.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/2.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/3.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/4.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/5.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/6.jpg">
+<meta property="og:image" content="http://yoursite.com/img/movie/7.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/8.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/9.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/10.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/11.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/12.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/13.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/14.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/15.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/16.png">
+<meta property="og:image" content="http://yoursite.com/img/movie/17.png">
+<meta property="og:updated_time" content="2019-03-19T08:37:31.504Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="电影推荐系统构建">
 <meta name="twitter:description" content="很久没有更新博客了，最近刚做完数据挖掘的大作业，选了一个电影数据集挖掘的课题，做了一个推荐系统，在这里简单地记录一下。电影推荐系统数据集来源于kaggle上的MovieLens完整的45,000条数据，电影数据包括2017年7月前发布的电影，包括270,000个用户的超过26,000,000条评论，以及从GroupLens官方网站获得的评分。基于此电影数据集，完成下面的数据挖掘目标。">
-<meta name="twitter:image" content="https://i.imgur.com/jBazUei.png">
+<meta name="twitter:image" content="http://yoursite.com/img/movie/1.png">
 
 
 
@@ -416,14 +416,14 @@ import seaborn as sns
 df = pd.read_csv(&apos;movies_metadata.csv&apos;)
 df[&apos;vote_average&apos;] = df[&apos;vote_average&apos;].replace(0, np.nan)
 sns.distplot(df[&apos;vote_average&apos;].fillna(df[&apos;vote_average&apos;].median()))
-</code></pre><p><img src="https://i.imgur.com/jBazUei.png" alt=""></p>
+</code></pre><p><img src="/img/movie/1.png" alt=""></p>
 <pre><code>df[&apos;year&apos;] = pd.to_datetime(df[&apos;release_date&apos;], errors=&apos;coerce&apos;).apply(lambda x: str(x).split(&apos;-&apos;)[0] if x != np.nan else np.nan)
 year_gen = pd.DataFrame(df[&apos;year&apos;].value_counts()).reset_index()
 year_gen.columns = [&apos;year&apos;, &apos;counts&apos;]
 year_gen.drop([87,135,],inplace=True)
 year_gen[&apos;year&apos;]=year_gen[&apos;year&apos;].astype(&apos;int&apos;)
 plt.plot(year_gen.year,year_gen.counts)
-</code></pre><p><img src="https://i.imgur.com/SdNwqOI.png" alt=""></p>
+</code></pre><p><img src="/img/movie/2.png" alt=""></p>
 <p>从上图中的电影分布可以看出，从1880年左右以来，电影的数量基本上是逐年增长的趋势，特别是进入21实际以来，增长速度很快（出现一段下降是因为2017年的完整数据收集不完整）。<br>下面再分析数据集中的电影的区域分布，利用一个比较强的可视化工具plotly，画出电影数量的区域分布，因为美国的电影产出相对其他国家高出太多，所以画图是先忽略了美国，这样画其他国家的数量之间的比较才会更加明显。</p>
 <pre><code>data = [ dict(
         type = &apos;choropleth&apos;,
@@ -462,20 +462,20 @@ plt.figure(figsize=(12,5))
 sns.barplot(x=&apos;country&apos;, y=&apos;num_movies&apos;, data=country)
 plt.show()
 ####除去美国外，英国。法国、德国、意大利，亚洲的日本和印度，北美的巴西
-</code></pre><p><img src="https://i.imgur.com/oroLVyE.png" alt=""></p>
-<p><img src="https://i.imgur.com/ZuPNuyb.png" alt=""></p>
+</code></pre><p><img src="/img/movie/3.png" alt=""></p>
+<p><img src="/img/movie/4.png" alt=""></p>
 <h2 id="推荐系统构建"><a href="#推荐系统构建" class="headerlink" title="推荐系统构建"></a>推荐系统构建</h2><p>在这次推荐系统的构建中，我们采用了三种算法来构建我们的推荐系统，基于这三种算法，包括基于用户投票的推荐算法、基于内容的推荐算法和协同过滤推荐算法，根据这些算法，最终来构建我们的电影推荐系统。</p>
 <h3 id="基于用户投票的推荐算法"><a href="#基于用户投票的推荐算法" class="headerlink" title="基于用户投票的推荐算法"></a>基于用户投票的推荐算法</h3><p>作为国际知名的权威点评网站，在他们大名鼎鼎的TOP250榜单中，采用的就是贝叶斯算法，其公式如下：</p>
-<p><img src="https://i.imgur.com/YasOosa.png" alt=""></p>
+<p><img src="/img/movie/5.png" alt=""></p>
 <p>其中，WR为加权得分，R为该电影的用户投票平均得分，V为该电影的投票人数，m为最低评分个数，C为所有电影的平均得分。<br>这个算法的提出基于这样一个现实问题：热门电影与冷门电影的平均得分，是否真的可比？举例来说，一部好莱坞大片有10000个观众投票，一部小成本的文艺片只有100个观众投票。这两者的投票结果，怎么比较？如果使用”威尔逊区间”，后者的得分将被大幅拉低，这样处理是否公平，能不能反映它们真正的质量？一个合理的思路是，如果要比较两部电影的好坏，至少应该请同样多的观众观看和评分。既然文艺片的观众人数偏少，那么应该设法为它增加一些观众。</p>
 <p>根据这个思路，这个算法相当于给每部电影增加了m个选票，并且每个评分为平均得分C，然后用现有观众的投票进行修正，即v*R/(v+m)部分，使得得分更加接近于真实情况。这种算法由于给每部电影增加了m个选票，拉近了不同电影之间投票人数的差异，使得投票人数较少的电影也有可能名列前茅。</p>
 <p>这个算法借鉴了“贝叶斯推断”的思想，既然不知道投票结果，那就预先估计一个值，然后不断用新的信息修正，使它接近于正确值。在式子中，m可以看作是先验概率，每一次新的投票都是一个调整因子，使总体平均分不断向该项目的真实投票结果靠近。投票人数越多，该项目的”贝叶斯平均”就越接近算术平均，对排名的影响就越小。因此这种方法可以让投票较少的项目，能够得到相对公平的排名。</p>
 <p>我们针对所有电影，类似于IMDB我们计算出了TOP250，下图为基于贝叶斯统计的用户投票排名算法得出的所有电影的TOP250中选取出的TOP10，其中电影名红色的为实际IMDB中进入TOP10的电影，可以看出有3部电影存在于IMDB的TOP10，绿色标注的电影为TOP11-15的电影，有3部。总的来说，贝叶斯统计得出的排名还是比较接近于IMDB的排名，但是由于我们的算法考虑的因素较少，所以还是有一定的区别。</p>
-<p><img src="https://i.imgur.com/Nd6D8YN.jpg" alt=""></p>
+<p><img src="/img/movie/6.jpg" alt=""></p>
 <p>进一步的，我们从电影数据集中，根据电影的genre属性值中，分离出电影所属的不同属性，所有电影的类型分布（TOP10）如下图所示</p>
-<p><img src="https://i.imgur.com/UMbWZN9.png" alt=""></p>
+<p><img src="/img/movie/7.png" alt=""></p>
 <p>可以看出，电影数据集中戏剧、喜剧、恐怖片、爱情片等数量较多，依次数量排名.针对数量超过3000的电影，我们也采取类似的方式计算了TOP250，部分电影类型的TOP10在下图中给出。</p>
-<p><img src="https://i.imgur.com/upDJLWF.png" alt=""></p>
+<p><img src="/img/movie/8.png" alt=""></p>
 <h3 id="基于内容的推荐算法"><a href="#基于内容的推荐算法" class="headerlink" title="基于内容的推荐算法"></a>基于内容的推荐算法</h3><p>基于投票排名的推荐算法给每个用户都是一样推荐按照TOP排名得出的电影，而不会根据特定的观众喜欢的电影去推荐相似的电影。为了能够给用户推荐相似的电影，我们首先需要对电影之间的相似性进行衡量，主要应用到电影的描述数据来完成基于内容的推荐，主要的实现过程包括：<br>•    对电影的关键词、描述信息、标语、主角、导演信息的提取<br>•    对上述信息进行词干提取<br>•    对上述信息进行特征抽取，转换成词向量<br>•    考虑评分情况，结合相似度完成推荐<br>首先我们对于电影的相关描述信息进行一个大致分析，制作了词云对所有电影的情况概览。</p>
 <pre><code>df[&apos;title&apos;] = df[&apos;title&apos;].astype(&apos;str&apos;)
 df[&apos;overview&apos;] = df[&apos;overview&apos;].astype(&apos;str&apos;)
@@ -487,13 +487,13 @@ plt.figure(figsize=(16,8))
 plt.imshow(title_wordcloud)
 plt.axis(&apos;off&apos;)
 plt.show()
-</code></pre><p><img src="https://i.imgur.com/Fckk4jq.png" alt=""></p>
+</code></pre><p><img src="/img/movie/9.png" alt=""></p>
 <pre><code>overview_wordcloud = WordCloud(stopwords=STOPWORDS, background_color=&apos;white&apos;, height=2000, width=4000).generate(overview_corpus)
 plt.figure(figsize=(16,8))
 plt.imshow(overview_wordcloud)
 plt.axis(&apos;off&apos;)
 plt.show()
-</code></pre><p><img src="https://i.imgur.com/5mNPVdG.png" alt=""></p>
+</code></pre><p><img src="/img/movie/10.png" alt=""></p>
 <p>上面两幅图分别是电影的标题和电影简述画出的词云，可以看到电影标题中Love、Girl、Man、Life，Love作为最高频的词，毕竟大多数电影都有爱情这条线。在电影的简述中，find、life、one是最高频的词，可以给我们反映大多数电影的主题。</p>
 <p>在获得电影的关键词、描述信息、标语、主角、导演信息之后，我们需要对这些信息进行词干提取。在语言形态学和信息检索里，词干提取是去除词缀得到词根的过程，即得到单词最一般的写法。计算机科学领域有很多词干提取的相应算法，我们使用了一个面向英语的词干提取器stemming，使用Python的NLTK库的stemming算法，实现的效果为要识别字符串“cats”、“catlike”和“catty”提取出词根“cat”；“stemmer”、“stemming”和“stemmed”提取出词根“stem”。</p>
 <pre><code>from nltk.stem.snowball import SnowballStemmer
@@ -502,17 +502,17 @@ stemmer = SnowballStemmer(&apos;english&apos;)  #英语的词干提取
 <pre><code>count = CountVectorizer(analyzer=&apos;word&apos;,ngram_range=(1, 2),min_df=0, stop_words=&apos;english&apos;)
 count_matrix = count.fit_transform(smd[&apos;soup&apos;])   #基于词向量统计的矩阵
 </code></pre><p>当然，基于内容的推荐算法还需要考虑到电影的评分，不然仅仅根据电影之间的相似度，很有可能就会出现给观众推荐很相似的电影，但却是“烂片”的这种情况，基于这种考虑，以电影《The Godfather》（教父）以及《The Lord of the Rings: The Return of the King》（指环王：王者归来）为例，推荐的相应10部电影结果如下图所示。</p>
-<p><img src="https://i.imgur.com/JemBXZC.png" alt=""></p>
+<p><img src="/img/movie/11.png" alt=""></p>
 <p>可以看到，都推荐了同类型的电影，比如针对教父推荐了一些剧情、犯罪电影，而针对指环王推荐了一些动作、奇幻类的电影，而且这两部电影都有其他续集，比如针对《教父1》推荐了其续集《教父2》及《教父3》也都相应地推荐了，推荐的电影也都是高分电影.</p>
 <h3 id="协同过滤推荐"><a href="#协同过滤推荐" class="headerlink" title="协同过滤推荐"></a>协同过滤推荐</h3><p>从应用的场景来看，基于内容的推荐算法更多地适用于用户根据关键字或者电影名字来搜索相应的电影，然后推荐系统来进行相应的推荐。基于需求个性角度来看，基于内容的推荐算法还不够个人化，用户需要的是更加符合个人偏好的推荐结果，可以根据用户之前的打分情况，更有针对性地推荐一些可能喜欢的电影，这种情况下，应用的最多的就是协同过滤算法。</p>
 <p>协同过滤通过用户和产品及用户的偏好信息产生推荐策略，最基本的策略有两种：一种是找到具有类似品味的人所喜欢的物品；另一种是从一个人喜欢的物品中找出类似的物品，即基于用户的推荐技术（User CF）和基于物品的推荐技术（Item CF）。在我们这个应用场景中，有大量的电影信息，但是用户已经打分的电影只占总量很少的一部分，将用户打分和电影信息构成一个矩阵，那么这个矩阵会存在严重的稀疏性，经过计算大约在1.5%左右，基于这种考虑，我们采取Item-based协同过滤算法。同样由于矩阵的稀疏性，在数据量很大的情况下一般采用矩阵分解来减少运算量，采用PMF矩阵分解算法来完成这个目标。</p>
 <p>采用的是surprise库中的SVD算法，但是我看了surprise库中的SVD算法介绍，其实更准确地说是PMF（Probabilistic Matrix Factorization）算法，即概率矩阵分解算法，所以这里对PMF进行相应的介绍。</p>
 <p>假定每个用户u都有一个D维的向量，表示他对不同风格的电影的偏好，每个电影i也有一个D维的向量表示不同风格的用户对它的偏好。 于是电影的评分矩阵可以这样来估计：</p>
-<p><img src="https://i.imgur.com/Zj6DD9w.png" alt=""></p>
+<p><img src="/img/movie/12.png" alt=""></p>
 <p>p 和q就是D维的向量。用梯度下降法训练p和q，迭代几十次就收敛了。但是这样的SVD很容易就过拟合，所以需要加入正则化项：</p>
-<p><img src="https://i.imgur.com/gc43bcW.png" alt=""></p>
+<p><img src="/img/movie/13.png" alt=""></p>
 <p>这样每次迭代的时候，更新公式为：</p>
-<p><img src="https://i.imgur.com/MRt6hwJ.png" alt=""></p>
+<p><img src="/img/movie/14.png" alt=""></p>
 <p>采用5折交叉验证</p>
 <pre><code>import pandas as pd
 import numpy as np
@@ -569,9 +569,9 @@ rec_result=rec_result.astype(&apos;int&apos;)
 rec_result=pd.DataFrame(rec_result,columns=[&apos;userId&apos;,&apos;rec1&apos;,&apos;rec2&apos;,&apos;rec3&apos;,&apos;rec4&apos;,&apos;rec5&apos;,
                                           &apos;rec6&apos;,&apos;rec7&apos;,&apos;rec8&apos;,&apos;rec9&apos;,&apos;rec10&apos;])
 </code></pre><p>算法运行结果：</p>
-<p><img src="https://i.imgur.com/wgzL9uA.png" alt=""></p>
+<p><img src="/img/movie/15.png" alt=""></p>
 <h2 id="简单的电影点评网站构建"><a href="#简单的电影点评网站构建" class="headerlink" title="简单的电影点评网站构建"></a>简单的电影点评网站构建</h2><p>整体框架</p>
-<p><img src="https://i.imgur.com/bFDYLcO.png" alt=""></p>
+<p><img src="/img/movie/16.png" alt=""></p>
 <p>MySQL是一个关系型数据库管理系统，也是一种WEB应用最好的数据库。数据库作为中间件，搭建在寝室的主机，便于小组成员之间使用，其操纵代码：</p>
 <pre><code>import pymysql
 import pandas as pd
@@ -583,7 +583,7 @@ df=pd.read_sql(&apos;SELECT * FROM db_movies.tb_movies;&apos;,conn)
 cur.close()
 conn.close()
 </code></pre><p>小伙伴应用Django框架，是一个开放源代码的Web应用框架，由Python写，时间仓促的情况下赶出了一个还是很不错的页面，点赞。</p>
-<p><img src="https://i.imgur.com/qF14GhU.png" alt=""></p>
+<p><img src="/img/movie/17.png" alt=""></p>
 <p>详细代码可见个人<a href="https://github.com/lkj1114889770/File_Recommend" target="_blank" rel="external">github</a>。</p>
 
       
