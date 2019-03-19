@@ -104,12 +104,12 @@
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="学习机器学习有段时间了，第一参加了个比赛，京东JDD数据探索大赛，做了个登陆识行为识别。不得不说，在实际业务场景中用学的机器学习算法来解决问题，比想象中的难度还是大很多，毕竟实际问题其实比平时简单的算法应用复杂得多。虽然目前数据准确率还不是很高，这个数据集的正例和负例比例相差太大，而且数据上对于特征工程处理也有很大的难度。Anyway，毕竟是第一次参加这样的比赛，收获还是很大的，学到了很多新东西。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/img/pipeline/i.png">
-<meta property="og:updated_time" content="2019-03-19T08:39:31.861Z">
+<meta property="og:image" content="http://yoursite.com/img/pipeline/1.png">
+<meta property="og:updated_time" content="2019-03-19T10:06:32.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网格搜索与Pipeline">
 <meta name="twitter:description" content="学习机器学习有段时间了，第一参加了个比赛，京东JDD数据探索大赛，做了个登陆识行为识别。不得不说，在实际业务场景中用学的机器学习算法来解决问题，比想象中的难度还是大很多，毕竟实际问题其实比平时简单的算法应用复杂得多。虽然目前数据准确率还不是很高，这个数据集的正例和负例比例相差太大，而且数据上对于特征工程处理也有很大的难度。Anyway，毕竟是第一次参加这样的比赛，收获还是很大的，学到了很多新东西。">
-<meta name="twitter:image" content="http://yoursite.com/img/pipeline/i.png">
+<meta name="twitter:image" content="http://yoursite.com/img/pipeline/1.png">
 
 
 
@@ -444,7 +444,7 @@ print(gSearch.best_params_,gSearch.best_score_)
 {&apos;gamma&apos;: 3, &apos;learning_rate&apos;: 0.1, &apos;max_depth&apos;: 6, &apos;subsample&apos;: 0.8} 0.738112481672
 </code></pre><p>这样就找出了较优的参数，唉，现在只能得到0.78的线下score，还要继续修改啊。</p>
 <h2 id="Pipeline机制"><a href="#Pipeline机制" class="headerlink" title="Pipeline机制"></a>Pipeline机制</h2><p>顾名思义就是管道机制，就是将机器学习整个流程流式化封装和管理，因为参数集在很多情况下对于测试集和训练集都是一样处理，他们有很多共同的步骤，这个机制就是便于这些步骤的共同使用。网上找到的一个很好解释的图如下，模型训练和预测过程中数据标准化、PCA降维之类的处理都可以通用，而且训练和预测用的是同一算法。</p>
-<center> <br><br><img width="500" height="400" src="/img/pipeline/i.png"> <br><br></center>
+<center> <br><br><img width="500" height="400" src="/img/pipeline/1.png"> <br><br></center>
 
 
       
