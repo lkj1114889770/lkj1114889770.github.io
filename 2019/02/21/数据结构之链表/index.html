@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/img/LinkedList/reverseList1.png">
 <meta property="og:image" content="http://yoursite.com/img/LinkedList/reverseList2.png">
-<meta property="og:updated_time" content="2019-02-21T12:34:48.006Z">
+<meta property="og:updated_time" content="2019-03-04T05:41:17.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构之链表">
 <meta name="twitter:description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个节点和下一个节点的指针；如果让链表最后一个节点指向第一个节点，就构成了循环链表。 一些例子">
@@ -408,7 +408,7 @@
     p-&gt;value = p-&gt;next-&gt;value;
     p-&gt;next = p-&gt;next-&gt;next;
 }
-</code></pre><h3 id="找出倒数第k个节点"><a href="#找出倒数第k个节点" class="headerlink" title="找出倒数第k个节点"></a>找出倒数第k个节点</h3><p>采用连个指针p1,p2，p1先走k步，然后p1和p2一起走，当p1到达节点终点时，p2即指向倒数第k个节点。</p>
+</code></pre><h3 id="找出倒数第k个节点"><a href="#找出倒数第k个节点" class="headerlink" title="找出倒数第k个节点"></a>找出倒数第k个节点</h3><p>采用两个指针p1,p2，p1先走k步，然后p1和p2一起走，当p1到达节点终点时，p2即指向倒数第k个节点。</p>
 <pre><code>Node* findk(Node* head, int k){
     Node *p1 = head;
     Node *p2 = head;

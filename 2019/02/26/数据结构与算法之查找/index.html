@@ -119,7 +119,7 @@
 <meta property="og:image" content="http://yoursite.com/img/search/table3.3.1.png">
 <meta property="og:image" content="http://yoursite.com/img/search/figure3.4.3.png">
 <meta property="og:image" content="http://yoursite.com/img/search/1.png">
-<meta property="og:updated_time" content="2019-02-26T12:51:19.084Z">
+<meta property="og:updated_time" content="2019-03-02T07:17:12.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构与算法之查找">
 <meta name="twitter:description" content="查找是针对符号表（有时也称之为字典或者索引）存储的键(key)值(value)信息，按照指定的键来查找信息，在这里就对常见的查找算法以及实现高效查找的符号表数据结构进行介绍。">
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1.7k
+                  2k
                 </span>
               
 
@@ -404,9 +404,12 @@
       
         <p>查找是针对符号表（有时也称之为字典或者索引）存储的键(key)值(value)信息，按照指定的键来查找信息，在这里就对常见的查找算法以及实现高效查找的符号表数据结构进行介绍。</p>
 <a id="more"></a>
+<h2 id="顺序查找"><a href="#顺序查找" class="headerlink" title="顺序查找"></a>顺序查找</h2><p>顺序查找是在无序队列中找出与关键字相同的数的具体位置，原理是让关键字与队列中的数逐个比较，知道找出与给定关键字相同的数为止。</p>
 <h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><p>二分查找针对的是有序的符号表，如果是无序的首先就要进行排序操作。其基本思想很简单，首先将key和中间键比较，如果相等则返回其索引；如果小于中间键则在左半部分同样取中间键进行比较；大于则在右半部分取中间键进行比较。</p>
 <pre><code>**在N个键的有序符号表中进行二分查找最多需要（logN+1）次比较），算法复杂度为O(logN).**
-</code></pre><h2 id="二叉查找树"><a href="#二叉查找树" class="headerlink" title="二叉查找树"></a>二叉查找树</h2><p>二叉查找树（Binary Search Tree）每个节点都含有一个可比较大小的键，每个节点都含有两个链接（有点类似于链表的扩展），基本定义为：</p>
+</code></pre><h2 id="分块查找"><a href="#分块查找" class="headerlink" title="分块查找"></a>分块查找</h2><p>分块查找是二分查找和顺序查找的一种改进，分块查找要求索引表是有序的，对于块内节点没有排序要求（块内无序，块间有序），因此特别适合节点动态变换的情况。这种带索引表的分块有序表查找性能取决于两步查找时间之和：第一步可以采用简单书序查找或者是二分查找查找索引表；第二部对于块之内只能顺序查找。</p>
+<p>假设索引表有n个元素，每块含有s个元素，平均查找长度为(n/s+s)/2+1,时间复杂度为O(n)~O(lgn).</p>
+<h2 id="二叉查找树"><a href="#二叉查找树" class="headerlink" title="二叉查找树"></a>二叉查找树</h2><p>二叉查找树（Binary Search Tree）每个节点都含有一个可比较大小的键，每个节点都含有两个链接（有点类似于链表的扩展），基本定义为：</p>
 <pre><code>class Node{
     Key key;  // 键
     Value val;  // 值
@@ -708,7 +711,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找"><span class="nav-number">1.</span> <span class="nav-text">二分查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">2.</span> <span class="nav-text">二叉查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找"><span class="nav-number">2.1.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能分析"><span class="nav-number">2.4.</span> <span class="nav-text">性能分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平衡查找树"><span class="nav-number">3.</span> <span class="nav-text">平衡查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3查找树"><span class="nav-number">3.1.</span> <span class="nav-text">2-3查找树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#红黑二叉查找树"><span class="nav-number">3.2.</span> <span class="nav-text">红黑二叉查找树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散列表"><span class="nav-number">4.</span> <span class="nav-text">散列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于拉链法的散列表"><span class="nav-number">4.1.</span> <span class="nav-text">基于拉链法的散列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于线性探测法的散列表"><span class="nav-number">4.2.</span> <span class="nav-text">基于线性探测法的散列表</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#顺序查找"><span class="nav-number">1.</span> <span class="nav-text">顺序查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找"><span class="nav-number">2.</span> <span class="nav-text">二分查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分块查找"><span class="nav-number">3.</span> <span class="nav-text">分块查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">4.</span> <span class="nav-text">二叉查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找"><span class="nav-number">4.1.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">4.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">4.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能分析"><span class="nav-number">4.4.</span> <span class="nav-text">性能分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平衡查找树"><span class="nav-number">5.</span> <span class="nav-text">平衡查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3查找树"><span class="nav-number">5.1.</span> <span class="nav-text">2-3查找树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#红黑二叉查找树"><span class="nav-number">5.2.</span> <span class="nav-text">红黑二叉查找树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散列表"><span class="nav-number">6.</span> <span class="nav-text">散列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于拉链法的散列表"><span class="nav-number">6.1.</span> <span class="nav-text">基于拉链法的散列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于线性探测法的散列表"><span class="nav-number">6.2.</span> <span class="nav-text">基于线性探测法的散列表</span></a></li></ol></li></ol></div>
             
 
           </div>

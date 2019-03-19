@@ -104,28 +104,28 @@
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="YOLO是一种全新的，与R-CNN思想截然不同的目标检测的方法。R-CNN系列网络是通过proposal region产生可能包含目标物体的bounding box，再通分类器判断是否包含物品以及物品类别，用regression对bounding的坐标、大小进行修正。YOLO则是一种end to end的方式，用一个神经网络，实现了预测出bounding box 的坐标、box中包含物体的置信度和">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/KVhyOJE.png">
-<meta property="og:image" content="https://i.imgur.com/6vox4OO.png">
-<meta property="og:image" content="https://i.imgur.com/VgNV9Rc.png">
-<meta property="og:image" content="https://i.imgur.com/sehftW1.png">
-<meta property="og:image" content="https://i.imgur.com/u90BPbt.png">
-<meta property="og:image" content="https://i.imgur.com/BmDEK3e.png">
-<meta property="og:image" content="https://i.imgur.com/CsmNs9B.png">
-<meta property="og:image" content="https://i.imgur.com/F8AsPNZ.png">
-<meta property="og:image" content="https://i.imgur.com/EkQOmSz.png">
-<meta property="og:image" content="https://i.imgur.com/XShUyy1.png">
-<meta property="og:image" content="https://i.imgur.com/21a8YXR.png">
-<meta property="og:image" content="https://i.imgur.com/LCahDqp.png">
-<meta property="og:image" content="https://i.imgur.com/zdvKkpA.png">
-<meta property="og:image" content="https://i.imgur.com/TnEqUtA.png">
-<meta property="og:image" content="https://i.imgur.com/XShUyy1.png">
-<meta property="og:image" content="https://i.imgur.com/AYQngjv.png">
-<meta property="og:image" content="https://i.imgur.com/ZxUzfO8.png">
-<meta property="og:updated_time" content="2018-09-20T08:01:32.814Z">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo1.1.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo1.2.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo1.3.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo1.4.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo1.5.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo1.6.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo1.7.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo2.1.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo2.2.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo2.3.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo2.4.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo2.5.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo2.6.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo2.7.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo3.1.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo3.2.png">
+<meta property="og:image" content="http://yoursite.com/img/yolo/yolo3.3.png">
+<meta property="og:updated_time" content="2019-03-19T08:13:22.077Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="目标检测网络之YOLO学习笔记">
 <meta name="twitter:description" content="YOLO是一种全新的，与R-CNN思想截然不同的目标检测的方法。R-CNN系列网络是通过proposal region产生可能包含目标物体的bounding box，再通分类器判断是否包含物品以及物品类别，用regression对bounding的坐标、大小进行修正。YOLO则是一种end to end的方式，用一个神经网络，实现了预测出bounding box 的坐标、box中包含物体的置信度和">
-<meta name="twitter:image" content="https://i.imgur.com/KVhyOJE.png">
+<meta name="twitter:image" content="http://yoursite.com/img/yolo/yolo1.1.png">
 
 
 
@@ -407,11 +407,11 @@
         <p>YOLO是一种全新的，与R-CNN思想截然不同的目标检测的方法。R-CNN系列网络是通过proposal region产生可能包含目标物体的bounding box，再通分类器判断是否包含物品以及物品类别，用regression对bounding的坐标、大小进行修正。YOLO则是一种end to end的方式，用一个神经网络，实现了预测出bounding box 的坐标、box中包含物体的置信度和物体的probabilities，因此检测速度更快，训练相对更加简单，当然相对来说也带来一些其他缺点。<br><a id="more"></a></p>
 <p>YOLO项目主页<a href="https://pjreddie.com/yolo/" target="_blank" rel="external">地址</a><br>YOLO1 <a href="https://arxiv.org/abs/1506.02640" target="_blank" rel="external">论文</a><br>YOLO2 <a href="https://arxiv.org/abs/1612.08242" target="_blank" rel="external">论文</a><br>YOLO3 <a href="https://pjreddie.com/media/files/papers/YOLOv3.pdf" target="_blank" rel="external">论文</a></p>
 <h2 id="YOLO-v1"><a href="#YOLO-v1" class="headerlink" title="YOLO v1"></a>YOLO v1</h2><p>YOLO使用来自整张图片的feature map来预测bounding box和class，因此可以保持较高的精度。YOLO将整张图片分成S×S的网格，如果一个目标的中心落入到网格单元中，那么这个网格单元负责这个目标的检测。</p>
-<div align="center"><br>    <img src="https://i.imgur.com/KVhyOJE.png" width="300" height="300"><br></div><br>每个网格单元预测B个bounding box和confidence score，confidence score反应了box包含目标的可信度，论文中将可confidence score定义为：<br><div align="center"><br>    <img src="https://i.imgur.com/6vox4OO.png" height="30"><br></div><br>，因此，如果没有目标存在confidence score为0，否则应该为IOU(intersection over union)，即真实框和预测框的交集部分。所以每个bounding box的预测值包括(x,y,w,h.confidence score). (x,y)表示预测的box中心相对于网格单元的的位置，(w,h)是用整个图片大小进行归一化的宽度和高度，另外，针对C个类别，每个类别需要预测一个条件概率，即：<br><div align="center"><br>    <img src="https://i.imgur.com/VgNV9Rc.png" height="30"><br></div><br>最终得到box中包含某个特定物品的概率为：<br><div align="center"><br>    <img src="https://i.imgur.com/sehftW1.png" height="40"><br></div><br>整个过程如下图所示。<br><div align="center"><br>    <img src="https://i.imgur.com/u90BPbt.png" width="700" height="400"><br></div>
+<div align="center"><br>    <img src="/img/yolo/yolo1.1.png" width="300" height="300"><br></div><br>每个网格单元预测B个bounding box和confidence score，confidence score反应了box包含目标的可信度，论文中将可confidence score定义为：<br><div align="center"><br>    <img src="/img/yolo/yolo1.2.png" height="30"><br></div><br>，因此，如果没有目标存在confidence score为0，否则应该为IOU(intersection over union)，即真实框和预测框的交集部分。所以每个bounding box的预测值包括(x,y,w,h.confidence score). (x,y)表示预测的box中心相对于网格单元的的位置，(w,h)是用整个图片大小进行归一化的宽度和高度，另外，针对C个类别，每个类别需要预测一个条件概率，即：<br><div align="center"><br>    <img src="/img/yolo/yolo1.3.png" height="30"><br></div><br>最终得到box中包含某个特定物品的概率为：<br><div align="center"><br>    <img src="/img/yolo/yolo1.4.png" height="40"><br></div><br>整个过程如下图所示。<br><div align="center"><br>    <img src="/img/yolo/yolo1.5.png" width="700" height="400"><br></div>
 
 <p>总结来说，YOLO网络将检测问题转换成regression，首先将整张图片转换成S×S的网格，并且每个网格单元预测<br>B个边界框，这些边界框的(x,y,w,h,confidence score)以及C个类别概率,这些预测被编码为S×S×(B*5+C)<br>的张量。</p>
 <h3 id="Network-Design"><a href="#Network-Design" class="headerlink" title="Network Design"></a>Network Design</h3><p>YOLO1的网络结构设计借鉴了GoodLeNet模型，包含了24个卷积层和2个全连接层，YOLO未使用inception module，而是使用1x1卷积层和）3x3卷积层简单替代，交替出现的1x1卷积层实现了跨通道信息融合以及通道数目降低。</p>
-<div align="center"><br>    <img src="https://i.imgur.com/BmDEK3e.png"><br></div>
+<div align="center"><br>    <img src="/img/yolo/yolo1.6.png"><br></div>
 
 <h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><ol>
 <li>使用 ImageNet 1000 类数据训练YOLO网络的前20个卷积层+1个average池化层+1个全连接层。</li>
@@ -419,7 +419,7 @@
 <li>最后一层预测类概率和边界框坐标。我们通过图像宽度和高度来规范(w,h)，使它们落在0和1之间。我们将边界框(x,y)坐标参数化为特定网格单元位置的偏移量，所以它们边界也在0和1之间。</li>
 </ol>
 <h3 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h3><p>YOLO1的误差计算对于分类误差和定位误差用了不同的权重，对包含与不包含物品的box的误差权重也进行了区分。具体来说，论文中增加了边界框坐标预测损失，并减少了不包含目标边界框的置信度预测损失，使用两个参数λcoord和λnoobj来完成这个工作，论文中设置了λcoord=5和λnoobj=0.5。<br>另一个问题是平方和误差权重在大框和小框中进行了区分。相同的误差下，小框误差的重要性肯定更好，论文中用了一个很巧妙的方法，<strong>直接预测边界框宽度和高度的平方根，而不是宽度和高度</strong>。根据y=x^1/2的函数就可以知道，函数斜率是随着x的增大而减小的，这样就可以提高小框的误差权重，真的巧妙。<br>YOLO每个网格单元预测多个box。在训练时，每个目标我们只需要一个box来负责，选定的原则是与真实框具有最大的IOU。</p>
-<div align="center"><br>    <img src="https://i.imgur.com/CsmNs9B.png"><br></div>
+<div align="center"><br>    <img src="/img/yolo/yolo1.7.png"><br></div>
 
 <h3 id="Shortcoming"><a href="#Shortcoming" class="headerlink" title="Shortcoming"></a>Shortcoming</h3><p>YOLO对边界框预测强加空间约束，因为每个网格单元只预测两个盒子，只能有一个类别。这个空间约束限制了我们的模型可以预测的邻近目标的数量，因此在小物品的检测上比较局限。</p>
 <h2 id="YOLO-v2"><a href="#YOLO-v2" class="headerlink" title="YOLO v2"></a>YOLO v2</h2><p>为提高物体定位精准性和召回率，YOLO2对网络结构的设计进行了改进，输出层使用卷积层替代YOLO的全连接层，联合使用coco物体检测标注数据和imagenet物体分类标注数据训练物体检测模型。相比YOLO，YOLO9000在识别种类、精度、速度、和定位准确性等方面都有大大提升。</p>
@@ -427,31 +427,31 @@
 <h4 id="High-Resolution-Classifier"><a href="#High-Resolution-Classifier" class="headerlink" title="High Resolution Classifier"></a>High Resolution Classifier</h4><p>YOLO2将ImageNet以448×448 的分辨率微调最初的分类网络，迭代10 epochs。</p>
 <h4 id="Convolutional-With-Anchor-Boxes"><a href="#Convolutional-With-Anchor-Boxes" class="headerlink" title="Convolutional With Anchor Boxes"></a>Convolutional With Anchor Boxes</h4><p>借鉴faster R-CNN的思想，引入anchor box，取消全连接层来进行预测，改用卷积层作为预测层对anchor box的offset和confidence进行预测。去除了一个池化层，使得输出特征具有更高的分辨率，将图片输入尺寸resize为416而非448，使得特征图大小为奇数，所以有一个中心单元格。目标，特别是大目标，倾向于占据图像的中心，所以在中心有一个单一的位置可以很好的预测这些目标，而不是四个位置都在中心附近。YOLO的卷积层将图像下采样32倍，所以通过使用输入图像416，我们得到13×13的输出特征图。同时，使用anchor box进行预测的时候，解耦空间位置预测与类别预测，对每个anchor box都预测object和class，仍然沿用YOLO1，目标检测仍然是预测proposed box和ground truth的IOU，类别预测（class predictions）仍然是存在object下的条件概率。</p>
 <h4 id="Dimension-Clusters"><a href="#Dimension-Clusters" class="headerlink" title="Dimension Clusters"></a>Dimension Clusters</h4><p>YOLO2不再采用手动挑选的box尺寸，而是对训练集的box尺寸进行k-means聚类，因为聚类的目的是想要更好的IOU，所以聚类的距离使用下列公式：</p>
-<div align="center"><br>    <img src="https://i.imgur.com/F8AsPNZ.png" height="40"><br></div><br>对不同的k值采用k-means聚类算法，即对数据集的ground truth聚类，在VOC和COCO数据集上的bounding box得到的结果如下图：<br><div align="center"><br>    <img src="https://i.imgur.com/EkQOmSz.png"><br></div>
+<div align="center"><br>    <img src="/img/yolo/yolo2.1.png" height="40"><br></div><br>对不同的k值采用k-means聚类算法，即对数据集的ground truth聚类，在VOC和COCO数据集上的bounding box得到的结果如下图：<br><div align="center"><br>    <img src="/img/yolo/yolo2.2.png"><br></div>
 
 <p>根据上图，k=5的时候，模型的复杂度和IOU能够得到一个不错的trade off。</p>
 <h4 id="Direct-location-prediction"><a href="#Direct-location-prediction" class="headerlink" title="Direct location prediction"></a>Direct location prediction</h4><p>对于位置坐标，YOLO2没有采用R-CNN的预测偏移，而是仍然类似于YOLO1中的，他预测相对于网格单元的位置坐标，将ground truth也限制在0-1之间，使用logistic activation 来实现。网络为每个边界框预测tx，ty，th，tw和to这5个坐标。如果网格单元从图像的左上角偏移（Cx，Cy），给定的anchor的宽度，高度分比为Pw，Ph那么预测结果为：</p>
-<div align="center"><br>    <img src="https://i.imgur.com/XShUyy1.png"><br></div><br><div align="center"><br>    <img src="https://i.imgur.com/21a8YXR.png"><br></div>
+<div align="center"><br>    <img src="/img/yolo/yolo2.3.png"><br></div><br><div align="center"><br>    <img src="/img/yolo/yolo2.4.png"><br></div>
 
 <h4 id="Fine-Grained-Features"><a href="#Fine-Grained-Features" class="headerlink" title="Fine-Grained Features"></a>Fine-Grained Features</h4><p>在13×13特征图上检测可以很容易检测到大目标，从更小粒度的特征图中可以更好地检测小物体，YOLO2添加一个passthrough layer从前一层26×26的特征图进行融合。传递层通过将相邻特征堆叠到不同的通道而不是堆叠到空间位置，将较高分辨率特征与低分辨率特征相连，类似于ResNet中的标识映射。这将26×26×512特征映射转换为13×13×2048特征映射，其可以与原始特征连接。</p>
 <h4 id="Multi-Scale-Training"><a href="#Multi-Scale-Training" class="headerlink" title="Multi-Scale Training"></a>Multi-Scale Training</h4><p>添加anchor box后，YOLO2将分辨率更改为416×416。然而，由于模型只使用卷积层和池化层，它可以在运行中调整大小。为了使YOLOv2能够在不同大小的图像上运行，相比于固定输入图像大小，YOLO2每隔几次迭代更改网络。每迭代10个batch网络随机选择一个新的图像尺寸大小。因为模型以32的因子下采样，YOLO2从以下32的倍数中抽取：{320,352，…，608}。因此，最小的选项是320×320，最大的是608×608.调整网络的大小，并继续训练。<br>这种训练方法迫使网络学习在各种输入维度上很好地预测。这意味着相同的网络可以预测不同分辨率的检测。网络在更小的尺寸下运行更快，因此YOLO2在速度和精度之间提供了一个简单的折衷。</p>
 <h3 id="Faster"><a href="#Faster" class="headerlink" title="Faster"></a>Faster</h3><h4 id="Darknet-19"><a href="#Darknet-19" class="headerlink" title="Darknet-19"></a>Darknet-19</h4><p>YOLO2大多数3×3的过滤器，并在每个池化步骤后将通道数量加倍，使用全局平均池进行预测，使用1×1滤波器以压缩3×3卷积之间的特征，最终模型，称为Darknet-19，有19卷积层和5个最大池化层，详见下图。</p>
-<div align="center"><br>    <img src="https://i.imgur.com/LCahDqp.png"><br></div>
+<div align="center"><br>    <img src="/img/yolo/yolo2.5.png"><br></div>
 
 <h4 id="Training-for-classification"><a href="#Training-for-classification" class="headerlink" title="Training for classification"></a>Training for classification</h4><p>使用Darknet19在标准ImageNet 1000类分类数据集上训练，在训练期间，使用数据增强技巧。</p>
 <h4 id="Training-for-detection"><a href="#Training-for-detection" class="headerlink" title="Training for detection"></a>Training for detection</h4><p>为了训练检测器，修改上面的网络，移除最后的卷积层，添加3个3×3卷积层，最后增加1×1卷积层，其输出为我们需要的检测维度，如对于VOC数据集，预测5个box，每个具有5个坐标，每个box20个类，因此125个过滤器。还添加了从最后的3×3×512层到第二到最后的卷积层的传递层passthrough layer，使得模型可以使用细粒度特征。</p>
 <h3 id="Stronger"><a href="#Stronger" class="headerlink" title="Stronger"></a>Stronger</h3><p>构建了一种分层分类模型（WordTree），提出了一种关于分类和检测数据的联合训练机制。</p>
-<div align="center"><br>    <img src="https://i.imgur.com/zdvKkpA.png"><br></div><br><div align="center"><br>    <img src="https://i.imgur.com/TnEqUtA.png"><br></div>
+<div align="center"><br>    <img src="/img/yolo/yolo2.6.png"><br></div><br><div align="center"><br>    <img src="/img/yolo/yolo2.7.png"><br></div>
 
 <p>ImageNet数据量更大，用于训练分类，COCO和VOC用于训练检测，ImageN对应分类有9000多种，COCO只有80种对应目标检测，通过wordTree来combine，来自分类的图片只计算分类的loss，来自检测集的图片计算完整的loss。</p>
 <h2 id="YOLO-v3"><a href="#YOLO-v3" class="headerlink" title="YOLO v3"></a>YOLO v3</h2><p>YOLO3 对于YOLO2有了一些改进，总的来说有几点：加深了网络，用了上采样，残差网络，多尺度预测，下面详细说明。</p>
 <h3 id="Bounding-Box-Prediction"><a href="#Bounding-Box-Prediction" class="headerlink" title="Bounding Box Prediction"></a>Bounding Box Prediction</h3><p>坐标预测仍然沿用YOLO2的，yolov3对每个bounding box预测四个坐标值(tx, ty, tw, th)，对于预测的cell根据图像左上角的偏移(cx, cy)，以及之前得到bounding box的宽和高pw, ph可以对bounding box按如下的方式进行预测：</p>
-<div align="center"><br>    <img src="https://i.imgur.com/XShUyy1.png"><br></div>
+<div align="center"><br>    <img src="/img/yolo/yolo3.1.png"><br></div>
 
 <p>训练的时候，loss的计算采用sum of squared error loss（平方和距离误差损失），yolov3对每个bounding box通过逻辑回归预测一个物体的得分，如果预测的这个bounding box与真实的边框值大部分重合且比其他所有预测的要好，那么这个值就为1.如果overlap没有达到一个阈值（yolov3中这里设定的阈值是0.5），那么这个预测的bounding box将会被忽略。YOLO3论文中使用的阈值是0.5.每个object只会分配一个bounding box，所以对应没有分配有ground truth object的box，其坐标损失和预测损失不需要计入，只需考虑objectness loss。If a bounding box prior is not assigned to a ground truth object it incurs no loss for coordinate or class predictions, only objectness.</p>
 <h3 id="Class-Prediction"><a href="#Class-Prediction" class="headerlink" title="Class Prediction"></a>Class Prediction</h3><p>每个框预测分类，bounding box使用多标签分类（multi-label classification）。论文中说没有使用softmax分类，只是使用了简单的逻辑回归进行分类，采用的二值交叉熵损失（binary cross-entropy loss）。<br>Each box predicts the classes the bounding box may contain using multilabel classification. We do not use a softmax as we have found it is unnecessary for good performance, instead we simply use independent logistic classifiers. During training we use binary cross-entropy loss for the class predictions.<br>This formulation helps when we move to more complex domains like the Open Images Dataset. In this dataset there are many overlapping labels (i.e. Woman and Person). Using a softmax imposes the assumption that each box has exactly one class which is often not the case. A multilabel approach better models the data.</p>
 <h3 id="Predictions-Across-Scales"><a href="#Predictions-Across-Scales" class="headerlink" title="Predictions Across Scales"></a>Predictions Across Scales</h3><p>YOLO3在三种不同尺度来预测box，应用一个类似于特征金字塔网络（feature pyramid network）上提取特征，如下图：</p>
-<div align="center"><br>    <img src="https://i.imgur.com/AYQngjv.png"><br></div>
+<div align="center"><br>    <img src="/img/yolo/yolo3.2.png"><br></div>
 
 <p>对于第一个scale的预测，即base feature extractor，最后预测得到一个3-d tensor，包含bounding box,objectness,class prediction.比如在COCO数据集中有80类物品，每一个scale预测3个box，所以tensor得到为（N×N×[3*(4+1+80)]）。<br>next scale，从上一步2 layer previous的feature map中进行上采样，然后从特征提取网络中的取earlier feature 与上采样后的进行合并，得到更多信息的语义，以及从earlier feature map可以得到更细粒度的特征。最后的scale采用前述类似的方法进行。可能实际代码更能体现这个过程，如下：<br>三种跨尺度预测</p>
 <pre><code>predict boxes at 3 different scales
@@ -627,7 +627,7 @@ def build(self, feat_ex, res18, res10):
    return self.res23  # 最后输出特征
 </code></pre><p>同样采用k-means聚类的到anchor box的尺寸。选取了9种，3中不同的scale：(10×13); (16×30); (33×23); (30×61); (62×45); (59×119); (116 × 90); (156 × 198); (373 × 326).</p>
 <h3 id="Feature-Extractor"><a href="#Feature-Extractor" class="headerlink" title="Feature Extractor"></a>Feature Extractor</h3><p>YOLO3的新的更深的网络，Darknet-53，实现细节可参见上面的代码</p>
-<div align="center"><br>    <img src="https://i.imgur.com/ZxUzfO8.png"><br></div>
+<div align="center"><br>    <img src="/img/yolo/yolo3.3.png"><br></div>
 
       
     </div>
