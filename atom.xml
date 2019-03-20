@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-01T07:40:52.038Z</updated>
+  <updated>2019-03-20T06:47:39.958Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>论文笔记-Region Proposal by Guided Anchoring(GA-RPN)</title>
+    <link href="http://yoursite.com/2019/03/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Region-Proposal-by-Guided-Anchoring-GA-RPN/"/>
+    <id>http://yoursite.com/2019/03/20/论文笔记-Region-Proposal-by-Guided-Anchoring-GA-RPN/</id>
+    <published>2019-03-20T06:13:40.000Z</published>
+    <updated>2019-03-20T06:47:39.958Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>论文链接：<a href="https://arxiv.org/pdf/1901.03278.pdf" target="_blank" rel="external">https://arxiv.org/pdf/1901.03278.pdf</a></p>
+<p>Anchor是目标检测领域的基石，目前比较先进的目标检测算法都是基于密集Anchor机制，通过预定的尺度和宽高比在feature map空间域上进行采样。这篇CVPR2019的文章提出了一种Guided Anchoring，根据语义信息来生成Anchor，主要是思想是定位目标的中心点以及相应的尺寸和宽高比，而且采用了feature adaption模块来缓解特征的不一致性。将GA-RPN应用到Fast R-CNN, Faster R-CNN和RetinaNet, 这篇论文在mAP上分别提高了 2.2%, 2.7% and 1.2%. </p>
+<a id="more"></a>
+<h2 id="Guided-Anchoring"><a href="#Guided-Anchoring" class="headerlink" title="Guided Anchoring"></a>Guided Anchoring</h2><p><img src="/img/GA-RPN/1.png" alt=""></p>
+<p>待续，晚点写。。。。。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;论文链接：&lt;a href=&quot;https://arxiv.org/pdf/1901.03278.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://arxiv.org/pdf/1901.03278.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Anchor是目标检测领域的基石，目前比较先进的目标检测算法都是基于密集Anchor机制，通过预定的尺度和宽高比在feature map空间域上进行采样。这篇CVPR2019的文章提出了一种Guided Anchoring，根据语义信息来生成Anchor，主要是思想是定位目标的中心点以及相应的尺寸和宽高比，而且采用了feature adaption模块来缓解特征的不一致性。将GA-RPN应用到Fast R-CNN, Faster R-CNN和RetinaNet, 这篇论文在mAP上分别提高了 2.2%, 2.7% and 1.2%. &lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
+    
+      <category term="CV" scheme="http://yoursite.com/tags/CV/"/>
+    
+  </entry>
   
   <entry>
     <title>数据结构与算法之排序</title>
@@ -2351,36 +2379,6 @@ plt.show()
       <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="集成学习" scheme="http://yoursite.com/tags/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>下完这场雨</title>
-    <link href="http://yoursite.com/2017/10/20/%E4%B8%8B%E5%AE%8C%E8%BF%99%E5%9C%BA%E9%9B%A8/"/>
-    <id>http://yoursite.com/2017/10/20/下完这场雨/</id>
-    <published>2017-10-20T13:30:47.000Z</published>
-    <updated>2019-03-19T10:04:23.125Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/img/houxian/1.jpg" alt=""></p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="530" height="86" src="//music.163.com/outchain/player?type=2&id=434550534&auto=0&height=66"></iframe>
-
-<p>偶然间网易云推送了这首《下完这场雨》，多久没有再听过后弦的歌了，这首17年的可以说是新歌，歌词一贯写得好，一如六七年前的清新中国风。江南烟雨中，伞下约无果；下完这场雨，此生难再遇。</p>
-<a id="more"></a>
-<p><img src="/img/houxian/2.png" alt=""></p>
-<p>仿佛又回到了六七年前，戴着耳机，揣着MP3，走在凤凰花园去学校的路上，穿过西厢，看过娃娃脸，有这样喜欢的清新中国风，有许嵩，有庐州月，断桥残雪，清明雨上，半城烟沙。。。<br>真好。<br>如果可以 别下完这场雨</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/img/houxian/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;530&quot; height=&quot;86&quot; src=&quot;//music.163.com/outchain/player?type=2&amp;id=434550534&amp;auto=0&amp;height=66&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;偶然间网易云推送了这首《下完这场雨》，多久没有再听过后弦的歌了，这首17年的可以说是新歌，歌词一贯写得好，一如六七年前的清新中国风。江南烟雨中，伞下约无果；下完这场雨，此生难再遇。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="音乐" scheme="http://yoursite.com/tags/%E9%9F%B3%E4%B9%90/"/>
     
   </entry>
   

@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="目标检测,CV," />
 
 
 
@@ -96,16 +96,20 @@
 
 
 
-<meta name="description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="听歌的小孩">
-<meta property="og:url" content="http://yoursite.com/archives/2018/03/index.html">
+<meta name="description" content="论文链接：https://arxiv.org/pdf/1901.03278.pdf Anchor是目标检测领域的基石，目前比较先进的目标检测算法都是基于密集Anchor机制，通过预定的尺度和宽高比在feature map空间域上进行采样。这篇CVPR2019的文章提出了一种Guided Anchoring，根据语义信息来生成Anchor，主要是思想是定位目标的中心点以及相应的尺寸和宽高比，而且采用">
+<meta name="keywords" content="目标检测,CV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记-Region Proposal by Guided Anchoring(GA-RPN)">
+<meta property="og:url" content="http://yoursite.com/2019/03/20/论文笔记-Region-Proposal-by-Guided-Anchoring-GA-RPN/index.html">
 <meta property="og:site_name" content="听歌的小孩">
-<meta property="og:description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
+<meta property="og:description" content="论文链接：https://arxiv.org/pdf/1901.03278.pdf Anchor是目标检测领域的基石，目前比较先进的目标检测算法都是基于密集Anchor机制，通过预定的尺度和宽高比在feature map空间域上进行采样。这篇CVPR2019的文章提出了一种Guided Anchoring，根据语义信息来生成Anchor，主要是思想是定位目标的中心点以及相应的尺寸和宽高比，而且采用">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/GA-RPN/1.png">
+<meta property="og:updated_time" content="2019-03-20T06:47:39.958Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="听歌的小孩">
-<meta name="twitter:description" content="瞎捣鼓的小空间  Email:kaijianliu@qq.com">
+<meta name="twitter:title" content="论文笔记-Region Proposal by Guided Anchoring(GA-RPN)">
+<meta name="twitter:description" content="论文链接：https://arxiv.org/pdf/1901.03278.pdf Anchor是目标检测领域的基石，目前比较先进的目标检测算法都是基于密集Anchor机制，通过预定的尺度和宽高比在feature map空间域上进行采样。这篇CVPR2019的文章提出了一种Guided Anchoring，根据语义信息来生成Anchor，主要是思想是定位目标的中心点以及相应的尺寸和宽高比，而且采用">
+<meta name="twitter:image" content="http://yoursite.com/img/GA-RPN/1.png">
 
 
 
@@ -134,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/03/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/03/20/论文笔记-Region-Proposal-by-Guided-Anchoring-GA-RPN/"/>
 
 
 
 
 
-  <title>归档 | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>论文笔记-Region Proposal by Guided Anchoring(GA-RPN) | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -165,7 +169,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left  page-archive  ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 	<a href="https://github.com/lkj1114889770"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
@@ -284,73 +288,195 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 31 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h2 class="archive-year motion-element" id="archive-year-2018">2018</h2>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/20/论文笔记-Region-Proposal-by-Guided-Anchoring-GA-RPN/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="听歌的小孩">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="听歌的小孩">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/03/05/NHD自动登陆签到脚本/" itemprop="url">
-              
-                <span itemprop="name">NHD自动登陆签到脚本</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">论文笔记-Region Proposal by Guided Anchoring(GA-RPN)</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-05T20:46:38+08:00"
-              content="2018-03-05" >
-          03-05
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-20T14:13:40+08:00">
+                2019-03-20
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  170
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p>论文链接：<a href="https://arxiv.org/pdf/1901.03278.pdf" target="_blank" rel="external">https://arxiv.org/pdf/1901.03278.pdf</a></p>
+<p>Anchor是目标检测领域的基石，目前比较先进的目标检测算法都是基于密集Anchor机制，通过预定的尺度和宽高比在feature map空间域上进行采样。这篇CVPR2019的文章提出了一种Guided Anchoring，根据语义信息来生成Anchor，主要是思想是定位目标的中心点以及相应的尺寸和宽高比，而且采用了feature adaption模块来缓解特征的不一致性。将GA-RPN应用到Fast R-CNN, Faster R-CNN和RetinaNet, 这篇论文在mAP上分别提高了 2.2%, 2.7% and 1.2%. </p>
+<a id="more"></a>
+<h2 id="Guided-Anchoring"><a href="#Guided-Anchoring" class="headerlink" title="Guided Anchoring"></a>Guided Anchoring</h2><p><img src="/img/GA-RPN/1.png" alt=""></p>
+<p>待续，晚点写。。。。。</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/目标检测/" rel="tag"># 目标检测</a>
+          
+            <a href="/tags/CV/" rel="tag"># CV</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/01/数据结构与算法之排序/" rel="next" title="数据结构与算法之排序">
+                <i class="fa fa-chevron-left"></i> 数据结构与算法之排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -358,6 +484,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -378,8 +508,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/touxiang.jpg"
@@ -491,6 +630,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Guided-Anchoring"><span class="nav-number">1.</span> <span class="nav-text">Guided Anchoring</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -621,11 +776,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
 
 
   
