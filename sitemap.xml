@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/05/06/maskrcnn-benchmark%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E8%AE%B0/</loc>
+    
+    <lastmod>2019-05-06T11:11:55.780Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/03/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Region-Proposal-by-Guided-Anchoring-GA-RPN/</loc>
     
     <lastmod>2019-03-25T03:11:39.260Z</lastmod>

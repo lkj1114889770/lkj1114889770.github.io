@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-25T03:11:39.260Z</updated>
+  <updated>2019-05-06T11:11:55.780Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>安装踩坑记&#39;</title>
+    <link href="http://yoursite.com/2019/05/06/maskrcnn-benchmark%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E8%AE%B0/"/>
+    <id>http://yoursite.com/2019/05/06/maskrcnn-benchmark安装踩坑记/</id>
+    <published>2019-05-06T10:52:50.000Z</published>
+    <updated>2019-05-06T11:11:55.780Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>想用maskrcnn框架做一个检测任务，虽然根据官网指示，倒是过程中还是碰到好几个坑，从上午折腾到办完才搞定，暂且记录一下安装过程。</p>
+<a id="more"></a>
+<h3 id="gcc降级"><a href="#gcc降级" class="headerlink" title="gcc降级"></a>gcc降级</h3><p>我是用的是cuda9.0,需要的是5.3及以下的GCC，而maskrcnn benhmark要求GCC &gt;= 4.9，Ubuntu16.04自带的是GCC 5.4，所以需要进行降级，安装5.3版本：</p>
+<ul>
+<li>首选需要下载GCC源码： <a href="https://ftp.gnu.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.gz" title="https://ftp.gnu.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.gz" target="_blank" rel="external">https://ftp.gnu.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.gz</a></li>
+<li><p>解压<br><code>sudo tar -zxvf gcc-5.3.0.tar.gz （解压）</code></p>
+</li>
+<li><p>下载编译依赖项：</p>
+<p>  cd gcc-5.3.0<br>  sudo ./contrib/download_prerequisites   </p>
+</li>
+<li><p>编译,，时间略长，20多分钟</p>
+<p>  mkdir build<br>  cd build<br>  sudo  ../gcc-5.3.0/configure –enable-checking=release –enable-languages=c,c++ –disable-multilib<br>  sudo make -j4</p>
+</li>
+<li><p>安装</p>
+</li>
+<li>  sudo make install</li>
+</ul>
+<p>这个时候可以检查版本，gcc -v &amp;&amp; g++ -v,若显示版本不对，重启即可。</p>
+<h3 id="官方step"><a href="#官方step" class="headerlink" title="官方step"></a>官方step</h3><pre><code>conda create --name maskrcnn_benchmark
+conda activate maskrcnn_benchmark
+
+# this installs the right pip and dependencies for the fresh python
+conda install ipython
+
+# maskrcnn_benchmark and coco api dependencies
+pip install ninja yacs cython matplotlib tqdm opencv-python
+
+# follow PyTorch installation in https://pytorch.org/get-started/locally/
+# we give the instructions for CUDA 9.0
+conda install -c pytorch pytorch-nightly torchvision cudatoolkit=9.0
+
+export INSTALL_DIR=$PWD
+
+# install pycocotools
+cd $INSTALL_DIR
+git clone https://github.com/cocodataset/cocoapi.git
+cd cocoapi/PythonAPI
+python setup.py build_ext install
+
+# install apex
+cd $INSTALL_DIR
+git clone https://github.com/NVIDIA/apex.git
+cd apex
+python setup.py install --cuda_ext --cpp_ext
+
+# install PyTorch Detection
+cd $INSTALL_DIR
+git clone https://github.com/facebookresearch/maskrcnn-benchmark.git
+cd maskrcnn-benchmark
+
+# the following will install the lib with
+# symbolic links, so that you can modify
+# the files if you want and won&apos;t need to
+# re-build it
+python setup.py build develop
+
+
+unset INSTALL_DIR
+</code></pre><p>这里出现了一个问题就是，耽误了很久：</p>
+<pre><code> 1 error detected in the compilation of &quot;/tmp/tmpxft_0000279e_00000000-7_multi_tensor_l2norm_kernel.cpp1.ii&quot;.
+error: command &apos;/usr/local/cuda/bin/nvcc&apos; failed with exit status 2
+error
+  Rolling back uninstall of apex
+</code></pre><p>在apex编译安装的时候，应该是由于我的电脑有多个cuda(cuda8 cuda9)默认账户下cuda软连接到cuda8,但是我的账户.bashrc下制定了cuda9，所以nvcc -v看到的虽然还是cuda9,但是编译apex时候找的是默认路径下的cuda对应的cuda8,因此出现错误，这里找到github上的解决方法如下：</p>
+<pre><code>CUDA_HOME=/usr/local/cuda-9.0 python setup.py install --cuda_ext --cpp_ext
+</code></pre><p>即，编译的时候指定cuda9路径。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;想用maskrcnn框架做一个检测任务，虽然根据官网指示，倒是过程中还是碰到好几个坑，从上午折腾到办完才搞定，暂且记录一下安装过程。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>论文笔记-Region Proposal by Guided Anchoring(GA-RPN)</title>
@@ -55,9 +139,9 @@
     </summary>
     
     
-      <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
-    
       <category term="CV" scheme="http://yoursite.com/tags/CV/"/>
+    
+      <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
     
   </entry>
   
@@ -393,9 +477,9 @@
     
       <category term="深度学习" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
-    
       <category term="CV" scheme="http://yoursite.com/tags/CV/"/>
+    
+      <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
     
   </entry>
   
@@ -821,11 +905,11 @@ box_indices = tf.stop_gradient(box_indices)
     </summary>
     
     
+      <category term="实例分割" scheme="http://yoursite.com/tags/%E5%AE%9E%E4%BE%8B%E5%88%86%E5%89%B2/"/>
+    
       <category term="深度学习" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="CV" scheme="http://yoursite.com/tags/CV/"/>
-    
-      <category term="实例分割" scheme="http://yoursite.com/tags/%E5%AE%9E%E4%BE%8B%E5%88%86%E5%89%B2/"/>
     
   </entry>
   
@@ -1358,9 +1442,9 @@ def build(self, feat_ex, res18, res10):
     
       <category term="深度学习" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
-    
       <category term="CV" scheme="http://yoursite.com/tags/CV/"/>
+    
+      <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
     
   </entry>
   
@@ -1465,9 +1549,9 @@ python setup.py install
     
       <category term="深度学习" scheme="http://yoursite.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
-    
       <category term="CV" scheme="http://yoursite.com/tags/CV/"/>
+    
+      <category term="目标检测" scheme="http://yoursite.com/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
     
   </entry>
   
@@ -2349,54 +2433,6 @@ plt.show()
       <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="监督学习" scheme="http://yoursite.com/tags/%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>AdaBoost算法笔记</title>
-    <link href="http://yoursite.com/2017/10/22/AdaBoost%E7%AE%97%E6%B3%95/"/>
-    <id>http://yoursite.com/2017/10/22/AdaBoost算法/</id>
-    <published>2017-10-22T07:35:19.000Z</published>
-    <updated>2019-03-19T08:59:55.195Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>AdaBoost属于机器学习中的集成学习，其基本思想是基于“弱学习算法”集成强化为“强学习算法”，在分类中就是组合弱分类器得到强分类器。实际中很容易得到正确率不是非常高的弱分类器(当然，通常来说at least &gt;50%），通过Adaboost算法，来组合得到正确率很高的强分类器。<br><a id="more"></a><br>从上述就可以知道，AdaBoost算法有两部分，顶层是主算法，底层是其他的分类算法，可以是决策树，SVM之类的算法</p>
-<p><img src="/img/adaboost/1.jpg" alt=""></p>
-<p>AdaBoost算法的核心思想就是：加大分类错误数据集的权重，以便迭代中进一步分类；加大正确率高的分类器在最终分类结果表决中的权重。</p>
-<p>对算法进一步阐述，考虑简单的二分类问题。</p>
-<ol>
-<li>初始化数据集的权值分布，初始化为相等的数值</li>
-</ol>
-<p><img src="/img/adaboost/2.png" alt=""></p>
-<ol>
-<li>使用训练集学习，得到基本分类器Gm,计算其分类误差率</li>
-</ol>
-<p><img src="/img/adaboost/3.png" alt=""></p>
-<ol>
-<li>计算分类器Gm的系数</li>
-</ol>
-<p><img src="/img/adaboost/4.png" alt=""></p>
-<p>am随着em增大而减小，这样分类器在最终组合分类器中权重会下降，同时还需要据此来更新数据集的权重。</p>
-<ol>
-<li>更新数据集权重分布</li>
-</ol>
-<p><img src="/img/adaboost/5.png" alt=""></p>
-<p>其中Zm为规范化因子，是的Dm+1成一个概率分布。</p>
-<ol>
-<li>构造弱分类器的组合<br>通过权重值的线性组合得到强分类器<br><img src="/img/adaboost/6.png" alt=""></li>
-</ol>
-<p>上述过程迭代M次，或者是分类精度达到要求</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;AdaBoost属于机器学习中的集成学习，其基本思想是基于“弱学习算法”集成强化为“强学习算法”，在分类中就是组合弱分类器得到强分类器。实际中很容易得到正确率不是非常高的弱分类器(当然，通常来说at least &amp;gt;50%），通过Adaboost算法，来组合得到正确率很高的强分类器。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="集成学习" scheme="http://yoursite.com/tags/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
