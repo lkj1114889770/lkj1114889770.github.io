@@ -104,14 +104,14 @@
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="这篇文章提出了一种Path Aggregation Network(PANet)，针对常规的多特征图从上到下（top-down）的信息传播，添加了自下向上（bottom-up）的路径，建立底层特征和高层特征之间的信息路径，从而增强整个特征层次架构。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/05/09/实例分割之PANet-Aggregation-Network-for-Instance-Segmentation/img/PANet/1.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/09/实例分割之PANet-Aggregation-Network-for-Instance-Segmentation/img/PANet/2.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/09/实例分割之PANet-Aggregation-Network-for-Instance-Segmentation/img/PANet/3.png">
-<meta property="og:updated_time" content="2019-06-05T14:31:26.465Z">
+<meta property="og:image" content="http://yoursite.com/img/PANet/1.png">
+<meta property="og:image" content="http://yoursite.com/img/PANet/2.png">
+<meta property="og:image" content="http://yoursite.com/img/PANet/3.png">
+<meta property="og:updated_time" content="2019-06-05T14:34:19.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实例分割之PANet-Aggregation Network for Instance Segmentation">
 <meta name="twitter:description" content="这篇文章提出了一种Path Aggregation Network(PANet)，针对常规的多特征图从上到下（top-down）的信息传播，添加了自下向上（bottom-up）的路径，建立底层特征和高层特征之间的信息路径，从而增强整个特征层次架构。">
-<meta name="twitter:image" content="http://yoursite.com/2019/05/09/实例分割之PANet-Aggregation-Network-for-Instance-Segmentation/img/PANet/1.png">
+<meta name="twitter:image" content="http://yoursite.com/img/PANet/1.png">
 
 
 
@@ -391,7 +391,7 @@
 
       
         <p>这篇文章提出了一种Path Aggregation Network(PANet)，针对常规的多特征图从上到下（top-down）的信息传播，添加了自下向上（bottom-up）的路径，建立底层特征和高层特征之间的信息路径，从而增强整个特征层次架构。</p>
-<p><img src="img/PANet/1.png" alt="1"></p>
+<p><img src="/img/PANet/1.png" alt="1"></p>
 <a id="more"></a>
 <p>主要的工作如下：</p>
 <ul>
@@ -400,12 +400,12 @@
 <li><p>提出了自适应池化层，即上图b部分，详细示意图如下图：</p>
 </li>
 </ul>
-<p><img src="img/PANet/2.png" alt="2"></p>
+<p><img src="/img/PANet/2.png" alt="2"></p>
 <p>  对每个候选区域，将其映射至不同特征层次，如上图的灰色部分，然后采用RoIAlign池化不同层次的特征网络，再采用融合操作，让网络适应特征。</p>
 <ul>
 <li>采用了FC层补充mask预测。如figure1(e)显示，详细如下图所示：</li>
 </ul>
-<p><img src="img/PANet/3.png" alt="3"></p>
+<p><img src="/img/PANet/3.png" alt="3"></p>
 <p>  主分支采用和连续卷积核decconv，同时采用了一个段路径，从conv3到conv4_fc，conv5_fc，再到fc层。</p>
 
       
