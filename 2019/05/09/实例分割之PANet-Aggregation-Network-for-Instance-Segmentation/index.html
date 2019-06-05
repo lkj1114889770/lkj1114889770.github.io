@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/05/09/实例分割之PANet-Aggregation-Network-for-Instance-Segmentation/img/PANet/1.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/09/实例分割之PANet-Aggregation-Network-for-Instance-Segmentation/img/PANet/2.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/09/实例分割之PANet-Aggregation-Network-for-Instance-Segmentation/img/PANet/3.png">
-<meta property="og:updated_time" content="2019-06-05T14:26:00.427Z">
+<meta property="og:updated_time" content="2019-06-05T14:31:26.465Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实例分割之PANet-Aggregation Network for Instance Segmentation">
 <meta name="twitter:description" content="这篇文章提出了一种Path Aggregation Network(PANet)，针对常规的多特征图从上到下（top-down）的信息传播，添加了自下向上（bottom-up）的路径，建立底层特征和高层特征之间的信息路径，从而增强整个特征层次架构。">
@@ -391,7 +391,8 @@
 
       
         <p>这篇文章提出了一种Path Aggregation Network(PANet)，针对常规的多特征图从上到下（top-down）的信息传播，添加了自下向上（bottom-up）的路径，建立底层特征和高层特征之间的信息路径，从而增强整个特征层次架构。</p>
-<p><img src="img/PANet/1.png" alt="1"><br><a id="more"></a></p>
+<p><img src="img/PANet/1.png" alt="1"></p>
+<a id="more"></a>
 <p>主要的工作如下：</p>
 <ul>
 <li><p>创建自下而上（bottom-up）的增强路径（图b绿色虚线），可以缩短信息传播路径，在FPN中红色的车行路径可以超过100层，而这种绿色虚线的短路径10层都不到，这样增强了low-level信息传播，新的路径增强可以让底层信息流通更快。</p>
@@ -404,7 +405,7 @@
 <ul>
 <li>采用了FC层补充mask预测。如figure1(e)显示，详细如下图所示：</li>
 </ul>
-<p><img src="img/PANet/3.png" alt="2"></p>
+<p><img src="img/PANet/3.png" alt="3"></p>
 <p>  主分支采用和连续卷积核decconv，同时采用了一个段路径，从conv3到conv4_fc，conv5_fc，再到fc层。</p>
 
       
