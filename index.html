@@ -389,35 +389,14 @@
 
       
         
-          
-            <p>对2019年出现的几个新的One-stage目标检测算法进行盘点：<a href="https://arxiv.org/abs/1904.08900" target="_blank" rel="external">CornerNet-Lite</a>，<a href="https://arxiv.org/pdf/1904.01355.pdf" target="_blank" rel="external">FCOS</a>，<a href="https://arxiv.org/abs/1904.08189" target="_blank" rel="external">CenterNe</a>t</p>
-<h2 id="CornerNet-Lite"><a href="#CornerNet-Lite" class="headerlink" title="CornerNet-Lite"></a>CornerNet-Lite</h2><p>CornetNet-Lite是CornerNet的优化版，提出了两种算法：</p>
-<ul>
-<li>CornerNet-Saccade，提高速度</li>
-<li>CornerNet-Squeeze，提高准确率</li>
-</ul>
-<h3 id="CornerNet-Saccade"><a href="#CornerNet-Saccade" class="headerlink" title="CornerNet-Saccade"></a>CornerNet-Saccade</h3><p>Saccades 是 <strong><em>single type and multi-object</em></strong>。CornerNet-Saccade 检测图像中可能的目标位置周围的小区域内的目标。它使用缩小后的完整图像来预测注意力图和粗边界框；两者都提出可能的对象位置，然后，CornerNet-Saccade通过检查以高分辨率为中心的区域来检测目标。</p>
-<p><img src="/img/One-stage目标检测新算法盘点/1567426867914.png" alt="1567426867914"></p>
-<p>其实思路很简单，首先在低分辨率的图上进行粗检测，然后在高分辨比率图片上检测粗检测出来的区域，进一步检测目标物，有一种级联的感觉。这里Saccade就是先扫一下全图，粗检测确定一些目标区域，然后在高分辨率图上进行细检测。</p>
-<h3 id="CornerNet-Squeeze"><a href="#CornerNet-Squeeze" class="headerlink" title="CornerNet-Squeeze"></a><strong>CornerNet-Squeeze</strong></h3><p>CornerNet中，大部分计算资源都花在了Hourglass-104上。Hourglass-104 由残差块构成，其由两个3×3卷积层和跳连接（skip connection）组成。CornerNet-Squeeze借鉴了SqueezeNet和mobileNet来设计了一个轻量级的Hourglass结构。主要就是本文将CornerNet-Squeeze中的残差模块替换为fire module。将其中第二层的3x3的标准卷积替换为深度可分离卷积。</p>
-<h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><p><strong>CornerNet-Squeeze为34ms / 34.4 mAP，而YOLOv3为39ms / 33mAP</strong>，<strong>CornerNet-Saccade精度可达42.6mAP。</strong></p>
-<h2 id="FCOS"><a href="#FCOS" class="headerlink" title="FCOS"></a>FCOS</h2><p>FCOS(FCOS: Fully Convolutional One-Stage Object Detection)，该算法是一种基于FCN的逐像素目标检测算法。</p>
-<p><img src="/img/One-stage目标检测新算法盘点/1567427820413.png" alt="1567427820413"></p>
-<p>FCOS直接对feature map中每个位置对应原图的边框都进行回归，换句话说FCOS直接把每个位置都作为训练样本，这一点和FCN用于语义分割相同。在FCOS中，如果位置 $(x,y)$落入任何真实边框，就认为它是一个正样本，它的类别标记为这个真实边框的类别。同时采用了FPN进行多级检测。</p>
-<h3 id="Center-ness-For-FCOS"><a href="#Center-ness-For-FCOS" class="headerlink" title="Center-ness  For FCOS"></a>Center-ness  For FCOS</h3><p><img src="/img/One-stage目标检测新算法盘点/1567427959778.png" alt="1567427959778"></p>
-<p>采用Center-ness抑制离目标中心位置较远的与侧边框，添加了Center-ness分支，预测Center-ness。</p>
-<p><img src="../img/One-stage目标检测新算法盘点/1567428160976.png" alt="1567428160976"></p>
-<p>可以看到其取值为0-1，采用交叉熵进行训练；预测的时候可以将Center-ness与分类分数相乘，降低远离中心的bbox权重。</p>
-<h3 id="performance"><a href="#performance" class="headerlink" title="performance"></a>performance</h3><p><img src="../img/One-stage目标检测新算法盘点/1567428272744.png" alt="1567428272744"></p>
-<h2 id="CenterNet-Keypoint-Triplets-for-Object-Detection"><a href="#CenterNet-Keypoint-Triplets-for-Object-Detection" class="headerlink" title="CenterNet: Keypoint Triplets for Object Detection"></a>CenterNet: Keypoint Triplets for Object Detection</h2><p>相比于CornerNet，只预测左上角和右下角，这样无法利用物体内部特征，产生了很多误检测，CenterNet还预测一个中心点，这样就是预测左上角、右下角、中心点三元组。</p>
-<p><img src="/img/One-stage目标检测新算法盘点/1567428836242.png" alt="1567428836242"></p>
-<h3 id="Keypoint-Triplets"><a href="#Keypoint-Triplets" class="headerlink" title="Keypoint Triplets"></a>Keypoint Triplets</h3><p>对每个预测框定义一个中心区域，判断每个中心区域是否有中心点，如有则保留，并且此时框的 confidence 为中心点，左上角点和右下角点的confidence的平均；否则去除这个bbox，这样就是的网络具备了目标内部信息感知的能力。采用一种尺度可调节的区域中心定义方法，该方法可以在预测框的尺度较大时定义一个相对较小的中心区域，在预测框的尺度较小时预测一个相对较大的中心区域</p>
-<p><img src="/img/One-stage目标检测新算法盘点/1567429034183.png" alt="1567429034183"></p>
-<h3 id="Center-Pooling-amp-amp-Cascade-corner-pooling"><a href="#Center-Pooling-amp-amp-Cascade-corner-pooling" class="headerlink" title="Center Pooling &amp;&amp; Cascade corner pooling"></a>Center Pooling &amp;&amp; Cascade corner pooling</h3><p><img src="/img/One-stage目标检测新算法盘点/1567429189510.png" alt="1567429189510"></p>
-<p>Center Pooling提取中心点水平方向和垂直方向的最大值相加，作为中心点特征。传统做法的 corner pooling。它提取物体边界最大值并相加，该方法只能提供关联物体边缘语义信息，对于更加丰富的物体内部语义信息则很难提取到。图4(c)为cascade corner pooling 原理，它首先提取物体边界最大值，然后在边界最大值处继续向内部(图中沿虚线方向)提取提最大值，并与边界最大值相加，以此给角点特征提供更加丰富的关联物体语义信息。Cascade corner pooling 也可通过不同方向上的 corner pooling 的组合实现.</p>
-<h3 id="performance-1"><a href="#performance-1" class="headerlink" title="performance"></a>performance</h3><p>输入511X511,Hourglass-104作为backbone,multi-scale可达<strong>47.0 mAP</strong>, single-scale 44.9 mAP。</p>
-
-          
+          <p>对2019年出现的几个新的One-stage目标检测算法进行盘点：<a href="https://arxiv.org/abs/1904.08900" target="_blank" rel="external">CornerNet-Lite</a>，<a href="https://arxiv.org/pdf/1904.01355.pdf" target="_blank" rel="external">FCOS</a>，<a href="https://arxiv.org/abs/1904.08189" target="_blank" rel="external">CenterNe</a>t</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/02/One-stage目标检测新算法盘点/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
