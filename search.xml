@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[‘One-stage目标检测新算法盘点']]></title>
+    <url>%2F2019%2F09%2F02%2FOne-stage%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B0%E7%AE%97%E6%B3%95%E7%9B%98%E7%82%B9%2F</url>
+    <content type="text"><![CDATA[对2019年出现的几个新的One-stage目标检测算法进行盘点：CornerNet-Lite，FCOS，CenterNet CornerNet-LiteCornetNet-Lite是CornerNet的优化版，提出了两种算法： CornerNet-Saccade，提高速度 CornerNet-Squeeze，提高准确率 CornerNet-SaccadeSaccades 是 single type and multi-object。CornerNet-Saccade 检测图像中可能的目标位置周围的小区域内的目标。它使用缩小后的完整图像来预测注意力图和粗边界框；两者都提出可能的对象位置，然后，CornerNet-Saccade通过检查以高分辨率为中心的区域来检测目标。 其实思路很简单，首先在低分辨率的图上进行粗检测，然后在高分辨比率图片上检测粗检测出来的区域，进一步检测目标物，有一种级联的感觉。这里Saccade就是先扫一下全图，粗检测确定一些目标区域，然后在高分辨率图上进行细检测。 CornerNet-SqueezeCornerNet中，大部分计算资源都花在了Hourglass-104上。Hourglass-104 由残差块构成，其由两个3×3卷积层和跳连接（skip connection）组成。CornerNet-Squeeze借鉴了SqueezeNet和mobileNet来设计了一个轻量级的Hourglass结构。主要就是本文将CornerNet-Squeeze中的残差模块替换为fire module。将其中第二层的3x3的标准卷积替换为深度可分离卷积。 PerformanceCornerNet-Squeeze为34ms / 34.4 mAP，而YOLOv3为39ms / 33mAP，CornerNet-Saccade精度可达42.6mAP。 FCOSFCOS(FCOS: Fully Convolutional One-Stage Object Detection)，该算法是一种基于FCN的逐像素目标检测算法。 FCOS直接对feature map中每个位置对应原图的边框都进行回归，换句话说FCOS直接把每个位置都作为训练样本，这一点和FCN用于语义分割相同。在FCOS中，如果位置 $(x,y)$落入任何真实边框，就认为它是一个正样本，它的类别标记为这个真实边框的类别。同时采用了FPN进行多级检测。 Center-ness For FCOS 采用Center-ness抑制离目标中心位置较远的与侧边框，添加了Center-ness分支，预测Center-ness。 可以看到其取值为0-1，采用交叉熵进行训练；预测的时候可以将Center-ness与分类分数相乘，降低远离中心的bbox权重。 performance CenterNet: Keypoint Triplets for Object Detection相比于CornerNet，只预测左上角和右下角，这样无法利用物体内部特征，产生了很多误检测，CenterNet还预测一个中心点，这样就是预测左上角、右下角、中心点三元组。 Keypoint Triplets对每个预测框定义一个中心区域，判断每个中心区域是否有中心点，如有则保留，并且此时框的 confidence 为中心点，左上角点和右下角点的confidence的平均；否则去除这个bbox，这样就是的网络具备了目标内部信息感知的能力。采用一种尺度可调节的区域中心定义方法，该方法可以在预测框的尺度较大时定义一个相对较小的中心区域，在预测框的尺度较小时预测一个相对较大的中心区域 Center Pooling &amp;&amp; Cascade corner pooling Center Pooling提取中心点水平方向和垂直方向的最大值相加，作为中心点特征。传统做法的 corner pooling。它提取物体边界最大值并相加，该方法只能提供关联物体边缘语义信息，对于更加丰富的物体内部语义信息则很难提取到。图4(c)为cascade corner pooling 原理，它首先提取物体边界最大值，然后在边界最大值处继续向内部(图中沿虚线方向)提取提最大值，并与边界最大值相加，以此给角点特征提供更加丰富的关联物体语义信息。Cascade corner pooling 也可通过不同方向上的 corner pooling 的组合实现. performance输入511X511,Hourglass-104作为backbone,multi-scale可达47.0 mAP, single-scale 44.9 mAP。]]></content>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>目标检测</tag>
+        <tag>CV</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[实例分割之PANet-Aggregation Network for Instance Segmentation]]></title>
     <url>%2F2019%2F05%2F09%2F%E5%AE%9E%E4%BE%8B%E5%88%86%E5%89%B2%E4%B9%8BPANet-Aggregation-Network-for-Instance-Segmentation%2F</url>
     <content type="text"><![CDATA[这篇文章提出了一种Path Aggregation Network(PANet)，针对常规的多特征图从上到下（top-down）的信息传播，添加了自下向上（bottom-up）的路径，建立底层特征和高层特征之间的信息路径，从而增强整个特征层次架构。 主要的工作如下： 创建自下而上（bottom-up）的增强路径（图b绿色虚线），可以缩短信息传播路径，在FPN中红色的车行路径可以超过100层，而这种绿色虚线的短路径10层都不到，这样增强了low-level信息传播，新的路径增强可以让底层信息流通更快。 提出了自适应池化层，即上图b部分，详细示意图如下图： 对每个候选区域，将其映射至不同特征层次，如上图的灰色部分，然后采用RoIAlign池化不同层次的特征网络，再采用融合操作，让网络适应特征。 采用了FC层补充mask预测。如figure1(e)显示，详细如下图所示： 主分支采用和连续卷积核decconv，同时采用了一个段路径，从conv3到conv4_fc，conv5_fc，再到fc层。]]></content>
