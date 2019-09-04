@@ -99,7 +99,7 @@
 <meta name="description" content="对2019年出现的几个新的One-stage目标检测算法进行盘点：CornerNet-Lite，FCOS，CenterNet">
 <meta name="keywords" content="深度学习,目标检测,CV">
 <meta property="og:type" content="article">
-<meta property="og:title" content="‘One-stage目标检测新算法盘点&#39;">
+<meta property="og:title" content="One-stage目标检测新算法盘点">
 <meta property="og:url" content="http://yoursite.com/2019/09/02/One-stage目标检测新算法盘点/index.html">
 <meta property="og:site_name" content="听歌的小孩">
 <meta property="og:description" content="对2019年出现的几个新的One-stage目标检测算法进行盘点：CornerNet-Lite，FCOS，CenterNet">
@@ -107,14 +107,14 @@
 <meta property="og:image" content="http://yoursite.com/img/One-stage目标检测新算法盘点/1567426867914.png">
 <meta property="og:image" content="http://yoursite.com/img/One-stage目标检测新算法盘点/1567427820413.png">
 <meta property="og:image" content="http://yoursite.com/img/One-stage目标检测新算法盘点/1567427959778.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/02/img/One-stage目标检测新算法盘点/1567428160976.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/02/img/One-stage目标检测新算法盘点/1567428272744.png">
+<meta property="og:image" content="http://yoursite.com/img/One-stage目标检测新算法盘点/1567428160976.png">
+<meta property="og:image" content="http://yoursite.com/img/One-stage目标检测新算法盘点/1567428272744.png">
 <meta property="og:image" content="http://yoursite.com/img/One-stage目标检测新算法盘点/1567428836242.png">
 <meta property="og:image" content="http://yoursite.com/img/One-stage目标检测新算法盘点/1567429034183.png">
 <meta property="og:image" content="http://yoursite.com/img/One-stage目标检测新算法盘点/1567429189510.png">
-<meta property="og:updated_time" content="2019-09-02T13:17:27.176Z">
+<meta property="og:updated_time" content="2019-09-04T07:17:46.861Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="‘One-stage目标检测新算法盘点&#39;">
+<meta name="twitter:title" content="One-stage目标检测新算法盘点">
 <meta name="twitter:description" content="对2019年出现的几个新的One-stage目标检测算法进行盘点：CornerNet-Lite，FCOS，CenterNet">
 <meta name="twitter:image" content="http://yoursite.com/img/One-stage目标检测新算法盘点/1567426867914.png">
 
@@ -151,7 +151,7 @@
 
 
 
-  <title>‘One-stage目标检测新算法盘点' | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>One-stage目标检测新算法盘点 | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -326,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">‘One-stage目标检测新算法盘点'</h1>
+          <h1 class="post-title" itemprop="name headline">One-stage目标检测新算法盘点</h1>
         
 
         <div class="post-meta">
@@ -412,9 +412,9 @@
 <p>FCOS直接对feature map中每个位置对应原图的边框都进行回归，换句话说FCOS直接把每个位置都作为训练样本，这一点和FCN用于语义分割相同。在FCOS中，如果位置 $(x,y)$落入任何真实边框，就认为它是一个正样本，它的类别标记为这个真实边框的类别。同时采用了FPN进行多级检测。</p>
 <h3 id="Center-ness-For-FCOS"><a href="#Center-ness-For-FCOS" class="headerlink" title="Center-ness  For FCOS"></a>Center-ness  For FCOS</h3><p><img src="/img/One-stage目标检测新算法盘点/1567427959778.png" alt="1567427959778"></p>
 <p>采用Center-ness抑制离目标中心位置较远的与侧边框，添加了Center-ness分支，预测Center-ness。</p>
-<p><img src="../img/One-stage目标检测新算法盘点/1567428160976.png" alt="1567428160976"></p>
+<p><img src="/img/One-stage目标检测新算法盘点/1567428160976.png" alt="1567428160976"></p>
 <p>可以看到其取值为0-1，采用交叉熵进行训练；预测的时候可以将Center-ness与分类分数相乘，降低远离中心的bbox权重。</p>
-<h3 id="performance"><a href="#performance" class="headerlink" title="performance"></a>performance</h3><p><img src="../img/One-stage目标检测新算法盘点/1567428272744.png" alt="1567428272744"></p>
+<h3 id="performance"><a href="#performance" class="headerlink" title="performance"></a>performance</h3><p><img src="/img/One-stage目标检测新算法盘点/1567428272744.png" alt="1567428272744"></p>
 <h2 id="CenterNet-Keypoint-Triplets-for-Object-Detection"><a href="#CenterNet-Keypoint-Triplets-for-Object-Detection" class="headerlink" title="CenterNet: Keypoint Triplets for Object Detection"></a>CenterNet: Keypoint Triplets for Object Detection</h2><p>相比于CornerNet，只预测左上角和右下角，这样无法利用物体内部特征，产生了很多误检测，CenterNet还预测一个中心点，这样就是预测左上角、右下角、中心点三元组。</p>
 <p><img src="/img/One-stage目标检测新算法盘点/1567428836242.png" alt="1567428836242"></p>
 <h3 id="Keypoint-Triplets"><a href="#Keypoint-Triplets" class="headerlink" title="Keypoint Triplets"></a>Keypoint Triplets</h3><p>对每个预测框定义一个中心区域，判断每个中心区域是否有中心点，如有则保留，并且此时框的 confidence 为中心点，左上角点和右下角点的confidence的平均；否则去除这个bbox，这样就是的网络具备了目标内部信息感知的能力。采用一种尺度可调节的区域中心定义方法，该方法可以在预测框的尺度较大时定义一个相对较小的中心区域，在预测框的尺度较小时预测一个相对较大的中心区域</p>
