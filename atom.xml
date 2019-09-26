@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-09-04T07:17:46.861Z</updated>
+  <updated>2019-09-26T07:13:16.118Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,13 +16,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>One-stage目标检测新算法盘点</title>
-    <link href="http://yoursite.com/2019/09/02/One-stage%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B0%E7%AE%97%E6%B3%95%E7%9B%98%E7%82%B9/"/>
-    <id>http://yoursite.com/2019/09/02/One-stage目标检测新算法盘点/</id>
+    <title>Anchor-free 目标检测新算法盘点</title>
+    <link href="http://yoursite.com/2019/09/02/Anchor-free%20%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B0%E7%AE%97%E6%B3%95%E7%9B%98%E7%82%B9/"/>
+    <id>http://yoursite.com/2019/09/02/Anchor-free 目标检测新算法盘点/</id>
     <published>2019-09-02T11:56:13.000Z</published>
-    <updated>2019-09-04T07:17:46.861Z</updated>
+    <updated>2019-09-26T07:13:16.118Z</updated>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>对2019年出现的几个新的One-stage目标检测算法进行盘点：<a href="https://arxiv.org/abs/1904.08900" target="_blank" rel="external">CornerNet-Lite</a>，<a href="https://arxiv.org/pdf/1904.01355.pdf" target="_blank" rel="external">FCOS</a>，<a href="https://arxiv.org/abs/1904.08189" target="_blank" rel="external">CenterNe</a>t</p>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>对2019年出现的几个新的Anchor-free目标检测算法进行盘点：<a href="https://arxiv.org/abs/1904.08900" target="_blank" rel="external">CornerNet-Lite</a>，<a href="https://arxiv.org/pdf/1904.01355.pdf" target="_blank" rel="external">FCOS</a>，<a href="https://arxiv.org/abs/1904.08189" target="_blank" rel="external">CenterNe</a>t</p>
 <a id="more"></a>
 <h2 id="CornerNet-Lite"><a href="#CornerNet-Lite" class="headerlink" title="CornerNet-Lite"></a>CornerNet-Lite</h2><p>CornetNet-Lite是CornerNet的优化版，提出了两种算法：</p>
 <ul>
@@ -53,7 +53,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;对2019年出现的几个新的One-stage目标检测算法进行盘点：&lt;a href=&quot;https://arxiv.org/abs/1904.08900&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CornerNet-Lite&lt;/a&gt;，&lt;a href=&quot;https://arxiv.org/pdf/1904.01355.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;FCOS&lt;/a&gt;，&lt;a href=&quot;https://arxiv.org/abs/1904.08189&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CenterNe&lt;/a&gt;t&lt;/p&gt;
+      &lt;p&gt;对2019年出现的几个新的Anchor-free目标检测算法进行盘点：&lt;a href=&quot;https://arxiv.org/abs/1904.08900&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CornerNet-Lite&lt;/a&gt;，&lt;a href=&quot;https://arxiv.org/pdf/1904.01355.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;FCOS&lt;/a&gt;，&lt;a href=&quot;https://arxiv.org/abs/1904.08189&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CenterNe&lt;/a&gt;t&lt;/p&gt;
     
     </summary>
     
