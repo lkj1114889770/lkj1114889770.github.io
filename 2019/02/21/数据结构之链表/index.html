@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据结构," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="听歌的小孩" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个节点和下一个节点的指针；如果让链表最后一个节点指向第一个节点，就构成了循环链表。 一些例子">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构之链表">
+<meta property="og:url" content="http://yoursite.com/2019/02/21/数据结构之链表/index.html">
+<meta property="og:site_name" content="听歌的小孩">
+<meta property="og:description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个节点和下一个节点的指针；如果让链表最后一个节点指向第一个节点，就构成了循环链表。 一些例子">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/LinkedList/reverseList1.png">
+<meta property="og:image" content="http://yoursite.com/img/LinkedList/reverseList2.png">
+<meta property="og:updated_time" content="2019-03-04T05:41:17.765Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构之链表">
+<meta name="twitter:description" content="定义链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。 struct Node{     int value;     Node *next; } 上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个节点和下一个节点的指针；如果让链表最后一个节点指向第一个节点，就构成了循环链表。 一些例子">
+<meta name="twitter:image" content="http://yoursite.com/img/LinkedList/reverseList1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/21/数据结构之链表/"/>
+
+
+
+
+
+  <title>数据结构之链表 | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/lkj1114889770"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">听歌的小孩</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好好学习，好好科研</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/21/数据结构之链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="听歌的小孩">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="听歌的小孩">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构之链表</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-21T15:37:15+08:00">
+                2019-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>链表由一系列的不必在内存中连续的结构组成，每一个结构包括节点（数据域）和指向该节点之后节点的指针（指针域）构成。</p>
+<pre><code>struct Node{
+    int value;
+    Node *next;
+}
+</code></pre><p>上面即是一种典型的单向链表，还有一种双向链表，除了数据域之外，还包括分别指向上一个节点和下一个节点的指针；如果让链表最后一个节点指向第一个节点，就构成了循环链表。</p>
+<h2 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h2><a id="more"></a>
+<h3 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a>插入节点</h3><p>在p之后插入值为i的节点</p>
+<pre><code>void insert(Node *p, int i){
+    Node* node = new Node;
+    node-&gt;value = i;
+    node-&gt;next = p-&gt;next;
+    p-&gt;next = node;
+}
+</code></pre><h3 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h3><p>删除某个节点p时，只需要用p后一个节点覆盖p当前节点：</p>
+<pre><code>void delete(NOde *p){
+    p-&gt;value = p-&gt;next-&gt;value;
+    p-&gt;next = p-&gt;next-&gt;next;
+}
+</code></pre><h3 id="找出倒数第k个节点"><a href="#找出倒数第k个节点" class="headerlink" title="找出倒数第k个节点"></a>找出倒数第k个节点</h3><p>采用两个指针p1,p2，p1先走k步，然后p1和p2一起走，当p1到达节点终点时，p2即指向倒数第k个节点。</p>
+<pre><code>Node* findk(Node* head, int k){
+    Node *p1 = head;
+    Node *p2 = head;
+    for(int i=0;i&lt;k;i++){
+        if(p1==NULL) return NULL;
+        p1=p1-&gt;next;
+    }
+    while(p1-&gt;next !=NULL &amp;&amp; p2-&gt;next != NULL){
+        p1=p1-&gt;next;
+        p2=p2-&gt;next;
+    }
+    return p2;
+}
+</code></pre><p>同样的道理，如果要找出链表的中间节点，可以令p1和p2分别以前进2步、前进1步的速度遍历，当p1到达节点终点时，p2即指向终点节点。</p>
+<h3 id="判断是否有环"><a href="#判断是否有环" class="headerlink" title="判断是否有环"></a>判断是否有环</h3><p>直观的判断是，存在环路的时候，一直遍历都不会遇到NULL节点，但是由于不知道链表的长度吗，所以采用这种判断不知道多久才能终止。转化成一个追及问题，如果有环，那么两个遍历速度不一致的指针一定会相遇，采用类似上面，有两个指针pslow，pfast,pslow每次走一步，pfast每次走两步，若是有环，pfast就能追上pslow，否则pfast会碰到NULL。</p>
+<pre><code>bool isLoop(Node* head){
+    if(head==NULL) return false;
+    Node* pfast = head;
+    Node* pslow = head;
+    while(pfast!=NULL){
+        if(pfast-&gt;next==NULL) return false;
+        pslow = pslow-&gt;next;
+        pfast = pfast-&gt;next-&gt;next;
+        if(pfast==pslow) return true;
+    }
+    return false;
+}
+</code></pre><h3 id="反向遍历"><a href="#反向遍历" class="headerlink" title="反向遍历"></a>反向遍历</h3><p>可以采用先将链表存在栈中，然后先进后出即为反向遍历：</p>
+<pre><code>void reverse(Node* head){
+    stack&lt;Node*&gt; nodestack;
+    Node* p = head;
+    while(p!=NULL){
+        nodestack.push(p);
+        p=p-&gt;next;
+    }
+    while(!nodestack.empty()){
+        cout&lt;&lt;nodestack.top().value&lt;&lt;endl;
+        nodestack.pop();
+    }
+}
+</code></pre><p>或者是采用递归的方法：</p>
+<pre><code>void reverse(Node* head){
+    if(head!=NULL){
+        if(head-&gt;next!=NULL){
+            reverse(head-&gt;next);
+        }
+        cout&lt;&lt;head-&gt;value&lt;&lt;endl;
+    }
+}
+</code></pre><h3 id="链表反转"><a href="#链表反转" class="headerlink" title="链表反转"></a>链表反转</h3><p>采用就地反转法，有一篇博客讲的很清楚<a href="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" title="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" target="_blank" rel="external">https://www.cnblogs.com/byrhuangqiang/p/4311336.html</a>，这里就转载一下人家的方法，主要思路就是把当前链表的下一个节点PCur插入到头结点dummy的下一个节点中，就地反转。<br>dummy-&gt;1-&gt;2-&gt;3-&gt;4-&gt;5的就地反转过程：<br>dummy-&gt;2-&gt;1-&gt;3-&gt;4-&gt;5<br>dummy-&gt;3-&gt;2-&gt;1-&gt;4-&gt;5<br>dummy-&gt;4&gt;-3-&gt;2-&gt;1-&gt;5<br>dummy-&gt;5-&gt;4-&gt;3-&gt;2-&gt;1</p>
+<p>初始状态为：</p>
+<p><img src="/img/LinkedList/reverseList1.png" width="300" hegiht="150" align="center"></p>
+<p>pCur指向每一次需要反转的节点，将prev对应的节点连接到下一个需要反转的节点，将pCur连接的当前需要反转的节点作为插入到dummy之后，即移到了头部，调整pCur指向下一个需要反转的节点，这样循环直到下一个需要反转的节点为NULL，其动态过程如下图：</p>
+<p><img src="/img/LinkedList/reverseList2.png" width="300" hegiht="450" align="center"></p>
+<pre><code>Node* reverseList(Node* head){
+    if(head==NULL) return head;
+    Node* dummy = new Node;
+    dummy-&gt;next = head;
+    Node* prev = dummy-&gt;next;
+    Node* pCur = prev-&gt;next;
+    while(pCur!=NULL){
+        prev-&gt;next = pCur-&gt;next;
+        pCur-&gt;next = dummy-&gt;next;
+        dummy-&gt;next = pCur;
+        pCur = prev-&gt;next;
+    }
+    return dummy-&gt;next;
+}
+</code></pre><h3 id="链表相交"><a href="#链表相交" class="headerlink" title="链表相交"></a>链表相交</h3><p>两个链表相交，则相交之后必重合，从交点到末尾节点均相同。那么如果两个链表p1，p2相交的话，首先假设获得链表的长度分别为m，n，那么让较长的先走|m-n|步，再同步走的话，如果两个链表相交，那么p1，p2指针必定会相撞。</p>
+<font face="微软雅黑" color="black" size="4">**参考**</font>
+
+<p><a href="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" title="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" target="_blank" rel="external">https://www.cnblogs.com/byrhuangqiang/p/4311336.html</a><br><a href="https://www.cnblogs.com/byonecry/p/4458821.html" title="https://www.cnblogs.com/byonecry/p/4458821.html" target="_blank" rel="external">https://www.cnblogs.com/byonecry/p/4458821.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/26/CornerNet-将目标检测转为关键点预测/" rel="next" title="CornerNet:将目标检测转为关键点预测">
+                <i class="fa fa-chevron-left"></i> CornerNet:将目标检测转为关键点预测
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/26/数据结构与算法之查找/" rel="prev" title="数据结构与算法之查找">
+                数据结构与算法之查找 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/touxiang.jpg"
+               alt="听歌的小孩" />
+          <p class="site-author-name" itemprop="name">听歌的小孩</p>
+           
+              <p class="site-description motion-element" itemprop="description">瞎捣鼓的小空间  Email:kaijianliu@qq.com</p>
+          
+        </div>
+		
+		<div id="music163player">
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=22650708&auto=0&height=66">
+			</iframe>
+		</div>
+		
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com//lkj1114889770" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3313734867" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      新浪微博
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bloger.5pipi.win/" title="皮皮鲁" target="_blank">皮皮鲁</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.kusuri.cc" title="Kusuri's Blog" target="_blank">Kusuri's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://rogoso.info/" title="rogoso's Blog" target="_blank">rogoso's Blog</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些例子"><span class="nav-number">2.</span> <span class="nav-text">一些例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入节点"><span class="nav-number">2.1.</span> <span class="nav-text">插入节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除节点"><span class="nav-number">2.2.</span> <span class="nav-text">删除节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找出倒数第k个节点"><span class="nav-number">2.3.</span> <span class="nav-text">找出倒数第k个节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断是否有环"><span class="nav-number">2.4.</span> <span class="nav-text">判断是否有环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向遍历"><span class="nav-number">2.5.</span> <span class="nav-text">反向遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表反转"><span class="nav-number">2.6.</span> <span class="nav-text">链表反转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表相交"><span class="nav-number">2.7.</span> <span class="nav-text">链表相交</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">听歌的小孩</span>
+</div>
+<div class="powered-by">
+   Powerd by Kaijian Liu
+  <span id="busuanzi_container_site_uv"> 
+  本站访问量：<span id="busuanzi_value_site_pv"></span>人次
+  </span>
+</div>
+
+
+<!-- <div class="powered-by">
+  <span id="busuanzi_container_site_uv"> 
+  本站访问量：<span id="busuanzi_value_site_pv"></span>人次
+  </span>
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+-->
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src=""></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

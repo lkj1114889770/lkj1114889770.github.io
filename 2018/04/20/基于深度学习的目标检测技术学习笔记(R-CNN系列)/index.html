@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="深度学习,目标检测,CV," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="听歌的小孩" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="图像的目标检测（object detection）主要包括两个任务，一是要标注出目标物体的位置（localization），而是要识别出目标物体的类别（classification）。通俗来说，就是解决图像中多个目标在哪里，是什么的一个问题。这个问题的涉及，主要是目前参加了天池大赛的一个目标识别方面的问题，所以阅读了一些相关方面的文献，在此做一个学习总结，主要来介绍R-CNN（Regions wi">
+<meta name="keywords" content="深度学习,目标检测,CV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于深度学习的目标检测技术学习笔记(R-CNN系列)">
+<meta property="og:url" content="http://yoursite.com/2018/04/20/基于深度学习的目标检测技术学习笔记(R-CNN系列)/index.html">
+<meta property="og:site_name" content="听歌的小孩">
+<meta property="og:description" content="图像的目标检测（object detection）主要包括两个任务，一是要标注出目标物体的位置（localization），而是要识别出目标物体的类别（classification）。通俗来说，就是解决图像中多个目标在哪里，是什么的一个问题。这个问题的涉及，主要是目前参加了天池大赛的一个目标识别方面的问题，所以阅读了一些相关方面的文献，在此做一个学习总结，主要来介绍R-CNN（Regions wi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/1.png">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/2.png">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/3.png">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/4.png">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/5.png">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/6.png">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/7.png">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/8.png">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/9.png">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/10.jpg">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/11.png">
+<meta property="og:image" content="http://yoursite.com/img/rcnn/12.png">
+<meta property="og:updated_time" content="2019-03-19T10:10:37.968Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于深度学习的目标检测技术学习笔记(R-CNN系列)">
+<meta name="twitter:description" content="图像的目标检测（object detection）主要包括两个任务，一是要标注出目标物体的位置（localization），而是要识别出目标物体的类别（classification）。通俗来说，就是解决图像中多个目标在哪里，是什么的一个问题。这个问题的涉及，主要是目前参加了天池大赛的一个目标识别方面的问题，所以阅读了一些相关方面的文献，在此做一个学习总结，主要来介绍R-CNN（Regions wi">
+<meta name="twitter:image" content="http://yoursite.com/img/rcnn/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/20/基于深度学习的目标检测技术学习笔记(R-CNN系列)/"/>
+
+
+
+
+
+  <title>基于深度学习的目标检测技术学习笔记(R-CNN系列) | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/lkj1114889770"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">听歌的小孩</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好好学习，好好科研</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/20/基于深度学习的目标检测技术学习笔记(R-CNN系列)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="听歌的小孩">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="听歌的小孩">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于深度学习的目标检测技术学习笔记(R-CNN系列)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-20T11:03:17+08:00">
+                2018-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2.1k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>图像的目标检测（object detection）主要包括两个任务，一是要标注出目标物体的位置（localization），而是要识别出目标物体的类别（classification）。通俗来说，就是解决图像中多个目标在哪里，是什么的一个问题。这个问题的涉及，主要是目前参加了天池大赛的一个目标识别方面的问题，所以阅读了一些相关方面的文献，在此做一个学习总结，主要来介绍R-CNN（Regions with CNN features）系列的算法。<br><a id="more"></a></p>
+<p>传统的目标检测算法一般是基于滑动窗口选中图中的某一部分作为候选区域，然后提取候选区域的特征，利用分类器（如常见的SVM)进行识别。2014年提出的region proposal+CNN代替传统目标检测使用的滑动窗口+特征工程的方法，设计了R-CNN算法，开启了基于深度学习的目标检测的大门。</p>
+<h2 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h2><p><img src="/img/rcnn/1.png" alt=""></p>
+<p>R-CNN算法流程为：</p>
+<ol>
+<li>输入图像，根据SS（selective search）算法提取2000个左右的region proposal（候选框）</li>
+<li>将候选框crop/wrap为固定大小后输入CNN中，得到固定维度的输出特征</li>
+<li>对提取的CNN特征，利用SVM分类器分类得到对应类别</li>
+<li>边界回归（bouding-box regression），用线性回归模型修正候选框的位置</li>
+</ol>
+<p>R-CNN使得识别的精度和速度都有了提升，但是也存在很大问题，每次候选框都需要经过CNN操作，计算量很大，有很多重复计算；训练步骤繁多。</p>
+<h2 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h2><p>R-CNN需要每次将候选框resize到固定大小作为CNN输入，这样有很多重复计算。SPP-net的主要思想是去掉了原始图像上的crop/warp等操作，换成了在卷积特征上的空间金字塔池化层（Spatial Pyramid Pooling，SPP）。</p>
+<p><img src="/img/rcnn/2.png" alt=""></p>
+<p>SPP Net对整幅图像只进行一次CNN操作得到特征图，这样原图中的每一个候选框都对应于特征图上大小不同的某一区域，通过SPP可以将这些不同大小的区域映射为相同的维度，作为之后的输入，这样就能保证只进行一次CNN操作了。SPP包含一种可伸缩的池化层，输出固定尺寸特征。</p>
+<p>基于SPP的思想，Fast R-CNN加入了一个ROI Pooling，将不同大小输入映射到一个固定大小的输出。R-CNN之前的操作是目标识别（classification）以及边界回归（bouding-box regression）分开进行。Fast R-CNN做的改进就是将这两个过程合并在一起，这两个任务共享CNN特征图，即成为了一个multi-task模型。</p>
+<p><img src="/img/rcnn/3.png" alt=""></p>
+<p>多任务自然对应multi-loss，损失函数包括分类误差以及边框回归误差。<br>L<em>cls</em>为分类误差：</p>
+<p><img src="/img/rcnn/4.png" alt=""></p>
+<p>分类误差只考虑对应的类别被正确分类到的概率，即P<em>l</em>为label对应的概率，当P<em>l</em>=1时，Loss为0，即正确分类的概率越大，loss越小。</p>
+<p>L<em>reg</em>为边框回归误差：</p>
+<p><img src="/img/rcnn/5.png" alt=""></p>
+<p>对预测的边框四个位置描述参数与真实分类对应边框的四个参数偏差进行评估作为损失函数，g函数为smooth L1函数，这样对于噪声点不敏感，鲁棒性强，在|x|&gt;1时，变为线性，降低噪声影响。</p>
+<p><img src="/img/rcnn/6.png" alt=""></p>
+<p><img src="/img/rcnn/7.png" alt=""></p>
+<p>这样加权得到的最终损失函数为：</p>
+<p><img src="/img/rcnn/8.png" alt=""></p>
+<p>foreground理解为前景，即对应有目标物体，这个时候需要考虑边框回归误差；background为背景，没有包含目标物品，所以不需考虑边框回归误差。</p>
+<h2 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h2><p>Faster R-CNN对Fast R-CNN又进行了改进，使得Faster。主要是将候选框的选取也引入到网络中，代替了之前SS选取候选框的方式，即引入了RPN（Region Proposal Network），将找候选框的工作也交给了神经网络了。</p>
+<p><img src="/img/rcnn/9.png" alt=""></p>
+<p>提到RPN网络，就不能不说anchors，即锚点，对应的是一组矩形框，在实际中有3种形状width:height = [1:1, 1:2, 2:1]，对应3种尺寸，所以共计9个矩形框。</p>
+<p><img src="/img/rcnn/10.jpg" alt=""></p>
+<p>这个矩形框对应的是原始输入图像里面的，并非是卷积特征图上的。即对卷积特征图上每一个点，可以对应原始图上的一个anchors，为其配备9个框作为原始检测框，当然一开始肯定是不准确的，可以在后续的bounding box regression修正检测框位置。</p>
+<p>为了生成区域建议框，在最后一个共享的卷积层输出的卷积特征映射上滑动小网络，这个网络全连接到输入卷积特征映射的nxn的空间窗口上。每个滑动窗口映射到一个低维向量上（对于ZF最后卷积层的输出是256channel，即生成256张特征图，所以小网络滑窗在特征图上的点生成向量是256-d，对于VGG是512-d，每个特征映射的一个滑动窗口对应一个数值）。这个向量输出给两个同级的全连接的层——包围盒回归层（reg）和包围盒分类层（cls）。论文中n=3，由于小网络是滑动窗口的形式，所以全连接的层（nxn的）被所有空间位置共享（指所有位置用来计算内积的nxn的层参数相同）。这种结构实现为nxn的卷积层，后接两个同级的1x1的卷积层（分别对应reg和cls）。<br>在每一个滑动窗口的位置，我们同时预测k个区域建议，所以reg层有4k个输出，即k个box的坐标编码。cls层输出2k个得分，即对每个建议框是目标/非目标的估计概率（为简单起见，是用二类的softmax层实现的cls层，还可以用logistic回归来生成k个得分）。k个建议框被相应的k个称为anchor的box参数化。每个anchor以当前滑动窗口中心为中心，并对应一种尺度和长宽比，我们使用3种尺度和3种长宽比，这样在每一个滑动位置就有k=9个anchor。对于大小为WxH（典型值约2,400）的卷积特征映射，总共有WHk个anchor。</p>
+<p>Faster R-CNN的损失函数为：</p>
+<p><img src="/img/rcnn/11.png" alt=""></p>
+<p>这里，i是一个mini-batch中anchor的索引，Pi是anchor i是目标的预测概率。如果anchor为正，Pi<em> 就是1，如果anchor为负，Pi</em> 就是0。ti是一个向量，表示预测的包围盒的4个参数化坐标，t<em>i</em>是与正anchor对应的GT（groundtruth）包围盒的坐标向量。Pi<em> L</em>reg<em>这一项意味着只有正anchor（Pi</em> =1）才有回归损失，其他情况就没有（Pi<em> =0）。cls层和reg层的输出分别由{pi}和{ti}组成，这两项分别由N</em>cls<em>和N</em>reg*以及一个平衡权重λ归一化。<br>边框回归损失函数，用采取类似fast R-CNN介绍的方法。具体地，学习的时候，对于四个参数进行如下处理：</p>
+<p><img src="/img/rcnn/12.png" alt=""></p>
+<p>x，y，w，h指的是包围盒中心的（x,y）坐标、宽、高。变量x，xa，x* 分别指预测的包围盒、anchor的包围盒、GT的包围盒（对y，w，h也是一样）的x坐标，可以理解为从anchor包围盒到附近的GT包围盒的包围盒回归。</p>
+<p>Fast R-CNN训练依赖于固定的目标建议框，而Faster R-CNN中的卷积层是共享的，所以RPN和Fast R-CNN都不能独立训练，论文中提出的是4步训练算法，通过交替优化来学习共享的特征。 </p>
+<ol>
+<li>训练RPN，该网络用ImageNet预训练的模型初始化，并端到端微调用于区域建议任务。</li>
+<li>利用第一步的RPN生成的建议框，由Fast R-CNN训练一个单独的检测网络，这个检测网络同样是由ImageNet预训练的模型初始化的，这时候两个网络还没有共享卷积层。</li>
+<li>用检测网络初始化RPN训练，但我们固定共享的卷积层，并且只微调RPN独有的层，现在两个网络共享卷积层了。</li>
+<li>保持共享的卷积层固定，微调Fast R-CNN的fc层。这样，两个网络共享相同的卷积层，构成一个统一的网络。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/目标检测/" rel="tag"># 目标检测</a>
+          
+            <a href="/tags/CV/" rel="tag"># CV</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/05/NHD自动登陆签到脚本/" rel="next" title="NHD自动登陆签到脚本">
+                <i class="fa fa-chevron-left"></i> NHD自动登陆签到脚本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/11/PCL的python库安装for-Ubuntu16-04/" rel="prev" title="PCL的python库安装for Ubuntu16.04">
+                PCL的python库安装for Ubuntu16.04 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/touxiang.jpg"
+               alt="听歌的小孩" />
+          <p class="site-author-name" itemprop="name">听歌的小孩</p>
+           
+              <p class="site-description motion-element" itemprop="description">瞎捣鼓的小空间  Email:kaijianliu@qq.com</p>
+          
+        </div>
+		
+		<div id="music163player">
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=22650708&auto=0&height=66">
+			</iframe>
+		</div>
+		
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com//lkj1114889770" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3313734867" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      新浪微博
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bloger.5pipi.win/" title="皮皮鲁" target="_blank">皮皮鲁</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.kusuri.cc" title="Kusuri's Blog" target="_blank">Kusuri's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://rogoso.info/" title="rogoso's Blog" target="_blank">rogoso's Blog</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#R-CNN"><span class="nav-number">1.</span> <span class="nav-text">R-CNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fast-R-CNN"><span class="nav-number">2.</span> <span class="nav-text">Fast R-CNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Faster-R-CNN"><span class="nav-number">3.</span> <span class="nav-text">Faster R-CNN</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">听歌的小孩</span>
+</div>
+<div class="powered-by">
+   Powerd by Kaijian Liu
+  <span id="busuanzi_container_site_uv"> 
+  本站访问量：<span id="busuanzi_value_site_pv"></span>人次
+  </span>
+</div>
+
+
+<!-- <div class="powered-by">
+  <span id="busuanzi_container_site_uv"> 
+  本站访问量：<span id="busuanzi_value_site_pv"></span>人次
+  </span>
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+-->
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src=""></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
