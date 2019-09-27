@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-09-27T01:33:12.514Z</updated>
+  <updated>2019-09-27T03:54:01.097Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,13 +20,19 @@
     <link href="http://yoursite.com/2019/09/26/RepPoints%EF%BC%9A%E7%94%A8%E4%BB%A3%E8%A1%A8%E6%80%A7%E7%82%B9%E9%9B%86%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
     <id>http://yoursite.com/2019/09/26/RepPoints：用代表性点集进行目标检测/</id>
     <published>2019-09-26T14:09:30.000Z</published>
-    <updated>2019-09-27T01:33:12.514Z</updated>
+    <updated>2019-09-27T03:54:01.097Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="https://arxiv.org/abs/1904.11490" target="_blank" rel="external">RepPoints</a>提出了用代表点进行更细粒度的定位和更方便的分类，并且在这个基础上，实现了anchior-free方法的multi-stage级联，达到了和anchor-based方法相媲美的精度。</p>
 <a id="more"></a>
-<h2 id="目标的表示"><a href="#目标的表示" class="headerlink" title="目标的表示"></a>目标的表示</h2><p>基于bounding box的方法通常是采用$(x_p,y_p,w_p,h_p)$来表示一个目标，通过预测一个4维向量$(\Delta x_p,\Delta y_p,\Delta w_p,\Delta h_p)$,来回归得到最终的目标框：<br>$$<br>B_r = (x_p+w_p\Delta x_p, y_p + h\Delta y_p,w_pe^{\Delta w_p},h_pe^{\Delta h_p})<br>$$<br>这样基于multi_stage的方式，bbox的生成如下图，从默认的anchor第一次得到bbox proposal，然后作为下一阶段的输入，进一步refine，最终得到最后的结果。</p>
+<h2 id="目标的表示"><a href="#目标的表示" class="headerlink" title="目标的表示"></a>目标的表示</h2><p>基于bounding box的方法通常是采用$(x_p,y_p,w_p,h_p)$来表示一个目标，通过预测一个4维向量$(\Delta x_p,\Delta y_p,\Delta w_p,\Delta h_p)$,来回归得到最终的目标框：</p>
+<script type="math/tex; mode=display">
+B_r = (x_p+w_p\Delta x_p, y_p + h\Delta y_p,w_pe^{\Delta w_p},h_pe^{\Delta h_p})</script><p>这样基于multi_stage的方式，bbox的生成如下图，从默认的anchor第一次得到bbox proposal，然后作为下一阶段的输入，进一步refine，最终得到最后的结果。</p>
 <p><img src="/img/用代表性点集进行目标检测/1569508562946.png" alt="1569508562946"></p>
-<p>RepPoints的方法不同于bbox采用四元组进行回归，而是预测一组关键特征点：<br>$$<br>R={x_k,y_k}_k^{n},<br>$$<br>论文中，默认$k=9$;这样，RepPoints的refine可以表示为：<br>$$<br>R_r = {(x_k+\Delta x_k,y_k + \Delta y_k) }_k^n,<br>$$<br>这样如果是multi_stage的refine，可以相应表示为：</p>
+<p>RepPoints的方法不同于bbox采用四元组进行回归，而是预测一组关键特征点：</p>
+<script type="math/tex; mode=display">
+R=\{x_k,y_k\}_k^{n},</script><p>论文中，默认$k=9$;这样，RepPoints的refine可以表示为：</p>
+<script type="math/tex; mode=display">
+R_r = \{(x_k+\Delta x_k,y_k + \Delta y_k) \}_k^n,</script><p>这样如果是multi_stage的refine，可以相应表示为：</p>
 <p><img src="/img/用代表性点集进行目标检测/1569508966664.png" alt="1569508966664"></p>
 <p>由于得到是分布于目标上的关键点，还是需要转换成bbox来表示最终的物体位置，同时RepPoints也是几乎bbox计算定位损失函数的。抓换成bbox的方法，论文中提到了三种方法：1）直接对x,y坐标取最大值最小值；2）取部分点对x，y坐标取最大值，最小值；3）基于RepPoints的均值和标准差进行计算。</p>
 <p>得到的bbox，论文中称之为伪框（pseudo box）。通过伪框来计算定位损失，计算伪框的左上角和右下角和gt的距离损失。</p>
@@ -162,7 +168,7 @@
 <p>  cd gcc-5.3.0<br>  sudo ./contrib/download_prerequisites   </p>
 </li>
 <li><p>编译,，时间略长，20多分钟</p>
-<p>  mkdir build<br>  cd build<br>  sudo  ../gcc-5.3.0/configure –enable-checking=release –enable-languages=c,c++ –disable-multilib<br>  sudo make -j4</p>
+<p>  mkdir build<br>  cd build<br>  sudo  ../gcc-5.3.0/configure —enable-checking=release —enable-languages=c,c++ —disable-multilib<br>  sudo make -j4</p>
 </li>
 <li><p>安装</p>
 </li>
@@ -203,7 +209,7 @@ cd maskrcnn-benchmark
 
 # the following will install the lib with
 # symbolic links, so that you can modify
-# the files if you want and won&apos;t need to
+# the files if you want and won&#39;t need to
 # re-build it
 python setup.py build develop
 
@@ -211,7 +217,7 @@ python setup.py build develop
 unset INSTALL_DIR
 </code></pre><p>这里出现了一个问题就是，耽误了很久：</p>
 <pre><code> 1 error detected in the compilation of &quot;/tmp/tmpxft_0000279e_00000000-7_multi_tensor_l2norm_kernel.cpp1.ii&quot;.
-error: command &apos;/usr/local/cuda/bin/nvcc&apos; failed with exit status 2
+error: command &#39;/usr/local/cuda/bin/nvcc&#39; failed with exit status 2
 error
   Rolling back uninstall of apex
 </code></pre><p>在apex编译安装的时候，应该是由于我的电脑有多个cuda(cuda8 cuda9)默认账户下cuda软连接到cuda8,但是我的账户.bashrc下制定了cuda9，所以nvcc -v看到的虽然还是cuda9,但是编译apex时候找的是默认路径下的cuda对应的cuda8,因此出现错误，这里找到github上的解决方法如下：</p>
@@ -305,8 +311,8 @@ error
 <ol>
 <li>设置两个变量i、j，排序开始的时候：i=0，j=n-1；</li>
 <li>第一个数组值作为比较值，首先保存到temp中，即temp=A[0]；</li>
-<li>然后j– ,向前搜索,找到小于temp后,因为s[i]的值保存在temp中,所以直接赋值,s[i]=s[j]</li>
-<li>然后i++,向后搜索,找到大于temp后,因为s[j]的值保存在第2步的s[i]中,所以直接赋值,s[j]=s[i],然后j–,避免死循环</li>
+<li>然后j— ,向前搜索,找到小于temp后,因为s[i]的值保存在temp中,所以直接赋值,s[i]=s[j]</li>
+<li>然后i++,向后搜索,找到大于temp后,因为s[j]的值保存在第2步的s[i]中,所以直接赋值,s[j]=s[i],然后j—,避免死循环</li>
 <li>重复第3、4步，直到i=j,最后将temp值返回s[i]中</li>
 <li>然后采用“二分”的思想,以i为分界线,拆分成两个数组 s[0,i-1]、s[i+1,n-1]又开始排序</li>
 </ol>
@@ -517,7 +523,7 @@ error
     return dummy-&gt;next;
 }
 </code></pre><h3 id="链表相交"><a href="#链表相交" class="headerlink" title="链表相交"></a>链表相交</h3><p>两个链表相交，则相交之后必重合，从交点到末尾节点均相同。那么如果两个链表p1，p2相交的话，首先假设获得链表的长度分别为m，n，那么让较长的先走|m-n|步，再同步走的话，如果两个链表相交，那么p1，p2指针必定会相撞。</p>
-<font face="微软雅黑" color="black" size="4"><strong>参考</strong></font>
+<font face="微软雅黑" color="black" size="4">**参考**</font>
 
 <p><a href="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" title="https://www.cnblogs.com/byrhuangqiang/p/4311336.html" target="_blank" rel="external">https://www.cnblogs.com/byrhuangqiang/p/4311336.html</a><br><a href="https://www.cnblogs.com/byonecry/p/4458821.html" title="https://www.cnblogs.com/byonecry/p/4458821.html" target="_blank" rel="external">https://www.cnblogs.com/byonecry/p/4458821.html</a></p>
 ]]></content>
@@ -651,7 +657,7 @@ error
 <pre><code># Build the shared convolutional layers.
 # Bottom-up Layers
 # Returns a list of the last layers of each stage, 5 in total.
-# Don&apos;t create the thead (stage 5), so we pick the 4th item in the list.
+# Don&#39;t create the thead (stage 5), so we pick the 4th item in the list.
 if callable(config.BACKBONE):
     _, C2, C3, C4, C5 = config.BACKBONE(input_image, stage5=True,
                                         train_bn=config.TRAIN_BN)
@@ -659,19 +665,19 @@ else:
     _, C2, C3, C4, C5 = resnet_graph(input_image, config.BACKBONE,
                                      stage5=True, train_bn=config.TRAIN_BN)
 # Top-down Layers
-# TODO: add assert to varify feature map sizes match what&apos;s in config
+# TODO: add assert to varify feature map sizes match what&#39;s in config
 # FPN：把底层的特征和高层的特征进行融合，便于细致检测。
 # 这里P5=C5，然后P4=P5+C4,P2 P3类似，最终得到rpn_feature_maps，注意这里多了个P6,其仅是由P5下采样获得。
-P5 = KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (1, 1), name=&apos;fpn_c5p5&apos;)(C5)
+P5 = KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (1, 1), name=&#39;fpn_c5p5&#39;)(C5)
 P4 = KL.Add(name=&quot;fpn_p4add&quot;)([
     KL.UpSampling2D(size=(2, 2), name=&quot;fpn_p5upsampled&quot;)(P5),
-    KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (1, 1), name=&apos;fpn_c4p4&apos;)(C4)])
+    KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (1, 1), name=&#39;fpn_c4p4&#39;)(C4)])
 P3 = KL.Add(name=&quot;fpn_p3add&quot;)([
     KL.UpSampling2D(size=(2, 2), name=&quot;fpn_p4upsampled&quot;)(P4),
-    KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (1, 1), name=&apos;fpn_c3p3&apos;)(C3)])
+    KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (1, 1), name=&#39;fpn_c3p3&#39;)(C3)])
 P2 = KL.Add(name=&quot;fpn_p2add&quot;)([
     KL.UpSampling2D(size=(2, 2), name=&quot;fpn_p3upsampled&quot;)(P3),
-    KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (1, 1), name=&apos;fpn_c2p2&apos;)(C2)])
+    KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (1, 1), name=&#39;fpn_c2p2&#39;)(C2)])
 # Attach 3x3 conv to all P layers to get the final feature maps.
 P2 = KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (3, 3), padding=&quot;SAME&quot;, name=&quot;fpn_p2&quot;)(P2)
 P3 = KL.Conv2D(config.TOP_DOWN_PYRAMID_SIZE, (3, 3), padding=&quot;SAME&quot;, name=&quot;fpn_p3&quot;)(P3)
@@ -695,7 +701,7 @@ if mode == &quot;training&quot;:
     # Duplicate across the batch dimension because Keras requires it
     # TODO: can this be optimized to avoid duplicating the anchors?
     anchors = np.broadcast_to(anchors, (config.BATCH_SIZE,) + anchors.shape)
-    # A hack to get around Keras&apos;s bad support for constants
+    # A hack to get around Keras&#39;s bad support for constants
     anchors = KL.Lambda(lambda x: tf.Variable(anchors), name=&quot;anchors&quot;)(input_image)
 else:
     # 如果是Inference就是输入的Anchor
@@ -725,13 +731,13 @@ outputs = [KL.Concatenate(axis=1, name=n)(list(o))
 rpn_class_logits, rpn_class, rpn_bbox = outputs
 </code></pre><p>其中RPN网络也用keras做了实现，Builds a Keras model of the Region Proposal Network.It wraps the RPN graph so it can be used multiple times with shared weights.</p>
 <pre><code> # Shared convolutional base of the RPN
-shared = KL.Conv2D(512, (3, 3), padding=&apos;same&apos;, activation=&apos;relu&apos;,
+shared = KL.Conv2D(512, (3, 3), padding=&#39;same&#39;, activation=&#39;relu&#39;,
                    strides=anchor_stride,
-                   name=&apos;rpn_conv_shared&apos;)(feature_map)
+                   name=&#39;rpn_conv_shared&#39;)(feature_map)
 
 # Anchor Score. [batch, height, width, anchors per location * 2].
-x = KL.Conv2D(2 * anchors_per_location, (1, 1), padding=&apos;valid&apos;,
-              activation=&apos;linear&apos;, name=&apos;rpn_class_raw&apos;)(shared)
+x = KL.Conv2D(2 * anchors_per_location, (1, 1), padding=&#39;valid&#39;,
+              activation=&#39;linear&#39;, name=&#39;rpn_class_raw&#39;)(shared)
 
 # Reshape to [batch, anchors, 2]
 rpn_class_logits = KL.Lambda(
@@ -744,7 +750,7 @@ rpn_probs = KL.Activation(
 # Bounding box refinement. [batch, H, W, anchors per location * depth]
 # where depth is [x, y, log(w), log(h)]
 x = KL.Conv2D(anchors_per_location * 4, (1, 1), padding=&quot;valid&quot;,
-              activation=&apos;linear&apos;, name=&apos;rpn_bbox_pred&apos;)(shared)
+              activation=&#39;linear&#39;, name=&#39;rpn_bbox_pred&#39;)(shared)
 
 # Reshape to [batch, anchors, 4]
 rpn_bbox = KL.Lambda(lambda t: tf.reshape(t, [tf.shape(t)[0], -1, 4]))(x)
@@ -780,7 +786,7 @@ boxes = utils.batch_slice([pre_nms_anchors, deltas],
                           self.config.IMAGES_PER_GPU,
                           names=[&quot;refined_anchors&quot;])
 
-# Clip to image boundaries. Since we&apos;re in normalized coordinates,
+# Clip to image boundaries. Since we&#39;re in normalized coordinates,
 # clip to 0..1 range. [batch, N, (y1, x1, y2, x2)]
 window = np.array([0, 0, 1, 1], dtype=np.float32)
 boxes = utils.batch_slice(boxes,
@@ -789,8 +795,8 @@ boxes = utils.batch_slice(boxes,
                           names=[&quot;refined_anchors_clipped&quot;])
 
 # Filter out small boxes
-# According to Xinlei Chen&apos;s paper, this reduces detection accuracy
-# for small objects, so we&apos;re skipping it.
+# According to Xinlei Chen&#39;s paper, this reduces detection accuracy
+# for small objects, so we&#39;re skipping it.
 
 # Non-max suppression
 def nms(boxes, scores):
@@ -849,7 +855,7 @@ y1, x1, y2, x2 = tf.split(boxes, 4, axis=2)
 h = y2 - y1
 w = x2 - x1
 # Use shape of first image. Images in a batch must have the same size.
-image_shape = parse_image_meta_graph(image_meta)[&apos;image_shape&apos;][0]
+image_shape = parse_image_meta_graph(image_meta)[&#39;image_shape&#39;][0]
 # Equation 1 in the Feature Pyramid Networks paper. Account for
 # the fact that our coordinates are normalized here.
 # e.g. a 224x224 ROI (in pixels) maps to P4
@@ -883,7 +889,7 @@ for i, level in enumerate(range(2, 6)):
     # pooling) is nearly as effective.&quot;
     #
     # Here we use the simplified approach of a single value per bin,
-    # which is how it&apos;s done in tf.crop_and_resize()
+    # which is how it&#39;s done in tf.crop_and_resize()
     # Result: [batch * num_boxes, pool_height, pool_width, channels]
     pooled.append(tf.image.crop_and_resize(
         feature_maps[i], level_boxes, box_indices, self.pool_shape,
@@ -901,7 +907,7 @@ box_to_level = tf.concat([tf.cast(box_to_level, tf.int32), box_range],
 
 # Rearrange pooled features to match the order of the original boxes
 # Sort box_to_level by batch then box index
-# TF doesn&apos;t have a way to sort by two columns, so merge them and sort.
+# TF doesn&#39;t have a way to sort by two columns, so merge them and sort.
 sorting_tensor = box_to_level[:, 0] * 100000 + box_to_level[:, 1]
 ix = tf.nn.top_k(sorting_tensor, k=tf.shape(
     box_to_level)[0]).indices[::-1]
@@ -944,18 +950,18 @@ if crowd_ix.shape[0] &gt; 0:
     crowd_iou_max = np.amax(crowd_overlaps, axis=1)
     no_crowd_bool = (crowd_iou_max &lt; 0.001)
 else:
-    # All anchors don&apos;t intersect a crowd
+    # All anchors don&#39;t intersect a crowd
     no_crowd_bool = np.ones([anchors.shape[0]], dtype=bool)
 
 # Compute overlaps [num_anchors, num_gt_boxes]
 overlaps = utils.compute_overlaps(anchors, gt_boxes)
 
 # Match anchors to GT Boxes
-# If an anchor overlaps a GT box with IoU &gt;= 0.7 then it&apos;s positive.
-# If an anchor overlaps a GT box with IoU &lt; 0.3 then it&apos;s negative.
-# Neutral anchors are those that don&apos;t match the conditions above,
-# and they don&apos;t influence the loss function.
-# However, don&apos;t keep any GT box unmatched (rare, but happens). Instead,
+# If an anchor overlaps a GT box with IoU &gt;= 0.7 then it&#39;s positive.
+# If an anchor overlaps a GT box with IoU &lt; 0.3 then it&#39;s negative.
+# Neutral anchors are those that don&#39;t match the conditions above,
+# and they don&#39;t influence the loss function.
+# However, don&#39;t keep any GT box unmatched (rare, but happens). Instead,
 # match it to the closest anchor (even if its max IoU is &lt; 0.3).
 #
 # 1. Set negative anchors first. They get overwritten below if a GT box is
@@ -971,7 +977,7 @@ rpn_match[gt_iou_argmax] = 1
 rpn_match[anchor_iou_max &gt;= 0.7] = 1
 
 # Subsample to balance positive and negative anchors
-# Don&apos;t let positives be more than half the anchors
+# Don&#39;t let positives be more than half the anchors
 ids = np.where(rpn_match == 1)[0]
 extra = len(ids) - (config.RPN_TRAIN_ANCHORS_PER_IMAGE // 2)
 if extra &gt; 0:
@@ -1115,15 +1121,15 @@ from PIL import Image
 from time import time
 import os
 
-dataDir=&apos;/home/zju/lkj/data/COCO Dataset&apos;
-dataType=&apos;train2017&apos;
-annFile=&apos;{}/annotations/instances_{}.json&apos;.format(dataDir,dataType)
+dataDir=&#39;/home/zju/lkj/data/COCO Dataset&#39;
+dataType=&#39;train2017&#39;
+annFile=&#39;{}/annotations/instances_{}.json&#39;.format(dataDir,dataType)
 
-classes = [&apos;backpack&apos;, &apos;umbrella&apos;, &apos;handbag&apos;, &apos;tie&apos;, &apos;suitcase&apos;, &apos;bottle&apos;, &apos;wine glass&apos;, &apos;cup&apos;, &apos;fork&apos;, &apos;knife&apos;,
-            &apos;spoon&apos;, &apos;bowl&apos;, &apos;banana&apos;, &apos;apple&apos;, &apos;sandwich&apos;, &apos;orange&apos;, &apos;broccoli&apos;, &apos;carrot&apos;, &apos;hot dog&apos;,
-            &apos;donut&apos;, &apos;cake&apos;, &apos;chair&apos;, &apos;couch&apos;, &apos;potted plant&apos;, &apos;bed&apos;, &apos;dining table&apos;, &apos;toilet&apos;, &apos;tv&apos;, &apos;laptop&apos;,
-            &apos;mouse&apos;, &apos;remote&apos;, &apos;keyboard&apos;, &apos;cell phone&apos;, &apos;microwave&apos;, &apos;oven&apos;, &apos;toaster&apos;, &apos;sink&apos;, &apos;refrigerator&apos;,
-            &apos;book&apos;, &apos;clock&apos;, &apos;vase&apos;, &apos;scissors&apos;, &apos;teddy bear&apos;, &apos;hair drier&apos;, &apos;toothbrush&apos;]
+classes = [&#39;backpack&#39;, &#39;umbrella&#39;, &#39;handbag&#39;, &#39;tie&#39;, &#39;suitcase&#39;, &#39;bottle&#39;, &#39;wine glass&#39;, &#39;cup&#39;, &#39;fork&#39;, &#39;knife&#39;,
+            &#39;spoon&#39;, &#39;bowl&#39;, &#39;banana&#39;, &#39;apple&#39;, &#39;sandwich&#39;, &#39;orange&#39;, &#39;broccoli&#39;, &#39;carrot&#39;, &#39;hot dog&#39;,
+            &#39;donut&#39;, &#39;cake&#39;, &#39;chair&#39;, &#39;couch&#39;, &#39;potted plant&#39;, &#39;bed&#39;, &#39;dining table&#39;, &#39;toilet&#39;, &#39;tv&#39;, &#39;laptop&#39;,
+            &#39;mouse&#39;, &#39;remote&#39;, &#39;keyboard&#39;, &#39;cell phone&#39;, &#39;microwave&#39;, &#39;oven&#39;, &#39;toaster&#39;, &#39;sink&#39;, &#39;refrigerator&#39;,
+            &#39;book&#39;, &#39;clock&#39;, &#39;vase&#39;, &#39;scissors&#39;, &#39;teddy bear&#39;, &#39;hair drier&#39;, &#39;toothbrush&#39;]
 
 # initialize COCO api for instance annotations
 coco = COCO(annFile)
@@ -1132,7 +1138,7 @@ imgIds = coco.getImgIds()
 img_filters=[]
 for imgId in imgIds:
     Anns = coco.loadAnns(coco.getAnnIds(imgIds=imgId))
-    annIds = list(map(lambda x:x[&apos;category_id&apos;],Anns))
+    annIds = list(map(lambda x:x[&#39;category_id&#39;],Anns))
     for annId in annIds:
         if annId in classesId:
             img_filters.append(imgId)
@@ -1157,10 +1163,10 @@ def convert(size,box):
 
 def convert_img(img_id):
     img_id_str = str(img_id).zfill(12)
-    img_path = &apos;{}/{}/{}.jpg&apos;.format(dataDir, dataType, img_id_str)
+    img_path = &#39;{}/{}/{}.jpg&#39;.format(dataDir, dataType, img_id_str)
     image = Image.open(img_path)
     resized_image = image.resize((416, 416), Image.BICUBIC)
-    image_data = np.array(resized_image, dtype=&apos;float32&apos;) / 255
+    image_data = np.array(resized_image, dtype=&#39;float32&#39;) / 255
     if image_data.size != 519168: # 不为3通道
         return False
     img_raw = image_data.tobytes()
@@ -1168,21 +1174,21 @@ def convert_img(img_id):
 
 def convert_annotation(image_id):
     img_info = coco.loadImgs(image_id)[0]  # 读入的是照片的详细信息，而非图像信息, 返回的是list，只有1个id输入时，取0
-    w = int(img_info[&apos;width&apos;])
-    h = int(img_info[&apos;height&apos;])
+    w = int(img_info[&#39;width&#39;])
+    h = int(img_info[&#39;height&#39;])
     bboxes = []
     Anns = coco.loadAnns(ids=coco.getAnnIds(imgIds=image_id))
     i = 0
     for Ann in Anns:
         if i&gt;29:
             break
-        iscrowd = Ann[&apos;iscrowd&apos;]
+        iscrowd = Ann[&#39;iscrowd&#39;]
         if iscrowd == 1:
             continue
-        if Ann[&apos;category_id&apos;] not in classesId:
+        if Ann[&#39;category_id&#39;] not in classesId:
             continue
-        cls_id = classesId.index(Ann[&apos;category_id&apos;])  # 取新的编号
-        bbox = Ann[&apos;bbox&apos;]
+        cls_id = classesId.index(Ann[&#39;category_id&#39;])  # 取新的编号
+        bbox = Ann[&#39;bbox&#39;]
         bb = convert((w, h), bbox) + [cls_id]
         bboxes.extend(bb)
         i = i + 1
@@ -1191,7 +1197,7 @@ def convert_annotation(image_id):
         bboxes = bboxes + [0, 0, 0, 0, 0]*(30-int(len(bboxes)/5))
     return np.array(bboxes, dtype=np.float32).flatten().tolist()
 
-filename = os.path.join(&apos;train2017&apos;+&apos;.tfrecords&apos;)
+filename = os.path.join(&#39;train2017&#39;+&#39;.tfrecords&#39;)
 writer = tf.python_io.TFRecordWriter(filename)
 i=0
 start = time()
@@ -1200,24 +1206,24 @@ for imgId in img_filters:
     img_raw = convert_img(imgId)
     if img_raw:
         example = tf.train.Example(features=tf.train.Features(feature={
-            &apos;xywhc&apos;:
+            &#39;xywhc&#39;:
                     tf.train.Feature(float_list=tf.train.FloatList(value=xywhc)),
-            &apos;img&apos;:
+            &#39;img&#39;:
                     tf.train.Feature(bytes_list=tf.train.BytesList(value=[img_raw])),
             }))
         writer.write(example.SerializeToString())
         # 显示制作进度，剩余时间
         if i%100==99:
             t = time()-start
-            print(i,&apos;t={:0.4f}s/100 step&apos;.format(t),&apos;  left time={:0.4f}s&apos;.format((len(img_filters)-i)*t/100))
+            print(i,&#39;t={:0.4f}s/100 step&#39;.format(t),&#39;  left time={:0.4f}s&#39;.format((len(img_filters)-i)*t/100))
             start = time()
         i = i+1
-print(&apos;Done!&apos;)
+print(&#39;Done!&#39;)
 writer.close()
 </code></pre><p>下面分段对代码进行介绍，这个数据制作是应用于物品检查与分割，并且只有部分物品，所以在程序开头有classes列举（总共45种，完整的COCO数据集包含91种）。COCO数据集中混有灰度图，所以在reshape的时候会一直报错，刚开始还一直想不清楚为什么，后来遍历原始数据集才发现有灰度图的存在，所以reshape成416*416*3会报错,所以程序有一个判断是否为3通道：</p>
 <pre><code>image = Image.open(img_path)
 resized_image = image.resize((416, 416), Image.BICUBIC)
-image_data = np.array(resized_image, dtype=&apos;float32&apos;) / 255
+image_data = np.array(resized_image, dtype=&#39;float32&#39;) / 255
 if image_data.size != 519168: # 不为3通道
     return False
 </code></pre><p>图像读取后转换成字符串(BytesList):</p>
@@ -1226,22 +1232,22 @@ if image_data.size != 519168: # 不为3通道
 <pre><code>return np.array(bboxes, dtype=np.float32).flatten().tolist()
 </code></pre><p>基于此，核心的构建部分为：</p>
 <pre><code>example = tf.train.Example(features=tf.train.Features(feature={
-    &apos;xywhc&apos;:
+    &#39;xywhc&#39;:
             tf.train.Feature(float_list=tf.train.FloatList(value=xywhc)),
-    &apos;img&apos;:
+    &#39;img&#39;:
             tf.train.Feature(bytes_list=tf.train.BytesList(value=[img_raw])),
     }))
 writer.write(example.SerializeToString())
 </code></pre><h2 id="TFrecords文件读取解析"><a href="#TFrecords文件读取解析" class="headerlink" title="TFrecords文件读取解析"></a>TFrecords文件读取解析</h2><p>对应构建时候的数据格式，进行解析，可以加一些程序对于读取后的图像文件的一些进一步处理，比如图像增强</p>
 <pre><code>def parser(example):
     features = {
-                &apos;xywhc&apos;: tf.FixedLenFeature([150], tf.float32),
-                &apos;img&apos;: tf.FixedLenFeature((), tf.string)}
+                &#39;xywhc&#39;: tf.FixedLenFeature([150], tf.float32),
+                &#39;img&#39;: tf.FixedLenFeature((), tf.string)}
     feats = tf.parse_single_example(example, features)
-    coord = feats[&apos;xywhc&apos;]
+    coord = feats[&#39;xywhc&#39;]
     coord = tf.reshape(coord, [30, 5])
 
-    img = tf.decode_raw(feats[&apos;img&apos;], tf.float32)
+    img = tf.decode_raw(feats[&#39;img&#39;], tf.float32)
     img = tf.reshape(img, [416, 416, 3])
     img = tf.image.resize_images(img, [cfg.train.image_resized, cfg.train.image_resized])
     rnd = tf.less(tf.random_uniform(shape=[], minval=0, maxval=2), 1)
@@ -1277,7 +1283,7 @@ writer.write(example.SerializeToString())
 
     return imgs, true_boxes
 </code></pre><p>测试一下整个数据输入模块：</p>
-<pre><code>file_path = &apos;train2007.tfrecords&apos;
+<pre><code>file_path = &#39;train2007.tfrecords&#39;
 imgs, true_boxes = data_pipeline(file_path, cfg.batch_size)
 sess = tf.Session()
 imgs_, true_boxes_ = sess.run([imgs, true_boxes])
@@ -1339,11 +1345,31 @@ plt.show()
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>YOLO是一种全新的，与R-CNN思想截然不同的目标检测的方法。R-CNN系列网络是通过proposal region产生可能包含目标物体的bounding box，再通分类器判断是否包含物品以及物品类别，用regression对bounding的坐标、大小进行修正。YOLO则是一种end to end的方式，用一个神经网络，实现了预测出bounding box 的坐标、box中包含物体的置信度和物体的probabilities，因此检测速度更快，训练相对更加简单，当然相对来说也带来一些其他缺点。<br><a id="more"></a></p>
 <p>YOLO项目主页<a href="https://pjreddie.com/yolo/" target="_blank" rel="external">地址</a><br>YOLO1 <a href="https://arxiv.org/abs/1506.02640" target="_blank" rel="external">论文</a><br>YOLO2 <a href="https://arxiv.org/abs/1612.08242" target="_blank" rel="external">论文</a><br>YOLO3 <a href="https://pjreddie.com/media/files/papers/YOLOv3.pdf" target="_blank" rel="external">论文</a></p>
 <h2 id="YOLO-v1"><a href="#YOLO-v1" class="headerlink" title="YOLO v1"></a>YOLO v1</h2><p>YOLO使用来自整张图片的feature map来预测bounding box和class，因此可以保持较高的精度。YOLO将整张图片分成S×S的网格，如果一个目标的中心落入到网格单元中，那么这个网格单元负责这个目标的检测。</p>
-<div align="center"><br>    <img src="/img/yolo/yolo1.1.png" width="300" height="300"><br></div><br>每个网格单元预测B个bounding box和confidence score，confidence score反应了box包含目标的可信度，论文中将可confidence score定义为：<br><div align="center"><br>    <img src="/img/yolo/yolo1.2.png" height="30"><br></div><br>，因此，如果没有目标存在confidence score为0，否则应该为IOU(intersection over union)，即真实框和预测框的交集部分。所以每个bounding box的预测值包括(x,y,w,h.confidence score). (x,y)表示预测的box中心相对于网格单元的的位置，(w,h)是用整个图片大小进行归一化的宽度和高度，另外，针对C个类别，每个类别需要预测一个条件概率，即：<br><div align="center"><br>    <img src="/img/yolo/yolo1.3.png" height="30"><br></div><br>最终得到box中包含某个特定物品的概率为：<br><div align="center"><br>    <img src="/img/yolo/yolo1.4.png" height="40"><br></div><br>整个过程如下图所示。<br><div align="center"><br>    <img src="/img/yolo/yolo1.5.png" width="700" height="400"><br></div>
+<div align="center">
+    <img src="/img/yolo/yolo1.1.png" width="300" height="300">
+</div>
+每个网格单元预测B个bounding box和confidence score，confidence score反应了box包含目标的可信度，论文中将可confidence score定义为：
+<div align="center">
+    <img src="/img/yolo/yolo1.2.png" height="30">
+</div>
+，因此，如果没有目标存在confidence score为0，否则应该为IOU(intersection over union)，即真实框和预测框的交集部分。所以每个bounding box的预测值包括(x,y,w,h.confidence score). (x,y)表示预测的box中心相对于网格单元的的位置，(w,h)是用整个图片大小进行归一化的宽度和高度，另外，针对C个类别，每个类别需要预测一个条件概率，即：
+<div align="center">
+    <img src="/img/yolo/yolo1.3.png" height="30">
+</div>
+最终得到box中包含某个特定物品的概率为：
+<div align="center">
+    <img src="/img/yolo/yolo1.4.png" height="40">
+</div>
+整个过程如下图所示。
+<div align="center">
+    <img src="/img/yolo/yolo1.5.png" width="700" height="400">
+</div>
 
 <p>总结来说，YOLO网络将检测问题转换成regression，首先将整张图片转换成S×S的网格，并且每个网格单元预测B个边界框，这些边界框的(x,y,w,h,confidence score)以及C个类别概率,这些预测被编码为S×S×(B*5+C)的张量。</p>
 <h3 id="Network-Design"><a href="#Network-Design" class="headerlink" title="Network Design"></a>Network Design</h3><p>YOLO1的网络结构设计借鉴了GoogleNet模型，包含了24个卷积层和2个全连接层，YOLO未使用inception module，而是使用1x1卷积层和）3x3卷积层简单替代，交替出现的1x1卷积层实现了跨通道信息融合以及通道数目降低。</p>
-<div align="center"><br>    <img src="/img/yolo/yolo1.6.png"><br></div>
+<div align="center">
+    <img src="/img/yolo/yolo1.6.png">
+</div>
 
 <h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><ol>
 <li>使用 ImageNet 1000 类数据训练YOLO网络的前20个卷积层+1个average池化层+1个全连接层。</li>
@@ -1351,7 +1377,9 @@ plt.show()
 <li>最后一层预测类概率和边界框坐标。我们通过图像宽度和高度来规范(w,h)，使它们落在0和1之间。我们将边界框(x,y)坐标参数化为特定网格单元位置的偏移量，所以它们边界也在0和1之间。</li>
 </ol>
 <h3 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h3><p>YOLO1的误差计算对于分类误差和定位误差用了不同的权重，对包含与不包含物品的box的误差权重也进行了区分。具体来说，论文中增加了边界框坐标预测损失，并减少了不包含目标边界框的置信度预测损失，使用两个参数λcoord和λnoobj来完成这个工作，论文中设置了λcoord=5和λnoobj=0.5。<br>另一个问题是平方和误差权重在大框和小框中进行了区分。相同的误差下，小框误差的重要性肯定更好，论文中用了一个很巧妙的方法，<strong>直接预测边界框宽度和高度的平方根，而不是宽度和高度</strong>。根据y=x^1/2的函数就可以知道，函数斜率是随着x的增大而减小的，这样就可以提高小框的误差权重，真的巧妙。<br>YOLO每个网格单元预测多个box。在训练时，每个目标我们只需要一个box来负责，选定的原则是与真实框具有最大的IOU。</p>
-<div align="center"><br>    <img src="/img/yolo/yolo1.7.png"><br></div>
+<div align="center">
+    <img src="/img/yolo/yolo1.7.png">
+</div>
 
 <h3 id="Shortcoming"><a href="#Shortcoming" class="headerlink" title="Shortcoming"></a>Shortcoming</h3><p>YOLO对边界框预测强加空间约束，因为每个网格单元只预测两个盒子，只能有一个类别。这个空间约束限制了我们的模型可以预测的邻近目标的数量，因此在小物品的检测上比较局限。</p>
 <h2 id="YOLO-v2"><a href="#YOLO-v2" class="headerlink" title="YOLO v2"></a>YOLO v2</h2><p>为提高物体定位精准性和召回率，YOLO2对网络结构的设计进行了改进，输出层使用卷积层替代YOLO的全连接层，联合使用coco物体检测标注数据和imagenet物体分类标注数据训练物体检测模型。相比YOLO，YOLO9000在识别种类、精度、速度、和定位准确性等方面都有大大提升。</p>
@@ -1359,69 +1387,91 @@ plt.show()
 <h4 id="High-Resolution-Classifier"><a href="#High-Resolution-Classifier" class="headerlink" title="High Resolution Classifier"></a>High Resolution Classifier</h4><p>YOLO2将ImageNet以448×448 的分辨率微调最初的分类网络，迭代10 epochs。</p>
 <h4 id="Convolutional-With-Anchor-Boxes"><a href="#Convolutional-With-Anchor-Boxes" class="headerlink" title="Convolutional With Anchor Boxes"></a>Convolutional With Anchor Boxes</h4><p>借鉴faster R-CNN的思想，引入anchor box，取消全连接层来进行预测，改用卷积层作为预测层对anchor box的offset和confidence进行预测。去除了一个池化层，使得输出特征具有更高的分辨率，将图片输入尺寸resize为416而非448，使得特征图大小为奇数，所以有一个中心单元格。目标，特别是大目标，倾向于占据图像的中心，所以在中心有一个单一的位置可以很好的预测这些目标，而不是四个位置都在中心附近。YOLO的卷积层将图像下采样32倍，所以通过使用输入图像416，我们得到13×13的输出特征图。同时，使用anchor box进行预测的时候，解耦空间位置预测与类别预测，对每个anchor box都预测object和class，仍然沿用YOLO1，目标检测仍然是预测proposed box和ground truth的IOU，类别预测（class predictions）仍然是存在object下的条件概率。</p>
 <h4 id="Dimension-Clusters"><a href="#Dimension-Clusters" class="headerlink" title="Dimension Clusters"></a>Dimension Clusters</h4><p>YOLO2不再采用手动挑选的box尺寸，而是对训练集的box尺寸进行k-means聚类，因为聚类的目的是想要更好的IOU，所以聚类的距离使用下列公式：</p>
-<div align="center"><br>    <img src="/img/yolo/yolo2.1.png" height="40"><br></div><br>对不同的k值采用k-means聚类算法，即对数据集的ground truth聚类，在VOC和COCO数据集上的bounding box得到的结果如下图：<br><div align="center"><br>    <img src="/img/yolo/yolo2.2.png"><br></div>
+<div align="center">
+    <img src="/img/yolo/yolo2.1.png" height="40">
+</div>
+对不同的k值采用k-means聚类算法，即对数据集的ground truth聚类，在VOC和COCO数据集上的bounding box得到的结果如下图：
+<div align="center">
+    <img src="/img/yolo/yolo2.2.png">
+</div>
 
 <p>根据上图，k=5的时候，模型的复杂度和IOU能够得到一个不错的trade off。</p>
 <h4 id="Direct-location-prediction"><a href="#Direct-location-prediction" class="headerlink" title="Direct location prediction"></a>Direct location prediction</h4><p>对于位置坐标，YOLO2没有采用R-CNN的预测偏移，而是仍然类似于YOLO1中的，他预测相对于网格单元的位置坐标，将ground truth也限制在0-1之间，使用logistic activation 来实现。网络为每个边界框预测tx，ty，th，tw和to这5个坐标。如果网格单元从图像的左上角偏移（Cx，Cy），给定的anchor的宽度，高度分别为Pw，Ph那么预测结果为：</p>
-<div align="center"><br>    <img src="/img/yolo/yolo2.3.png"><br></div><br><div align="center"><br>    <img src="/img/yolo/yolo2.4.png"><br></div>
+<div align="center">
+    <img src="/img/yolo/yolo2.3.png">
+</div>
+<div align="center">
+    <img src="/img/yolo/yolo2.4.png">
+</div>
 
 <h4 id="Fine-Grained-Features"><a href="#Fine-Grained-Features" class="headerlink" title="Fine-Grained Features"></a>Fine-Grained Features</h4><p>在13×13特征图上检测可以很容易检测到大目标，从更小粒度的特征图中可以更好地检测小物体，YOLO2添加一个passthrough layer从前一层26×26的特征图进行融合。传递层通过将相邻特征堆叠到不同的通道而不是堆叠到空间位置，将较高分辨率特征与低分辨率特征相连，类似于ResNet中的标识映射。这将26×26×512特征映射转换为13×13×2048特征映射，其可以与原始特征连接。</p>
 <h4 id="Multi-Scale-Training"><a href="#Multi-Scale-Training" class="headerlink" title="Multi-Scale Training"></a>Multi-Scale Training</h4><p>添加anchor box后，YOLO2将分辨率更改为416×416。然而，由于模型只使用卷积层和池化层，它可以在运行中调整大小。为了使YOLOv2能够在不同大小的图像上运行，相比于固定输入图像大小，YOLO2每隔几次迭代更改网络。每迭代10个batch网络随机选择一个新的图像尺寸大小。因为模型以32的因子下采样，YOLO2从以下32的倍数中抽取：{320,352，…，608}。因此，最小的选项是320×320，最大的是608×608.调整网络的大小，并继续训练。<br>这种训练方法迫使网络学习在各种输入维度上很好地预测。这意味着相同的网络可以预测不同分辨率的检测。网络在更小的尺寸下运行更快，因此YOLO2在速度和精度之间提供了一个简单的折衷。</p>
 <h3 id="Faster"><a href="#Faster" class="headerlink" title="Faster"></a>Faster</h3><h4 id="Darknet-19"><a href="#Darknet-19" class="headerlink" title="Darknet-19"></a>Darknet-19</h4><p>YOLO2大多数3×3的滤波器，并在每个池化步骤后将通道数量加倍，使用全局平均池化进行预测，使用1×1滤波器以压缩3×3卷积之间的特征，最终模型，称为Darknet-19，有19卷积层和5个最大池化层，详见下图。</p>
-<div align="center"><br>    <img src="/img/yolo/yolo2.5.png"><br></div>
+<div align="center">
+    <img src="/img/yolo/yolo2.5.png">
+</div>
 
 <h4 id="Training-for-classification"><a href="#Training-for-classification" class="headerlink" title="Training for classification"></a>Training for classification</h4><p>使用Darknet19在标准ImageNet 1000类分类数据集上训练，在训练期间，使用数据增强技巧。</p>
 <h4 id="Training-for-detection"><a href="#Training-for-detection" class="headerlink" title="Training for detection"></a>Training for detection</h4><p>为了训练检测器，修改上面的网络，移除最后的卷积层，添加3个3×3卷积层，最后增加1×1卷积层，其输出为我们需要的检测维度，如对于VOC数据集，预测5个box，每个具有5个坐标，每个box20个类，因此125个过滤器。还添加了从最后的3×3×512层到第二到最后的卷积层的传递层passthrough layer，使得模型可以使用细粒度特征。</p>
 <h3 id="Stronger"><a href="#Stronger" class="headerlink" title="Stronger"></a>Stronger</h3><p>构建了一种分层分类模型（WordTree），提出了一种关于分类和检测数据的联合训练机制。</p>
-<div align="center"><br>    <img src="/img/yolo/yolo2.6.png"><br></div><br><div align="center"><br>    <img src="/img/yolo/yolo2.7.png"><br></div>
+<div align="center">
+    <img src="/img/yolo/yolo2.6.png">
+</div>
+<div align="center">
+    <img src="/img/yolo/yolo2.7.png">
+</div>
 
 <p>ImageNet数据量更大，用于训练分类，COCO和VOC用于训练检测，ImageN对应分类有9000多种，COCO只有80种对应目标检测，通过wordTree来combine，来自分类的图片只计算分类的loss，来自检测集的图片计算完整的loss。</p>
 <h2 id="YOLO-v3"><a href="#YOLO-v3" class="headerlink" title="YOLO v3"></a>YOLO v3</h2><p>YOLO3 对于YOLO2有了一些改进，总的来说有几点：加深了网络，用了上采样，残差网络，多尺度预测，下面详细说明。</p>
 <h3 id="Bounding-Box-Prediction"><a href="#Bounding-Box-Prediction" class="headerlink" title="Bounding Box Prediction"></a>Bounding Box Prediction</h3><p>坐标预测仍然沿用YOLO2的，yolov3对每个bounding box预测四个坐标值(tx, ty, tw, th)，对于预测的cell根据图像左上角的偏移(cx, cy)，以及之前得到bounding box的宽和高pw, ph可以对bounding box按如下的方式进行预测：</p>
-<div align="center"><br>    <img src="/img/yolo/yolo3.1.png"><br></div>
+<div align="center">
+    <img src="/img/yolo/yolo3.1.png">
+</div>
 
 <p>训练的时候，loss的计算采用sum of squared error loss（平方和距离误差损失），yolov3对每个bounding box通过逻辑回归预测一个物体的得分，如果预测的这个bounding box与真实的边框值大部分重合且比其他所有预测的要好，那么这个值就为1.如果overlap没有达到一个阈值（yolov3中这里设定的阈值是0.5），那么这个预测的bounding box将会被忽略。YOLO3论文中使用的阈值是0.5.每个object只会分配一个bounding box，所以对应没有分配有ground truth object的box，其坐标损失和预测损失不需要计入，只需考虑objectness loss。If a bounding box prior is not assigned to a ground truth object it incurs no loss for coordinate or class predictions, only objectness.</p>
 <h3 id="Class-Prediction"><a href="#Class-Prediction" class="headerlink" title="Class Prediction"></a>Class Prediction</h3><p>每个框预测分类，bounding box使用多标签分类（multi-label classification）。论文中说没有使用softmax分类，只是使用了简单的逻辑回归进行分类，采用的二值交叉熵损失（binary cross-entropy loss）。<br>Each box predicts the classes the bounding box may contain using multilabel classification. We do not use a softmax as we have found it is unnecessary for good performance, instead we simply use independent logistic classifiers. During training we use binary cross-entropy loss for the class predictions.<br>This formulation helps when we move to more complex domains like the Open Images Dataset. In this dataset there are many overlapping labels (i.e. Woman and Person). Using a softmax imposes the assumption that each box has exactly one class which is often not the case. A multilabel approach better models the data.</p>
 <h3 id="Predictions-Across-Scales"><a href="#Predictions-Across-Scales" class="headerlink" title="Predictions Across Scales"></a>Predictions Across Scales</h3><p>YOLO3在三种不同尺度来预测box，应用一个类似于特征金字塔网络（feature pyramid network）上提取特征，如下图：</p>
-<div align="center"><br>    <img src="/img/yolo/yolo3.2.png"><br></div>
+<div align="center">
+    <img src="/img/yolo/yolo3.2.png">
+</div>
 
 <p>对于第一个scale的预测，即base feature extractor，最后预测得到一个3-d tensor，包含bounding box,objectness,class prediction.比如在COCO数据集中有80类物品，每一个scale预测3个box，所以tensor得到为（N×N×[3*(4+1+80)]）。<br>next scale，从上一步2 layer previous的feature map中进行上采样，然后从特征提取网络中的取earlier feature 与上采样后的进行合并，得到更多信息的语义，以及从earlier feature map可以得到更细粒度的特征。最后的scale采用前述类似的方法进行。可能实际代码更能体现这个过程，如下：<br>三种跨尺度预测</p>
 <pre><code>predict boxes at 3 different scales
-&apos;&apos;&apos;
+&#39;&#39;&#39;
 def build(self, feat_ex, res18, res10):
-    self.conv52 = self.conv_layer(feat_ex, 1, 1, 1024, 512, True, &apos;conv_head_52&apos;)          # 13x512
-    self.conv53 = self.conv_layer(self.conv52, 3, 1, 512, 1024, True, &apos;conv_head_53&apos;)   # 13x1024
-    self.conv54 = self.conv_layer(self.conv53, 1, 1, 1024, 512, True, &apos;conv_head_54&apos;)   # 13x512
-    self.conv55 = self.conv_layer(self.conv54, 3, 1, 512, 1024, True, &apos;conv_head_55&apos;)   # 13x1024
-    self.conv56 = self.conv_layer(self.conv55, 1, 1, 1024, 512, True, &apos;conv_head_56&apos;)   # 13x512
-    self.conv57 = self.conv_layer(self.conv56, 3, 1, 512, 1024, True, &apos;conv_head_57&apos;)   # 13x1024
-    self.conv58 = self.conv_layer(self.conv57, 1, 1, 1024, 75, False, &apos;conv_head_58&apos;)   # 13x75
+    self.conv52 = self.conv_layer(feat_ex, 1, 1, 1024, 512, True, &#39;conv_head_52&#39;)          # 13x512
+    self.conv53 = self.conv_layer(self.conv52, 3, 1, 512, 1024, True, &#39;conv_head_53&#39;)   # 13x1024
+    self.conv54 = self.conv_layer(self.conv53, 1, 1, 1024, 512, True, &#39;conv_head_54&#39;)   # 13x512
+    self.conv55 = self.conv_layer(self.conv54, 3, 1, 512, 1024, True, &#39;conv_head_55&#39;)   # 13x1024
+    self.conv56 = self.conv_layer(self.conv55, 1, 1, 1024, 512, True, &#39;conv_head_56&#39;)   # 13x512
+    self.conv57 = self.conv_layer(self.conv56, 3, 1, 512, 1024, True, &#39;conv_head_57&#39;)   # 13x1024
+    self.conv58 = self.conv_layer(self.conv57, 1, 1, 1024, 75, False, &#39;conv_head_58&#39;)   # 13x75
     # follow yolo layer mask = 6,7,8
-    self.conv59 = self.conv_layer(self.conv56, 1, 1, 512, 256, True, &apos;conv_head_59&apos;)    # 13x256
+    self.conv59 = self.conv_layer(self.conv56, 1, 1, 512, 256, True, &#39;conv_head_59&#39;)    # 13x256
     size = tf.shape(self.conv59)[1]
     self.upsample0 = tf.image.resize_nearest_neighbor(self.conv59, [2*size, 2*size],    # 上采样
-                                                      name=&apos;upsample_0&apos;)                # 26x256
-    self.route0 = tf.concat([self.upsample0, res18], axis=-1, name=&apos;route_0&apos;)           # 26x768
-    self.conv60 = self.conv_layer(self.route0, 1, 1, 768, 256, True, &apos;conv_head_60&apos;)    # 26x256
-    self.conv61 = self.conv_layer(self.conv60, 3, 1, 256, 512, True, &apos;conv_head_61&apos;)    # 26x512
-    self.conv62 = self.conv_layer(self.conv61, 1, 1, 512, 256, True, &apos;conv_head_62&apos;)    # 26x256
-    self.conv63 = self.conv_layer(self.conv62, 3, 1, 256, 512, True, &apos;conv_head_63&apos;)    # 26x512
-    self.conv64 = self.conv_layer(self.conv63, 1, 1, 512, 256, True, &apos;conv_head_64&apos;)    # 26x256
-    self.conv65 = self.conv_layer(self.conv64, 3, 1, 256, 512, True, &apos;conv_head_65&apos;)    # 26x512
-    self.conv66 = self.conv_layer(self.conv65, 1, 1, 512, 75, False, &apos;conv_head_66&apos;)    # 26x75
+                                                      name=&#39;upsample_0&#39;)                # 26x256
+    self.route0 = tf.concat([self.upsample0, res18], axis=-1, name=&#39;route_0&#39;)           # 26x768
+    self.conv60 = self.conv_layer(self.route0, 1, 1, 768, 256, True, &#39;conv_head_60&#39;)    # 26x256
+    self.conv61 = self.conv_layer(self.conv60, 3, 1, 256, 512, True, &#39;conv_head_61&#39;)    # 26x512
+    self.conv62 = self.conv_layer(self.conv61, 1, 1, 512, 256, True, &#39;conv_head_62&#39;)    # 26x256
+    self.conv63 = self.conv_layer(self.conv62, 3, 1, 256, 512, True, &#39;conv_head_63&#39;)    # 26x512
+    self.conv64 = self.conv_layer(self.conv63, 1, 1, 512, 256, True, &#39;conv_head_64&#39;)    # 26x256
+    self.conv65 = self.conv_layer(self.conv64, 3, 1, 256, 512, True, &#39;conv_head_65&#39;)    # 26x512
+    self.conv66 = self.conv_layer(self.conv65, 1, 1, 512, 75, False, &#39;conv_head_66&#39;)    # 26x75
     # follow yolo layer mask = 3,4,5
-    self.conv67 = self.conv_layer(self.conv64, 1, 1, 256, 128, True, &apos;conv_head_67&apos;)    # 26x128
+    self.conv67 = self.conv_layer(self.conv64, 1, 1, 256, 128, True, &#39;conv_head_67&#39;)    # 26x128
     size = tf.shape(self.conv67)[1]
     self.upsample1 = tf.image.resize_nearest_neighbor(self.conv67, [2 * size, 2 * size],
-                                                      name=&apos;upsample_1&apos;)                # 52x128
-    self.route1 = tf.concat([self.upsample1, res10], axis=-1, name=&apos;route_1&apos;)           # 52x384
-    self.conv68 = self.conv_layer(self.route1, 1, 1, 384, 128, True, &apos;conv_head_68&apos;)    # 52x128
-    self.conv69 = self.conv_layer(self.conv68, 3, 1, 128, 256, True, &apos;conv_head_69&apos;)    # 52x256
-    self.conv70 = self.conv_layer(self.conv69, 1, 1, 256, 128, True, &apos;conv_head_70&apos;)    # 52x128
-    self.conv71 = self.conv_layer(self.conv70, 3, 1, 128, 256, True, &apos;conv_head_71&apos;)    # 52x256
-    self.conv72 = self.conv_layer(self.conv71, 1, 1, 256, 128, True, &apos;conv_head_72&apos;)    # 52x128
-    self.conv73 = self.conv_layer(self.conv72, 3, 1, 128, 256, True, &apos;conv_head_73&apos;)    # 52x256
-    self.conv74 = self.conv_layer(self.conv73, 1, 1, 256, 75, False, &apos;conv_head_74&apos;)    # 52x75
+                                                      name=&#39;upsample_1&#39;)                # 52x128
+    self.route1 = tf.concat([self.upsample1, res10], axis=-1, name=&#39;route_1&#39;)           # 52x384
+    self.conv68 = self.conv_layer(self.route1, 1, 1, 384, 128, True, &#39;conv_head_68&#39;)    # 52x128
+    self.conv69 = self.conv_layer(self.conv68, 3, 1, 128, 256, True, &#39;conv_head_69&#39;)    # 52x256
+    self.conv70 = self.conv_layer(self.conv69, 1, 1, 256, 128, True, &#39;conv_head_70&#39;)    # 52x128
+    self.conv71 = self.conv_layer(self.conv70, 3, 1, 128, 256, True, &#39;conv_head_71&#39;)    # 52x256
+    self.conv72 = self.conv_layer(self.conv71, 1, 1, 256, 128, True, &#39;conv_head_72&#39;)    # 52x128
+    self.conv73 = self.conv_layer(self.conv72, 3, 1, 128, 256, True, &#39;conv_head_73&#39;)    # 52x256
+    self.conv74 = self.conv_layer(self.conv73, 1, 1, 256, 75, False, &#39;conv_head_74&#39;)    # 52x75
     # follow yolo layer mask = 0,1,2
 
     return self.conv74, self.conv66, self.conv58
@@ -1429,7 +1479,9 @@ def build(self, feat_ex, res18, res10):
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span><span class="params">(self, img, istraining, decay_bn=<span class="number">0.99</span>)</span>:</span></span><br><span class="line">        self.phase_train = istraining</span><br><span class="line">        self.decay_bn = decay_bn</span><br><span class="line">        self.conv0 = self.conv_layer(bottom=img, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">3</span>,   <span class="comment"># 416x3</span></span><br><span class="line">                                     out_channels=<span class="number">32</span>, name=<span class="string">'conv_0'</span>)                <span class="comment"># 416x32</span></span><br><span class="line">        self.conv1 = self.conv_layer(bottom=self.conv0, size=<span class="number">3</span>, stride=<span class="number">2</span>, in_channels=<span class="number">32</span>,</span><br><span class="line">                                     out_channels=<span class="number">64</span>, name=<span class="string">'conv_1'</span>)                <span class="comment"># 208x64</span></span><br><span class="line">        self.conv2 = self.conv_layer(bottom=self.conv1, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">64</span>,</span><br><span class="line">                                     out_channels=<span class="number">32</span>, name=<span class="string">'conv_2'</span>)                <span class="comment"># 208x32</span></span><br><span class="line">        self.conv3 = self.conv_layer(bottom=self.conv2, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">32</span>,</span><br><span class="line">                                     out_channels=<span class="number">64</span>, name=<span class="string">'conv_3'</span>)                <span class="comment"># 208x64</span></span><br><span class="line">        self.res0 = self.conv3 + self.conv1                                         <span class="comment"># 208x64</span></span><br><span class="line">        self.conv4 = self.conv_layer(bottom=self.res0, size=<span class="number">3</span>, stride=<span class="number">2</span>, in_channels=<span class="number">64</span>,</span><br><span class="line">                                     out_channels=<span class="number">128</span>, name=<span class="string">'conv_4'</span>)               <span class="comment"># 104x128</span></span><br><span class="line">        self.conv5 = self.conv_layer(bottom=self.conv4, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                     out_channels=<span class="number">64</span>, name=<span class="string">'conv_5'</span>)                <span class="comment"># 104x64</span></span><br><span class="line">        self.conv6 = self.conv_layer(bottom=self.conv5, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">64</span>,</span><br><span class="line">                                     out_channels=<span class="number">128</span>, name=<span class="string">'conv_6'</span>)               <span class="comment"># 104x128</span></span><br><span class="line">        self.res1 = self.conv6 + self.conv4     <span class="comment"># 128                               # 104x128</span></span><br><span class="line">        self.conv7 = self.conv_layer(bottom=self.res1, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                     out_channels=<span class="number">64</span>, name=<span class="string">'conv_7'</span>)                <span class="comment"># 104x64</span></span><br><span class="line">        self.conv8 = self.conv_layer(bottom=self.conv7, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">64</span>,</span><br><span class="line">                                     out_channels=<span class="number">128</span>, name=<span class="string">'conv_8'</span>)               <span class="comment"># 104x128</span></span><br><span class="line">        self.res2 = self.conv8 + self.res1      <span class="comment"># 128                               # 104x128</span></span><br><span class="line">        self.conv9 = self.conv_layer(bottom=self.res2, size=<span class="number">3</span>, stride=<span class="number">2</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                     out_channels=<span class="number">256</span>, name=<span class="string">'conv_9'</span>)               <span class="comment"># 52x256</span></span><br><span class="line">        self.conv10 = self.conv_layer(bottom=self.conv9, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">128</span>, name=<span class="string">'conv_10'</span>)             <span class="comment"># 52x128</span></span><br><span class="line">        self.conv11 = self.conv_layer(bottom=self.conv10, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_11'</span>)             <span class="comment"># 52x256</span></span><br><span class="line">        self.res3 = self.conv11 + self.conv9                                        <span class="comment"># 52x256</span></span><br><span class="line">        self.conv12 = self.conv_layer(bottom=self.res3, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">128</span>, name=<span class="string">'conv_12'</span>)             <span class="comment"># 52x128</span></span><br><span class="line">        self.conv13 = self.conv_layer(bottom=self.conv12, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_13'</span>)             <span class="comment"># 52x256</span></span><br><span class="line">        self.res4 = self.conv13 + self.res3                                         <span class="comment"># 52x256</span></span><br><span class="line">        self.conv14 = self.conv_layer(bottom=self.res4, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">128</span>, name=<span class="string">'conv_14'</span>)             <span class="comment"># 52x128</span></span><br><span class="line">        self.conv15 = self.conv_layer(bottom=self.conv14, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_15'</span>)             <span class="comment"># 52x256</span></span><br><span class="line">        self.res5 = self.conv15 + self.res4                                         <span class="comment"># 52x256</span></span><br><span class="line">        self.conv16 = self.conv_layer(bottom=self.res5, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">128</span>, name=<span class="string">'conv_16'</span>)             <span class="comment"># 52x128</span></span><br><span class="line">        self.conv17 = self.conv_layer(bottom=self.conv16, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_17'</span>)             <span class="comment"># 52x256</span></span><br><span class="line">        self.res6 = self.conv17 + self.res5                                         <span class="comment"># 52x256</span></span><br><span class="line">        self.conv18 = self.conv_layer(bottom=self.res6, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">128</span>, name=<span class="string">'conv_18'</span>)             <span class="comment"># 52x128</span></span><br><span class="line">        self.conv19 = self.conv_layer(bottom=self.conv18, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_19'</span>)             <span class="comment"># 52x256</span></span><br><span class="line">        self.res7 = self.conv19 + self.res6                                         <span class="comment"># 52x256</span></span><br><span class="line">        self.conv20 = self.conv_layer(bottom=self.res7, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">128</span>, name=<span class="string">'conv_20'</span>)             <span class="comment"># 52x128</span></span><br><span class="line">        self.conv21 = self.conv_layer(bottom=self.conv20, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_21'</span>)             <span class="comment"># 52x256</span></span><br><span class="line">        self.res8 = self.conv21 + self.res7                                         <span class="comment"># 52x256</span></span><br><span class="line">        self.conv22 = self.conv_layer(bottom=self.res8, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">128</span>, name=<span class="string">'conv_22'</span>)             <span class="comment"># 52x128</span></span><br><span class="line">        self.conv23 = self.conv_layer(bottom=self.conv22, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_23'</span>)             <span class="comment"># 52x256</span></span><br><span class="line">        self.res9 = self.conv23 + self.res8                                         <span class="comment"># 52x256</span></span><br><span class="line">        self.conv24 = self.conv_layer(bottom=self.res9, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">128</span>, name=<span class="string">'conv_24'</span>)             <span class="comment"># 52x128</span></span><br><span class="line">        self.conv25 = self.conv_layer(bottom=self.conv24, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">128</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_25'</span>)             <span class="comment"># 52x256</span></span><br><span class="line">        self.res10 = self.conv25 + self.res9                                        <span class="comment"># 52x256 一个输出的特征尺度</span></span><br><span class="line">        self.conv26 = self.conv_layer(bottom=self.res10, size=<span class="number">3</span>, stride=<span class="number">2</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_26'</span>)             <span class="comment"># 26x512</span></span><br><span class="line">        self.conv27 = self.conv_layer(bottom=self.conv26, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_27'</span>)             <span class="comment"># 26x256</span></span><br><span class="line">        self.conv28 = self.conv_layer(bottom=self.conv27, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_28'</span>)             <span class="comment"># 26x512</span></span><br><span class="line">        self.res11 = self.conv28 + self.conv26                                      <span class="comment"># 26x512</span></span><br><span class="line">        self.conv29 = self.conv_layer(bottom=self.res11, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_29'</span>)             <span class="comment"># 26x256</span></span><br><span class="line">        self.conv30 = self.conv_layer(bottom=self.conv29, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_30'</span>)             <span class="comment"># 26x512</span></span><br><span class="line">        self.res12 = self.conv30 + self.res11                                       <span class="comment"># 26x512</span></span><br><span class="line">        self.conv31 = self.conv_layer(bottom=self.res12, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_31'</span>)             <span class="comment"># 26x256</span></span><br><span class="line">        self.conv32 = self.conv_layer(bottom=self.conv31, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_32'</span>)             <span class="comment"># 26x512</span></span><br><span class="line">        self.res13 = self.conv32 + self.res12                                       <span class="comment"># 26x512</span></span><br><span class="line">        self.conv33 = self.conv_layer(bottom=self.res13, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_33'</span>)             <span class="comment"># 26x256</span></span><br><span class="line">        self.conv34 = self.conv_layer(bottom=self.conv33, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_34'</span>)             <span class="comment"># 26x512</span></span><br><span class="line">        self.res14 = self.conv34 + self.res13                                       <span class="comment"># 26x512</span></span><br><span class="line">        self.conv35 = self.conv_layer(bottom=self.res14, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_35'</span>)             <span class="comment"># 26x256</span></span><br><span class="line">        self.conv36 = self.conv_layer(bottom=self.conv35, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_36'</span>)             <span class="comment"># 26x512</span></span><br><span class="line">        self.res15 = self.conv36 + self.res14                                       <span class="comment"># 26x512</span></span><br><span class="line">        self.conv37 = self.conv_layer(bottom=self.res15, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_37'</span>)             <span class="comment"># 26x256</span></span><br><span class="line">        self.conv38 = self.conv_layer(bottom=self.conv37, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_38'</span>)             <span class="comment"># 26x512</span></span><br><span class="line">        self.res16 = self.conv38 + self.res15                                       <span class="comment"># 26x512</span></span><br><span class="line">        self.conv39 = self.conv_layer(bottom=self.res16, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_39'</span>)             <span class="comment"># 26x256</span></span><br><span class="line">        self.conv40 = self.conv_layer(bottom=self.conv39, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_40'</span>)             <span class="comment"># 26x512</span></span><br><span class="line">        self.res17 = self.conv40 + self.res16                                       <span class="comment"># 26x512</span></span><br><span class="line">        self.conv41 = self.conv_layer(bottom=self.res17, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">256</span>, name=<span class="string">'conv_41'</span>)             <span class="comment"># 26x256</span></span><br><span class="line">        self.conv42 = self.conv_layer(bottom=self.conv41, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">256</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_42'</span>)             <span class="comment"># 26x512</span></span><br><span class="line">        self.res18 = self.conv42 + self.res17                                       <span class="comment"># 26x512，一个输出的特征尺度</span></span><br><span class="line">        self.conv43 = self.conv_layer(bottom=self.res18, size=<span class="number">3</span>, stride=<span class="number">2</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">1024</span>, name=<span class="string">'conv_43'</span>)            <span class="comment"># 13x1024</span></span><br><span class="line">        self.conv44 = self.conv_layer(bottom=self.conv43, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">1024</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_44'</span>)             <span class="comment"># 13x512</span></span><br><span class="line">        self.conv45 = self.conv_layer(bottom=self.conv44, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">1024</span>, name=<span class="string">'conv_45'</span>)            <span class="comment"># 13x1024</span></span><br><span class="line">        self.res19 = self.conv45 + self.conv43                                      <span class="comment"># 13x1024</span></span><br><span class="line">        self.conv46 = self.conv_layer(bottom=self.res19, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">1024</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_46'</span>)             <span class="comment"># 13x512</span></span><br><span class="line">        self.conv47 = self.conv_layer(bottom=self.conv44, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">1024</span>, name=<span class="string">'conv_47'</span>)            <span class="comment"># 13x1024</span></span><br><span class="line">        self.res20 = self.conv47 + self.res19                                       <span class="comment"># 13x1024</span></span><br><span class="line">        self.conv48 = self.conv_layer(bottom=self.res20, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">1024</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_48'</span>)             <span class="comment"># 13x512</span></span><br><span class="line">        self.conv49 = self.conv_layer(bottom=self.conv48, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">1024</span>, name=<span class="string">'conv_49'</span>)            <span class="comment"># 13x1024</span></span><br><span class="line">        self.res21 = self.conv49 + self.res20                                       <span class="comment"># 13x1024</span></span><br><span class="line">        self.conv50 = self.conv_layer(bottom=self.res21, size=<span class="number">1</span>, stride=<span class="number">1</span>, in_channels=<span class="number">1024</span>,</span><br><span class="line">                                      out_channels=<span class="number">512</span>, name=<span class="string">'conv_50'</span>)             <span class="comment"># 13x512</span></span><br><span class="line">        self.conv51 = self.conv_layer(bottom=self.conv50, size=<span class="number">3</span>, stride=<span class="number">1</span>, in_channels=<span class="number">512</span>,</span><br><span class="line">                                      out_channels=<span class="number">1024</span>, name=<span class="string">'conv_51'</span>)            <span class="comment"># 13x1024</span></span><br><span class="line">        self.res23 = self.conv51 + self.res21                                       <span class="comment"># 13x1024</span></span><br><span class="line">        <span class="keyword">return</span> self.res23  <span class="comment"># 最后输出特征</span></span><br></pre></td></tr></table></figure>
 <p>同样采用k-means聚类的到anchor box的尺寸。选取了9种，3中不同的scale：(10×13); (16×30); (33×23); (30×61); (62×45); (59×119); (116 × 90); (156 × 198); (373 × 326).</p>
 <h3 id="Feature-Extractor"><a href="#Feature-Extractor" class="headerlink" title="Feature Extractor"></a>Feature Extractor</h3><p>YOLO3的新的更深的网络，Darknet-53，实现细节可参见上面的代码</p>
-<div align="center"><br>    <img src="/img/yolo/yolo3.3.png"><br></div>
+<div align="center">
+    <img src="/img/yolo/yolo3.3.png">
+</div>
 ]]></content>
     
     <summary type="html">
@@ -1468,7 +1520,7 @@ python setup.py install
 </code></pre><p>在此之前常出现的一个编译问题是cython版本问题，所以在执行上一步之前首先：</p>
 <pre><code>pip install cython==0.25.2
 </code></pre><h2 id="解决常出现的链接失败的问题"><a href="#解决常出现的链接失败的问题" class="headerlink" title="解决常出现的链接失败的问题"></a>解决常出现的链接失败的问题</h2><p>由于我的默认python为anaconda3的python，可能是anaconda3自带的链接库的问题，所以出现了如下错误：</p>
-<pre><code>./lib/libgomp.so.1: version `GOMP_4.0&apos; not found (required by /home/lkj/anaconda3/lib/python3.5/site-packages/xgboost-0.6-py3.5.egg/xgboost/libxgboost.so) 
+<pre><code>./lib/libgomp.so.1: version `GOMP_4.0&#39; not found (required by /home/lkj/anaconda3/lib/python3.5/site-packages/xgboost-0.6-py3.5.egg/xgboost/libxgboost.so) 
 </code></pre><p>上面的意思是anaconda3/lib/libgomp.so.1中没有‘GOMP_4.0’，这个可以使用strings命令查看libgomp.so.1这个文件，显示并无4.0版本，因此寻找其他路径的链接库替代，用locate命令搜索系统中所有的libgomp.so.1，得到：<br><img src="/img/pcl/figure1.png" alt=""><br>然后用strings查看这些文件信息，</p>
 <pre><code>/usr/lib/x86_64-linux-gnu/libgomp.so.1 |grep GOMP
 </code></pre><p>发现x86_64-linux-gnu/libgomp.so.1包含GOMP_4.0<br><img src="/img/pcl/figure2.png" alt=""><br>因此可以删掉原有的libgomp.so.1，重新做一个新的链接。</p>
@@ -1569,37 +1621,37 @@ python setup.py install
 <p>其实总体思路还是很简单的，与之前的爬虫不同，这次需要用户登陆，所以是POST方法，并将用户名和密码以data参数代入，登陆之后服务器会返回cookie来标识用户。因为http是一种无状态协议，用户首次访问web站点的时候，服务器对用户一无所知。而Cookie就像是服务器给每个来访问的用户贴的标签，而这些标签就是对来访问的客户端的独有的身份的一个标识，这里就如同每个人的身份证一样，带着你的个人信息。而当一个客户端第一次连接过来的时候，服务端就会给他打一个标签，这里就如同给你发了一个身份证，所以之后的访问服务器再带上这个cookie就标识了该账户，具体流程网上找到一张很好的图可以解释。</p>
 <p><img src="/img/nhd/3.png" alt=""></p>
 <p>这样的话，只需要第一次输入密码，后面浏览器再次访问只要带上这个服务器返回的cookie，服务器就可以知道是该账户在访问，所以python程序也模拟该过程。利用request库中的session对象来创建类似于图中的过程，session对象会保存访问过程中的cookie用于之后对服务器的继续访问。</p>
-<pre><code>url = &apos;http://www.nexushd.org/takelogin.php&apos;  #登陆界面
+<pre><code>url = &#39;http://www.nexushd.org/takelogin.php&#39;  #登陆界面
 a = session.post(url=url, cookies=cookies, headers=headers, data=data)
 #这里的cookie是浏览器首次访问的使用的cookie，之后服务器
 #设置的cookie会保存在session对象中
 time.sleep(2)
 
-url2 = &apos;http://www.nexushd.org/signin.php&apos;  #签到界面
+url2 = &#39;http://www.nexushd.org/signin.php&#39;  #签到界面
 b = session.get(url=url2, headers=headers)
 time.sleep(2)
 
-url3 = &apos;http://www.nexushd.org/signin.php?&apos;
-qiandao = {&apos;action&apos;:&apos;post&apos;,&apos;content&apos;:&apos;lalala2333&apos;} #签到信息随便填，lalala2333
+url3 = &#39;http://www.nexushd.org/signin.php?&#39;
+qiandao = {&#39;action&#39;:&#39;post&#39;,&#39;content&#39;:&#39;lalala2333&#39;} #签到信息随便填，lalala2333
 r = session.post(url=url3, headers=headers, data=qiandao)
 </code></pre><p>而后就是一个判断是否登陆成功的程序，依然使用BeautifulSoup来解析，得到已签到之后退出循环，并将日志信息记录到日志文件。</p>
 <pre><code>r = session.post(url=url3, headers=headers, data=qiandao)
-r = BeautifulSoup(r.content,&apos;lxml&apos;)
-message1 = r.find_all(&apos;a&apos;,{&apos;href&apos;:&quot;signin.php&quot;})[0].contents[0]
-message2 = r.find_all(&apos;h2&apos;)[0].getText()
-if message2 == &apos;签到成功&apos;:
-    f = codecs.open(&apos;logging.txt&apos;, &apos;a&apos;, encoding=&apos;utf-8&apos;)
-    str = time.strftime(&apos;%Y-%m-%d  %H:%M:%S&apos;, time.localtime(time.time())) + &apos;-----签到成功&apos; + &apos;\n&apos;
+r = BeautifulSoup(r.content,&#39;lxml&#39;)
+message1 = r.find_all(&#39;a&#39;,{&#39;href&#39;:&quot;signin.php&quot;})[0].contents[0]
+message2 = r.find_all(&#39;h2&#39;)[0].getText()
+if message2 == &#39;签到成功&#39;:
+    f = codecs.open(&#39;logging.txt&#39;, &#39;a&#39;, encoding=&#39;utf-8&#39;)
+    str = time.strftime(&#39;%Y-%m-%d  %H:%M:%S&#39;, time.localtime(time.time())) + &#39;-----签到成功&#39; + &#39;\n&#39;
     f.write(str)  # 记录日志信息到日志文件
     f.close()
-    print(r.find_all(&apos;span&apos;, {&apos;class&apos;: &apos;medium&apos;})[0].getText())
-    print(r.find_all(&apos;td&apos;, {&apos;class&apos;: &apos;text&apos;})[-1].getText().split(&apos;。&apos;)[0])
+    print(r.find_all(&#39;span&#39;, {&#39;class&#39;: &#39;medium&#39;})[0].getText())
+    print(r.find_all(&#39;td&#39;, {&#39;class&#39;: &#39;text&#39;})[-1].getText().split(&#39;。&#39;)[0])
     break
-elif message1 == &apos;已签到&apos;: #如果已经签到
-    print(&apos;已经签到过了哦&apos;)
+elif message1 == &#39;已签到&#39;: #如果已经签到
+    print(&#39;已经签到过了哦&#39;)
     break
 if maxtry &lt; 30:
-    print(&apos;签到失败，第&apos;+str(maxtry+1)+&apos;次重试&apos;)
+    print(&#39;签到失败，第&#39;+str(maxtry+1)+&#39;次重试&#39;)
     maxtry = maxtry+1
     time.sleep(5)
 else:
@@ -1607,28 +1659,28 @@ else:
     break
 </code></pre><p>为了能够开机自动运行程序，将该程序添加至windows启动运行。代码中读取在配置文件中的账户信息，并且通过读取上一次签到成功时间来判断是否成功签到过。</p>
 <pre><code>maxtry=0  #记录重试次数
-f = codecs.open(&apos;profile.txt&apos;, &apos;r&apos;, encoding=&apos;utf-8&apos;)  #读取配置文件，包含账户及密码
+f = codecs.open(&#39;profile.txt&#39;, &#39;r&#39;, encoding=&#39;utf-8&#39;)  #读取配置文件，包含账户及密码
 line=f.readline()
 f.close()
 
 username = line.split()[0] #你的用户名
 password = line.split()[1]  #你的密码
-data = {&apos;username&apos;: username, &apos;password&apos;:password}
+data = {&#39;username&#39;: username, &#39;password&#39;:password}
 
 flag = True
 day_now = time.localtime(time.time()).tm_mday
-f = codecs.open(&apos;logging.txt&apos;, &apos;r&apos;, encoding=&apos;utf-8&apos;)
+f = codecs.open(&#39;logging.txt&#39;, &#39;r&#39;, encoding=&#39;utf-8&#39;)
 lines = f.readlines()
 f.close()
 #######更换账户登陆时，最好清除以前账户的日志信息
 try:  #如果第一次使用可能没有签到记录
-    day_log = int(lines[-1].split()[0].split(&apos;-&apos;)[-1])
+    day_log = int(lines[-1].split()[0].split(&#39;-&#39;)[-1])
 except:
     day_log=33
 
-day_log = int(lines[-1].split()[0].split(&apos;-&apos;)[-1])
+day_log = int(lines[-1].split()[0].split(&#39;-&#39;)[-1])
 if day_now == day_log:
-    print(username+&apos;今天签到过了哦&apos;)
+    print(username+&#39;今天签到过了哦&#39;)
     flag = False
 </code></pre><p>将配置文件profile.txt和日志文件logging.txt以及代码qiandao.py放入windows的启动运行的文件夹，这个文件夹可以通过在cmd窗口下输入</p>
 <pre><code>shell:Startup
@@ -1693,56 +1745,56 @@ pause
 import pandas as pd
 import numpy as np
 import warnings
-warnings.filterwarnings(&apos;ignore&apos;)
+warnings.filterwarnings(&#39;ignore&#39;)
 import matplotlib.pyplot as plt
 import seaborn as sns
-df = pd.read_csv(&apos;movies_metadata.csv&apos;)
-df[&apos;vote_average&apos;] = df[&apos;vote_average&apos;].replace(0, np.nan)
-sns.distplot(df[&apos;vote_average&apos;].fillna(df[&apos;vote_average&apos;].median()))
+df = pd.read_csv(&#39;movies_metadata.csv&#39;)
+df[&#39;vote_average&#39;] = df[&#39;vote_average&#39;].replace(0, np.nan)
+sns.distplot(df[&#39;vote_average&#39;].fillna(df[&#39;vote_average&#39;].median()))
 </code></pre><p><img src="/img/movie/1.png" alt=""></p>
-<pre><code>df[&apos;year&apos;] = pd.to_datetime(df[&apos;release_date&apos;], errors=&apos;coerce&apos;).apply(lambda x: str(x).split(&apos;-&apos;)[0] if x != np.nan else np.nan)
-year_gen = pd.DataFrame(df[&apos;year&apos;].value_counts()).reset_index()
-year_gen.columns = [&apos;year&apos;, &apos;counts&apos;]
+<pre><code>df[&#39;year&#39;] = pd.to_datetime(df[&#39;release_date&#39;], errors=&#39;coerce&#39;).apply(lambda x: str(x).split(&#39;-&#39;)[0] if x != np.nan else np.nan)
+year_gen = pd.DataFrame(df[&#39;year&#39;].value_counts()).reset_index()
+year_gen.columns = [&#39;year&#39;, &#39;counts&#39;]
 year_gen.drop([87,135,],inplace=True)
-year_gen[&apos;year&apos;]=year_gen[&apos;year&apos;].astype(&apos;int&apos;)
+year_gen[&#39;year&#39;]=year_gen[&#39;year&#39;].astype(&#39;int&#39;)
 plt.plot(year_gen.year,year_gen.counts)
 </code></pre><p><img src="/img/movie/2.png" alt=""></p>
 <p>从上图中的电影分布可以看出，从1880年左右以来，电影的数量基本上是逐年增长的趋势，特别是进入21实际以来，增长速度很快（出现一段下降是因为2017年的完整数据收集不完整）。<br>下面再分析数据集中的电影的区域分布，利用一个比较强的可视化工具plotly，画出电影数量的区域分布，因为美国的电影产出相对其他国家高出太多，所以画图是先忽略了美国，这样画其他国家的数量之间的比较才会更加明显。</p>
 <pre><code>data = [ dict(
-        type = &apos;choropleth&apos;,
-        locations = con_df[&apos;country&apos;],
-        locationmode = &apos;country names&apos;,
-        z = con_df[&apos;num_movies&apos;],
-        text = con_df[&apos;country&apos;],
-        colorscale = [[0,&apos;rgb(255, 255, 255)&apos;],[1,&apos;rgb(255, 0, 0)&apos;]],
+        type = &#39;choropleth&#39;,
+        locations = con_df[&#39;country&#39;],
+        locationmode = &#39;country names&#39;,
+        z = con_df[&#39;num_movies&#39;],
+        text = con_df[&#39;country&#39;],
+        colorscale = [[0,&#39;rgb(255, 255, 255)&#39;],[1,&#39;rgb(255, 0, 0)&#39;]],
         autocolorscale = False,
         reversescale = False,
         marker = dict(
             line = dict (
-                color = &apos;rgb(180,180,180)&apos;,
+                color = &#39;rgb(180,180,180)&#39;,
                 width = 0.5
             ) ),
         colorbar = dict(
             autotick = False,
-            tickprefix = &apos;&apos;,
-            title = &apos;数量图例&apos;),
+            tickprefix = &#39;&#39;,
+            title = &#39;数量图例&#39;),
       ) ]
 
 layout = dict(
-    title = &apos;电影数据集中电影数量分布（除美国外）&apos;,
+    title = &#39;电影数据集中电影数量分布（除美国外）&#39;,
     geo = dict(
         showframe = False,
         showcoastlines = False,
         projection = dict(
-            type = &apos;Mercator&apos;
+            type = &#39;Mercator&#39;
         )
     )
 )
 
 fig = dict( data=data, layout=layout )
-py.iplot( fig, validate=False, filename=&apos;d3-world-map&apos; )
+py.iplot( fig, validate=False, filename=&#39;d3-world-map&#39; )
 plt.figure(figsize=(12,5))
-sns.barplot(x=&apos;country&apos;, y=&apos;num_movies&apos;, data=country)
+sns.barplot(x=&#39;country&#39;, y=&#39;num_movies&#39;, data=country)
 plt.show()
 ####除去美国外，英国。法国、德国、意大利，亚洲的日本和印度，北美的巴西
 </code></pre><p><img src="/img/movie/3.png" alt=""></p>
@@ -1760,30 +1812,30 @@ plt.show()
 <p>可以看出，电影数据集中戏剧、喜剧、恐怖片、爱情片等数量较多，依次数量排名.针对数量超过3000的电影，我们也采取类似的方式计算了TOP250，部分电影类型的TOP10在下图中给出。</p>
 <p><img src="/img/movie/8.png" alt=""></p>
 <h3 id="基于内容的推荐算法"><a href="#基于内容的推荐算法" class="headerlink" title="基于内容的推荐算法"></a>基于内容的推荐算法</h3><p>基于投票排名的推荐算法给每个用户都是一样推荐按照TOP排名得出的电影，而不会根据特定的观众喜欢的电影去推荐相似的电影。为了能够给用户推荐相似的电影，我们首先需要对电影之间的相似性进行衡量，主要应用到电影的描述数据来完成基于内容的推荐，主要的实现过程包括：<br>•    对电影的关键词、描述信息、标语、主角、导演信息的提取<br>•    对上述信息进行词干提取<br>•    对上述信息进行特征抽取，转换成词向量<br>•    考虑评分情况，结合相似度完成推荐<br>首先我们对于电影的相关描述信息进行一个大致分析，制作了词云对所有电影的情况概览。</p>
-<pre><code>df[&apos;title&apos;] = df[&apos;title&apos;].astype(&apos;str&apos;)
-df[&apos;overview&apos;] = df[&apos;overview&apos;].astype(&apos;str&apos;)
-title_corpus = &apos; &apos;.join(df[&apos;title&apos;])
-overview_corpus = &apos; &apos;.join(df[&apos;overview&apos;])
+<pre><code>df[&#39;title&#39;] = df[&#39;title&#39;].astype(&#39;str&#39;)
+df[&#39;overview&#39;] = df[&#39;overview&#39;].astype(&#39;str&#39;)
+title_corpus = &#39; &#39;.join(df[&#39;title&#39;])
+overview_corpus = &#39; &#39;.join(df[&#39;overview&#39;])
 from wordcloud import WordCloud, STOPWORDS
-title_wordcloud = WordCloud(stopwords=STOPWORDS, background_color=&apos;white&apos;, height=2000, width=4000).generate(title_corpus)
+title_wordcloud = WordCloud(stopwords=STOPWORDS, background_color=&#39;white&#39;, height=2000, width=4000).generate(title_corpus)
 plt.figure(figsize=(16,8))
 plt.imshow(title_wordcloud)
-plt.axis(&apos;off&apos;)
+plt.axis(&#39;off&#39;)
 plt.show()
 </code></pre><p><img src="/img/movie/9.png" alt=""></p>
-<pre><code>overview_wordcloud = WordCloud(stopwords=STOPWORDS, background_color=&apos;white&apos;, height=2000, width=4000).generate(overview_corpus)
+<pre><code>overview_wordcloud = WordCloud(stopwords=STOPWORDS, background_color=&#39;white&#39;, height=2000, width=4000).generate(overview_corpus)
 plt.figure(figsize=(16,8))
 plt.imshow(overview_wordcloud)
-plt.axis(&apos;off&apos;)
+plt.axis(&#39;off&#39;)
 plt.show()
 </code></pre><p><img src="/img/movie/10.png" alt=""></p>
 <p>上面两幅图分别是电影的标题和电影简述画出的词云，可以看到电影标题中Love、Girl、Man、Life，Love作为最高频的词，毕竟大多数电影都有爱情这条线。在电影的简述中，find、life、one是最高频的词，可以给我们反映大多数电影的主题。</p>
 <p>在获得电影的关键词、描述信息、标语、主角、导演信息之后，我们需要对这些信息进行词干提取。在语言形态学和信息检索里，词干提取是去除词缀得到词根的过程，即得到单词最一般的写法。计算机科学领域有很多词干提取的相应算法，我们使用了一个面向英语的词干提取器stemming，使用Python的NLTK库的stemming算法，实现的效果为要识别字符串“cats”、“catlike”和“catty”提取出词根“cat”；“stemmer”、“stemming”和“stemmed”提取出词根“stem”。</p>
 <pre><code>from nltk.stem.snowball import SnowballStemmer
-stemmer = SnowballStemmer(&apos;english&apos;)  #英语的词干提取
+stemmer = SnowballStemmer(&#39;english&#39;)  #英语的词干提取
 </code></pre><p>下一步需要将提取词干后的文档进行向量化处理，采用的是sklearn中的Countvectorizer。根据语料库中的词频排序从高到低进行选择，词汇表的最大含量由vocabsize超参数来指定，超参数minDF，则指定词汇表中的词语至少要在多少个不同文档中出现次数，产生文档关于词语的稀疏表示，在fitting过程中，countvectorizer将根据语料库中的词频排序选出前vocabsize个词，输出词向量。</p>
-<pre><code>count = CountVectorizer(analyzer=&apos;word&apos;,ngram_range=(1, 2),min_df=0, stop_words=&apos;english&apos;)
-count_matrix = count.fit_transform(smd[&apos;soup&apos;])   #基于词向量统计的矩阵
+<pre><code>count = CountVectorizer(analyzer=&#39;word&#39;,ngram_range=(1, 2),min_df=0, stop_words=&#39;english&#39;)
+count_matrix = count.fit_transform(smd[&#39;soup&#39;])   #基于词向量统计的矩阵
 </code></pre><p>当然，基于内容的推荐算法还需要考虑到电影的评分，不然仅仅根据电影之间的相似度，很有可能就会出现给观众推荐很相似的电影，但却是“烂片”的这种情况，基于这种考虑，以电影《The Godfather》（教父）以及《The Lord of the Rings: The Return of the King》（指环王：王者归来）为例，推荐的相应10部电影结果如下图所示。</p>
 <p><img src="/img/movie/11.png" alt=""></p>
 <p>可以看到，都推荐了同类型的电影，比如针对教父推荐了一些剧情、犯罪电影，而针对指环王推荐了一些动作、奇幻类的电影，而且这两部电影都有其他续集，比如针对《教父1》推荐了其续集《教父2》及《教父3》也都相应地推荐了，推荐的电影也都是高分电影.</p>
@@ -1801,19 +1853,19 @@ count_matrix = count.fit_transform(smd[&apos;soup&apos;])   #基于词向量统�
 import numpy as np
 from surprise import Reader, Dataset, SVD, evaluate
 from collections import defaultdict
-import warnings; warnings.simplefilter(&apos;ignore&apos;)
+import warnings; warnings.simplefilter(&#39;ignore&#39;)
 
 
 reader = Reader()
-ratings = pd.read_csv(&apos;ratings_small.csv&apos;)
+ratings = pd.read_csv(&#39;ratings_small.csv&#39;)
 
 #从DataFrame导入数据
-data = Dataset.load_from_df(ratings[[&apos;userId&apos;, &apos;movieId&apos;, &apos;rating&apos;]], reader)
+data = Dataset.load_from_df(ratings[[&#39;userId&#39;, &#39;movieId&#39;, &#39;rating&#39;]], reader)
 data.split(n_folds=5)
 trainset = data.build_full_trainset()
 #SVD算法
 algo = SVD()
-evaluate(algo, data, measures=[&apos;RMSE&apos;, &apos;MAE&apos;])
+evaluate(algo, data, measures=[&#39;RMSE&#39;, &#39;MAE&#39;])
 
 #训练模型
 algo.train(trainset)
@@ -1823,11 +1875,11 @@ predictions = algo.test(testset)  #预测测试集结果
 
 
 def get_top_n(predictions, n=10):
-    &apos;&apos;&apos;对预测结果中的每个用户，返回n部电影，默认n=10
+    &#39;&#39;&#39;对预测结果中的每个用户，返回n部电影，默认n=10
     返回值一个字典，包括：
     keys 为原始的userId，以及对应的values为一个元组
         [(raw item id, rating estimation), ...].
-    &apos;&apos;&apos;
+    &#39;&#39;&#39;
 
     # 预测结果取出，对应每个userId.
     top_n = defaultdict(list)
@@ -1846,11 +1898,11 @@ for uid, user_ratings in top_n.items():
     rec_result[i,0]=uid
     rec_result[i,1:]=[iid for (iid, _) in user_ratings]
     i=i+1
-rec_result=rec_result.astype(&apos;int&apos;)
+rec_result=rec_result.astype(&#39;int&#39;)
 
 #转变成DataFrame
-rec_result=pd.DataFrame(rec_result,columns=[&apos;userId&apos;,&apos;rec1&apos;,&apos;rec2&apos;,&apos;rec3&apos;,&apos;rec4&apos;,&apos;rec5&apos;,
-                                          &apos;rec6&apos;,&apos;rec7&apos;,&apos;rec8&apos;,&apos;rec9&apos;,&apos;rec10&apos;])
+rec_result=pd.DataFrame(rec_result,columns=[&#39;userId&#39;,&#39;rec1&#39;,&#39;rec2&#39;,&#39;rec3&#39;,&#39;rec4&#39;,&#39;rec5&#39;,
+                                          &#39;rec6&#39;,&#39;rec7&#39;,&#39;rec8&#39;,&#39;rec9&#39;,&#39;rec10&#39;])
 </code></pre><p>算法运行结果：</p>
 <p><img src="/img/movie/15.png" alt=""></p>
 <h2 id="简单的电影点评网站构建"><a href="#简单的电影点评网站构建" class="headerlink" title="简单的电影点评网站构建"></a>简单的电影点评网站构建</h2><p>整体框架</p>
@@ -1859,10 +1911,10 @@ rec_result=pd.DataFrame(rec_result,columns=[&apos;userId&apos;,&apos;rec1&apos;,
 <pre><code>import pymysql
 import pandas as pd
 #连接数据库
-conn = pymysql.connect(host=&apos;10.110.43.140&apos;,port= 3306,user = &apos;###&apos;,passwd=&apos;####&apos;,db=&apos;sys&apos;) #db：库名，用户名和密码这里我打了马赛克了，嘻嘻
+conn = pymysql.connect(host=&#39;10.110.43.140&#39;,port= 3306,user = &#39;###&#39;,passwd=&#39;####&#39;,db=&#39;sys&#39;) #db：库名，用户名和密码这里我打了马赛克了，嘻嘻
 #创建游标
 cur = conn.cursor()
-df=pd.read_sql(&apos;SELECT * FROM db_movies.tb_movies;&apos;,conn)
+df=pd.read_sql(&#39;SELECT * FROM db_movies.tb_movies;&#39;,conn)
 cur.close()
 conn.close()
 </code></pre><p>小伙伴应用Django框架，是一个开放源代码的Web应用框架，由Python写，时间仓促的情况下赶出了一个还是很不错的页面，点赞。</p>
@@ -1900,10 +1952,10 @@ conn.close()
    verbose=0, pre_dispatch=‘2*n_jobs’, error_score=’raise’)
 </code></pre><p>常用参数<br><strong>estimator</strong>：所使用的分类器，如estimator=RandomForestClassifier(min_samples_split=100,min_samples_leaf=20,max_depth=8,max_features=’sqrt’,random_state=10), 并且传入除需要确定最佳的参数之外的其他参数。每一个分类器都需要一个scoring参数，或者score方法。<br><strong>param_grid</strong>：值为字典或者列表，即需要最优化的参数的取值，param_grid =param_test1，param_test1 = {‘n_estimators’:range(10,71,10)}。我用的Xgboost算法，优化的参数集为：</p>
 <pre><code>parameters = {
-    &apos;max_depth&apos;:[4,6],
-    &apos;learning_rate&apos;:[0.1,0.3],
-    &apos;subsample&apos;:[0.8,1.0],
-    &apos;gamma&apos;:[0,3,5]
+    &#39;max_depth&#39;:[4,6],
+    &#39;learning_rate&#39;:[0.1,0.3],
+    &#39;subsample&#39;:[0.8,1.0],
+    &#39;gamma&#39;:[0,3,5]
 }
 </code></pre><p><strong>scoring</strong> :准确度评价标准，默认None,这时需要使用score函数；或者如scoring=’roc_auc’，根据所选模型不同，评价准则不同。字符串（函数名），或是可调用对象，需要其函数签名形如：scorer(estimator, X, y)；如果是None，则使用estimator的误差估计函数。scoring官方给的参数选择为<a href="http://scikit-learn.org/stable/modules/model_evaluation.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/model_evaluation.html</a>，当然也可以自定义，我在比赛中就按照JDD给的评分要求自定义了：</p>
 <pre><code>from sklearn.metrics import fbeta_score,make_scorer
@@ -1921,7 +1973,7 @@ min_child_weight=1,
 gamma=0,
 subsample=0.8,
 colsample_bytree=0.8,
-objective= &apos;binary:logistic&apos;,
+objective= &#39;binary:logistic&#39;,
 scale_pos_weight=1,
 seed=27,
 silent=0
@@ -1930,10 +1982,10 @@ silent=0
 #网格搜索实验
 from sklearn.model_selection import GridSearchCV
 parameters = {
-    &apos;max_depth&apos;:[4,6],
-    &apos;learning_rate&apos;:[0.1,0.3],
-    &apos;subsample&apos;:[0.8,1.0],
-    &apos;gamma&apos;:[0,3,5]
+    &#39;max_depth&#39;:[4,6],
+    &#39;learning_rate&#39;:[0.1,0.3],
+    &#39;subsample&#39;:[0.8,1.0],
+    &#39;gamma&#39;:[0,3,5]
 }
 gSearch  =GridSearchCV(xgbFier,parameters,n_jobs=-1,scoring=JdScore,cv=5)
 
@@ -1941,14 +1993,16 @@ import time
 start =time.time()
 gSearch.fit(X_train,Y_train)
 runtime=time.time()-start
-print(&apos;run time:&apos;,runtime)
+print(&#39;run time:&#39;,runtime)
 print(gSearch.best_params_,gSearch.best_score_)
 </code></pre><p>输出结果为：</p>
 <pre><code>run time: 4109.730866909027
-{&apos;gamma&apos;: 3, &apos;learning_rate&apos;: 0.1, &apos;max_depth&apos;: 6, &apos;subsample&apos;: 0.8} 0.738112481672
+{&#39;gamma&#39;: 3, &#39;learning_rate&#39;: 0.1, &#39;max_depth&#39;: 6, &#39;subsample&#39;: 0.8} 0.738112481672
 </code></pre><p>这样就找出了较优的参数，唉，现在只能得到0.78的线下score，还要继续修改啊。</p>
 <h2 id="Pipeline机制"><a href="#Pipeline机制" class="headerlink" title="Pipeline机制"></a>Pipeline机制</h2><p>顾名思义就是管道机制，就是将机器学习整个流程流式化封装和管理，因为参数集在很多情况下对于测试集和训练集都是一样处理，他们有很多共同的步骤，这个机制就是便于这些步骤的共同使用。网上找到的一个很好解释的图如下，模型训练和预测过程中数据标准化、PCA降维之类的处理都可以通用，而且训练和预测用的是同一算法。</p>
-<center> <br><br><img width="500" height="400" src="/img/pipeline/1.png"> <br><br></center>
+<center> <br>
+<img width="500" height="400" src="/img/pipeline/1.png"> <br>
+</center>
 
 ]]></content>
     
