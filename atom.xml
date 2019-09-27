@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-09-27T03:54:01.097Z</updated>
+  <updated>2019-09-27T04:54:15.360Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2019/09/26/RepPoints%EF%BC%9A%E7%94%A8%E4%BB%A3%E8%A1%A8%E6%80%A7%E7%82%B9%E9%9B%86%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
     <id>http://yoursite.com/2019/09/26/RepPoints：用代表性点集进行目标检测/</id>
     <published>2019-09-26T14:09:30.000Z</published>
-    <updated>2019-09-27T03:54:01.097Z</updated>
+    <updated>2019-09-27T04:54:15.360Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="https://arxiv.org/abs/1904.11490" target="_blank" rel="external">RepPoints</a>提出了用代表点进行更细粒度的定位和更方便的分类，并且在这个基础上，实现了anchior-free方法的multi-stage级联，达到了和anchor-based方法相媲美的精度。</p>
 <a id="more"></a>
