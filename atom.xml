@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-10-08T12:06:51.025Z</updated>
+  <updated>2019-10-08T12:12:41.231Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2019/10/08/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%80%BB%E7%BB%93/"/>
     <id>http://yoursite.com/2019/10/08/小目标检测总结/</id>
     <published>2019-10-08T11:11:40.000Z</published>
-    <updated>2019-10-08T12:06:51.025Z</updated>
+    <updated>2019-10-08T12:12:41.231Z</updated>
     
     <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>目标检测最常见的faster rcnn以及yolo在大、中尺寸的目标上能取得不错的效果，但是在小目标上性能不太好，这篇文章针对小目标检测问题的方法进行了归纳总结。</p>
 <a id="more"></a>
@@ -49,6 +49,8 @@
 <li>引入dilated卷积层增加网络高层的感受野，这是因为第一个改进点引起的感受野减小。</li>
 <li>减小网络高层的宽度，减少因增大分辨率带来的计算量。</li>
 </ol>
+<h2 id="HRNet"><a href="#HRNet" class="headerlink" title="HRNet"></a>HRNet</h2><p>HRNet通过加入高分辨率特征图和低分辨率特征图的连接，在特征提取的同时保持高分辨率表示，可以有益于小目标检测。</p>
+<p><a href="https://github.com/HRNet/HRNet-Object-Detection/blob/master/images/hrnetv2p.png" target="_blank" rel="external"><img src="/img/小目标检测总结/hrnetv2p.png" alt="img"></a></p>
 ]]></content>
     
     <summary type="html">

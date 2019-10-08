@@ -111,7 +111,8 @@
 <meta property="og:image" content="http://yoursite.com/img/小目标检测总结/1570535852438.png">
 <meta property="og:image" content="http://yoursite.com/img/小目标检测总结/1570535491620.png">
 <meta property="og:image" content="http://yoursite.com/img/小目标检测总结/1570535682913.png">
-<meta property="og:updated_time" content="2019-10-08T12:06:51.025Z">
+<meta property="og:image" content="http://yoursite.com/img/小目标检测总结/hrnetv2p.png">
+<meta property="og:updated_time" content="2019-10-08T12:12:41.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小目标检测总结">
 <meta name="twitter:description" content="目标检测最常见的faster rcnn以及yolo在大、中尺寸的目标上能取得不错的效果，但是在小目标上性能不太好，这篇文章针对小目标检测问题的方法进行了归纳总结。">
@@ -369,7 +370,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  636
+                  685
                 </span>
               
 
@@ -421,6 +422,8 @@
 <li>引入dilated卷积层增加网络高层的感受野，这是因为第一个改进点引起的感受野减小。</li>
 <li>减小网络高层的宽度，减少因增大分辨率带来的计算量。</li>
 </ol>
+<h2 id="HRNet"><a href="#HRNet" class="headerlink" title="HRNet"></a>HRNet</h2><p>HRNet通过加入高分辨率特征图和低分辨率特征图的连接，在特征提取的同时保持高分辨率表示，可以有益于小目标检测。</p>
+<p><a href="https://github.com/HRNet/HRNet-Object-Detection/blob/master/images/hrnetv2p.png" target="_blank" rel="external"><img src="/img/小目标检测总结/hrnetv2p.png" alt="img"></a></p>
 
       
     </div>
@@ -668,7 +671,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FPN"><span class="nav-number">1.</span> <span class="nav-text">FPN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SNIPER"><span class="nav-number">2.</span> <span class="nav-text">SNIPER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YOLT"><span class="nav-number">3.</span> <span class="nav-text">YOLT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Augmentation"><span class="nav-number">4.</span> <span class="nav-text">Data Augmentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proposal-区域进行超分辨率"><span class="nav-number">5.</span> <span class="nav-text">Proposal 区域进行超分辨率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#contextual-information"><span class="nav-number">6.</span> <span class="nav-text">contextual information</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Anchor设置"><span class="nav-number">7.</span> <span class="nav-text">Anchor设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DetNet"><span class="nav-number">8.</span> <span class="nav-text">DetNet</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FPN"><span class="nav-number">1.</span> <span class="nav-text">FPN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SNIPER"><span class="nav-number">2.</span> <span class="nav-text">SNIPER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YOLT"><span class="nav-number">3.</span> <span class="nav-text">YOLT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Augmentation"><span class="nav-number">4.</span> <span class="nav-text">Data Augmentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proposal-区域进行超分辨率"><span class="nav-number">5.</span> <span class="nav-text">Proposal 区域进行超分辨率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#contextual-information"><span class="nav-number">6.</span> <span class="nav-text">contextual information</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Anchor设置"><span class="nav-number">7.</span> <span class="nav-text">Anchor设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DetNet"><span class="nav-number">8.</span> <span class="nav-text">DetNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HRNet"><span class="nav-number">9.</span> <span class="nav-text">HRNet</span></a></li></ol></div>
             
 
           </div>
