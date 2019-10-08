@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/img/小目标检测总结/1570535852438.png">
 <meta property="og:image" content="http://yoursite.com/img/小目标检测总结/1570535491620.png">
 <meta property="og:image" content="http://yoursite.com/img/小目标检测总结/1570535682913.png">
-<meta property="og:updated_time" content="2019-10-08T12:01:49.001Z">
+<meta property="og:updated_time" content="2019-10-08T12:06:51.025Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小目标检测总结">
 <meta name="twitter:description" content="目标检测最常见的faster rcnn以及yolo在大、中尺寸的目标上能取得不错的效果，但是在小目标上性能不太好，这篇文章针对小目标检测问题的方法进行了归纳总结。">
@@ -369,7 +369,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  632
+                  636
                 </span>
               
 
@@ -408,7 +408,7 @@
 <li>对小目标在图片上复制粘贴多次</li>
 </ol>
 <p><img src="/img/小目标检测总结/1570535461483.png" alt="1570535461483"></p>
-<h2 id="Proposal-区域进行超分辨率"><a href="#Proposal-区域进行超分辨率" class="headerlink" title="Proposal 区域进行超分辨率"></a>Proposal 区域进行超分辨率</h2><p>对proposal区域采用Convolutional-deconvolutional network进行超分辨率。该网络的结构是对称的，每个卷积层都有对应的反卷积层。卷积层用来获取图像的抽象内容，反卷积层用来放大特征尺寸并且恢复图像细节。</p>
+<h2 id="Proposal-区域进行超分辨率"><a href="#Proposal-区域进行超分辨率" class="headerlink" title="Proposal 区域进行超分辨率"></a>Proposal 区域进行超分辨率</h2><p><a href="http://cdn.iiit.ac.in/cdn/cvit.iiit.ac.in/images/ConferencePapers/2017/Improving-SmallObject-Detection.pdf" target="_blank" rel="external">Improving Small Object Detection</a>: 对proposal区域采用Convolutional-deconvolutional network进行超分辨率。该网络的结构是对称的，每个卷积层都有对应的反卷积层。卷积层用来获取图像的抽象内容，反卷积层用来放大特征尺寸并且恢复图像细节。</p>
 <p><img src="/img/小目标检测总结/1570535852438.png" alt="1570535852438"></p>
 <h2 id="contextual-information"><a href="#contextual-information" class="headerlink" title="contextual information"></a>contextual information</h2><p><a href="https://arxiv.org/ftp/arxiv/papers/1709/1709.05054.pdf" target="_blank" rel="external">Feature-Fused SSD: Fast Detection for Small Objects</a>，这篇文章将上下文信息引入，以提高小目标的检测识别准确率。figure1中，海边这个信息对于船的检测识别，人对于瓶子，自行车对于人，这些上下文信息的引入，都可以提高检测结果。</p>
 <p><img src="/img/小目标检测总结/1570535491620.png" alt="1570535491620"></p>
