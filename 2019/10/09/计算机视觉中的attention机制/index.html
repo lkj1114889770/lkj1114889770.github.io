@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CV," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="听歌的小孩" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="所谓attention机制，即是聚焦于某个局部信息的机制，这样比较符合人脑和人眼的感知机制。这篇文章对计算机视觉领域一些常见的attention机制进行了归纳总结。">
+<meta name="keywords" content="CV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机视觉中的attention机制">
+<meta property="og:url" content="http://yoursite.com/2019/10/09/计算机视觉中的attention机制/index.html">
+<meta property="og:site_name" content="听歌的小孩">
+<meta property="og:description" content="所谓attention机制，即是聚焦于某个局部信息的机制，这样比较符合人脑和人眼的感知机制。这篇文章对计算机视觉领域一些常见的attention机制进行了归纳总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/计算机视觉中的attention机制/1570606969643.png">
+<meta property="og:image" content="http://yoursite.com/img/计算机视觉中的attention机制/1570608172366.png">
+<meta property="og:image" content="http://yoursite.com/img/计算机视觉中的attention机制/1570608747406.png">
+<meta property="og:image" content="http://yoursite.com/img/计算机视觉中的attention机制/1570610071889.png">
+<meta property="og:image" content="http://yoursite.com/img/计算机视觉中的attention机制/1570612231627.png">
+<meta property="og:image" content="http://yoursite.com/img/计算机视觉中的attention机制/1570612447568.png">
+<meta property="og:image" content="http://yoursite.com/img/计算机视觉中的attention机制/1570612715221.png">
+<meta property="og:image" content="http://yoursite.com/img/计算机视觉中的attention机制/1570613225250.png">
+<meta property="og:image" content="http://yoursite.com/img/计算机视觉中的attention机制/1570613545669.png">
+<meta property="og:updated_time" content="2019-10-09T10:47:16.947Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机视觉中的attention机制">
+<meta name="twitter:description" content="所谓attention机制，即是聚焦于某个局部信息的机制，这样比较符合人脑和人眼的感知机制。这篇文章对计算机视觉领域一些常见的attention机制进行了归纳总结。">
+<meta name="twitter:image" content="http://yoursite.com/img/计算机视觉中的attention机制/1570606969643.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/09/计算机视觉中的attention机制/"/>
+
+
+
+
+
+  <title>计算机视觉中的attention机制 | 听歌的小孩</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	<a href="https://github.com/lkj1114889770"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">听歌的小孩</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好好学习，好好科研</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/09/计算机视觉中的attention机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="听歌的小孩">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="听歌的小孩">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算机视觉中的attention机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-09T15:26:18+08:00">
+                2019-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>所谓attention机制，即是聚焦于某个局部信息的机制，这样比较符合人脑和人眼的感知机制。这篇文章对计算机视觉领域一些常见的attention机制进行了归纳总结。</p>
+<a id="more"></a>
+<h2 id="SENet"><a href="#SENet" class="headerlink" title="SENet"></a>SENet</h2><p><a href="https://arxiv.org/abs/1709.01507" target="_blank" rel="external">Squeeze-and-Excitation Networks</a>（简称 SENet）是一种通道上的attention机制，通过自学习的方式，显式地建模每个特征图通道的重要程度，从而提升有用特征，并且抑制对当前任务用处不大的特征。</p>
+<p><img src="/img/计算机视觉中的attention机制/1570606969643.png" alt="1570606969643"></p>
+<p>SE block基本结构如上图，$F_{sq}$操作为全局平均池化(global average pool)，这样每个通道最终得到一个实数，即为$1 \times 1 \times C$的向量，经过两次全连接，输出的依然是$1 \times 1 \times C $的向量，然后用这个向量和原先的特征图通道相乘，从而对每个通道重新标定。</p>
+<h2 id="可变形卷积"><a href="#可变形卷积" class="headerlink" title="可变形卷积"></a>可变形卷积</h2><h3 id="Deformable-Convolution-v1"><a href="#Deformable-Convolution-v1" class="headerlink" title="Deformable Convolution v1"></a>Deformable Convolution v1</h3><p>可变形卷积在卷积采样的时候引入了attention，即加入了offset，能够适应不同尺度、长宽比和角度。</p>
+<p><img src="/img/计算机视觉中的attention机制/1570608172366.png" alt="1570608172366"></p>
+<p>可变形卷积加入了额外的卷积层，预测得到$2N$维度且和原始feature map同样大小的offset，然后根据这个offset在feature map上进行采样卷积操作。</p>
+<p><img src="/img/计算机视觉中的attention机制/1570608747406.png" alt="1570608747406"></p>
+<p>deformable RoI pooling 同样也需要offsets参数，不过这里是利用标准的RoI Pooling之后得到的$k \times k$，通过全连接的到$k \times k$的offsets，由于RoI区域大小不同，所以还需要进一步处理：</p>
+<script type="math/tex; mode=display">
+\Delta p_{ij}  = \gamma \Delta \mathop p ^ -_{ij}  \circ (w,h)</script><p>这里，$\gamma$为预定义的系数，取0.1，$\mathop p\limits^ -  _{ij}$为输出的归一化的offset。</p>
+<h3 id="Deformable-Convolution-v2"><a href="#Deformable-Convolution-v2" class="headerlink" title="Deformable Convolution v2"></a>Deformable Convolution v2</h3><p>Deformable Convolution v2进一步增加了可变形卷积的自由度，即不仅仅预测offsets，采样点的权重也同时重新标定，为可调节的可变形卷积：</p>
+<script type="math/tex; mode=display">
+y(p) = \sum\limits_{k = 1}^K {w_k  \cdot x(p + p_k  + \Delta p_k ) \cdot \Delta m_k }</script><p>这里$\Delta m_k$为可学习的权重参数。</p>
+<h2 id="Non-local-Neural-Networks"><a href="#Non-local-Neural-Networks" class="headerlink" title="Non-local Neural Networks"></a>Non-local Neural Networks</h2><p>Non-local 机制在提取某处特征时利用其周围点的信息，其实本质上是一种scaled dot-product attention，这里就先介绍一下scaled dot-product attention，后面会发现这和non-local是一样的。</p>
+<p><img src="/img/计算机视觉中的attention机制/1570610071889.png" alt="1570610071889"></p>
+<p>这里有三个名词query Q, key K, value V，本质上，attention可以描述为一个query到一系列key-value的映射。其计算主要分三步：</p>
+<ul>
+<li>第一步是将query和每个key进行相似度计算得到权重，常用的相似度函数有点积，拼接，感知机等；</li>
+<li>第二步一般是使用一个softmax函数对这些权重进行归一化；</li>
+<li>最后将权重和相应的键值value进行加权求和得到最后的attention。</li>
+</ul>
+<p>scaled dot-product attention是一种self-attention机制：</p>
+<script type="math/tex; mode=display">
+Attention(Q_i ,K,V) = soft\max (v_i  * [v_1^T ,v_2^T ,...,v_n^T ]) * \left[ \begin{array}{l}
+ v_1  \\ 
+ v_2  \\ 
+ ... \\ 
+ v_n  \\ 
+ \end{array} \right] = soft\max (Q_i K^T )V</script><p>在nlp中，这里的$v_i$对应于word embedding，在CV中，可以对应于特征图某一点的特征向量。了解了上述知识，再来介绍non-local。non-local操作用公式可以表示为：</p>
+<script type="math/tex; mode=display">
+y_i  = \frac{1}{C(x)}\sum\limits_{\forall j} {f(x_i ,x_j )g(x_j )}</script><p>其中，某一点$i$的响应值$y_i$，与$g(x_j)$和$x_i,x_j$之间的信息得到的权重有关，$g(x_j)$可对应卷积操作，$f(x_i,x_j)$显式地建模空间域上计算$x_j$对$y_i$贡献的权重，这个的计算通常是Gaussian，Embedded Gaussian，Dot product，Concatenation等，这里介绍所使用的的Embedded Gaussian，即：</p>
+<script type="math/tex; mode=display">
+f(x_i ,x_j ) = e^{\theta (x_i )^T \varphi (x_j )}</script><p>这里的$\theta()$和$\varphi()$  non-local使用$1 \times 1$的卷积进行了实现，采用softmax操作就完成了f()函数的幂计算和除以C(x)计算）。将non local包装成一个block，这个block就类似ResNet网络中的block，这样non local操作就可以很方便地插入到现有的网络结构中:</p>
+<script type="math/tex; mode=display">
+z_i = W_z y_i+ x_i</script><p>这样，最终non local模块为：</p>
+<p><img src="/img/计算机视觉中的attention机制/1570612231627.png" alt="1570612231627"></p>
+<p>为了简化计算，θ、φ和g操作的卷积核数量设定为输入feature map通道数的一半（Figure2中512对1024）。</p>
+<h2 id="Asymmetric-Non-local-Neural-Networks"><a href="#Asymmetric-Non-local-Neural-Networks" class="headerlink" title="Asymmetric Non-local Neural Networks"></a>Asymmetric Non-local Neural Networks</h2><p><a href="https://arxiv.org/pdf/1908.07678.pdf" target="_blank" rel="external">Asymmetric Non-local Neural Networks for Semantic Segmentation</a>，这篇19年的ICCV的文章对non-local进行了改进。</p>
+<p><img src="/img/计算机视觉中的attention机制/1570612447568.png" alt="1570612447568"></p>
+<p>non-local的一个缺点就是，计算量太大，计算复杂度为$O(CH^2W^2)$. non-local为对称的，Query和Key向量大小相等，Asymmetric Non-local Neural Networks采用了非对称式的，Key对应于$N \times S$大小，$S \ll N$，因此可以极大地减小计算量。</p>
+<p>具体来说，应用于语义分割的时候，整体框架如下图：</p>
+<p><img src="/img/计算机视觉中的attention机制/1570612715221.png" alt="1570612715221"></p>
+<p>网络含有两个主要的模块，其中一个是Asymmetric Pyramid Non-local Block(APNB)和Asymmetric Fusion Non-local Block(AFNB)，本质上均为上述的非对称non-local，其中AFNB将stage4作为key和value，将stage5作为Query. 为了节省计算，APNB的key和value来源于同一个。</p>
+<h2 id="Criss-Cross-Attention"><a href="#Criss-Cross-Attention" class="headerlink" title="Criss-Cross Attention"></a>Criss-Cross Attention</h2><p><a href="https://arxiv.org/pdf/1811.11721.pdf" target="_blank" rel="external">CCNet: Criss-Cross Attention for Semantic Segmentation</a>，这篇文章采用了一个两个连续的十字交叉的attention方式代替了non-local，也是可以大大简化计算，同时也取得了不错的效果。</p>
+<p><img src="/img/计算机视觉中的attention机制/1570613225250.png" alt="1570613225250"></p>
+<p>图中的绿色部分，即为计算feature map中一个点的操作，为一个十字形，non-local计算一个点的时候，需要计算feature map中所有点，即$H^2W^2$次，而十字形仅计算$(HW*(H+W-1))$次，而且如下图所示，通过连续两次，即可覆盖所有的点：</p>
+<p><img src="/img/计算机视觉中的attention机制/1570613545669.png" alt="1570613545669"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CV/" rel="tag"># CV</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/08/小目标检测总结/" rel="next" title="小目标检测总结">
+                <i class="fa fa-chevron-left"></i> 小目标检测总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/touxiang.jpg"
+               alt="听歌的小孩" />
+          <p class="site-author-name" itemprop="name">听歌的小孩</p>
+           
+              <p class="site-description motion-element" itemprop="description">瞎捣鼓的小空间  Email:kaijianliu@qq.com</p>
+          
+        </div>
+		
+		<div id="music163player">
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=22650708&auto=0&height=66">
+			</iframe>
+		</div>
+		
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com//lkj1114889770" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3313734867" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      新浪微博
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://bloger.5pipi.win/" title="皮皮鲁" target="_blank">皮皮鲁</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.kusuri.cc" title="Kusuri's Blog" target="_blank">Kusuri's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://rogoso.info/" title="rogoso's Blog" target="_blank">rogoso's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://baozzz1.github.io/" title="包子" target="_blank">包子</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SENet"><span class="nav-number">1.</span> <span class="nav-text">SENet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可变形卷积"><span class="nav-number">2.</span> <span class="nav-text">可变形卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Deformable-Convolution-v1"><span class="nav-number">2.1.</span> <span class="nav-text">Deformable Convolution v1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deformable-Convolution-v2"><span class="nav-number">2.2.</span> <span class="nav-text">Deformable Convolution v2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Non-local-Neural-Networks"><span class="nav-number">3.</span> <span class="nav-text">Non-local Neural Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Asymmetric-Non-local-Neural-Networks"><span class="nav-number">4.</span> <span class="nav-text">Asymmetric Non-local Neural Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Criss-Cross-Attention"><span class="nav-number">5.</span> <span class="nav-text">Criss-Cross Attention</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">听歌的小孩</span>
+</div>
+<div class="powered-by">
+   Powerd by Kaijian Liu
+  <span id="busuanzi_container_site_uv"> 
+  本站访问量：<span id="busuanzi_value_site_pv"></span>人次
+  </span>
+</div>
+
+
+<!-- <div class="powered-by">
+  <span id="busuanzi_container_site_uv"> 
+  本站访问量：<span id="busuanzi_value_site_pv"></span>人次
+  </span>
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+-->
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
