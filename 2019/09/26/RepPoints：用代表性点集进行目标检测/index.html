@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://yoursite.com/img/RepPoints：用代表性点集进行目标检测/1569509738415.png">
 <meta property="og:image" content="http://yoursite.com/img/RepPoints：用代表性点集进行目标检测/1569509867224.png">
 <meta property="og:image" content="http://yoursite.com/img/RepPoints：用代表性点集进行目标检测/1569547217902.png">
-<meta property="og:updated_time" content="2019-09-27T04:54:15.360Z">
+<meta property="og:updated_time" content="2019-10-11T14:22:49.442Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RepPoints:用代表性点集进行目标检测">
 <meta name="twitter:description" content="RepPoints提出了用代表点进行更细粒度的定位和更方便的分类，并且在这个基础上，实现了anchior-free方法的multi-stage级联，达到了和anchor-based方法相媲美的精度。">
@@ -404,7 +404,7 @@ R=\{x_k,y_k\}_k^{n},</script><p>论文中，默认$k=9$;这样，RepPoints的ref
 <script type="math/tex; mode=display">
 R_r = \{(x_k+\Delta x_k,y_k + \Delta y_k) \}_k^n,</script><p>这样如果是multi_stage的refine，可以相应表示为：</p>
 <p><img src="/img/用代表性点集进行目标检测/1569508966664.png" alt="1569508966664"></p>
-<p>由于得到是分布于目标上的关键点，还是需要转换成bbox来表示最终的物体位置，同时RepPoints也是几乎bbox计算定位损失函数的。抓换成bbox的方法，论文中提到了三种方法：1）直接对x,y坐标取最大值最小值；2）取部分点对x，y坐标取最大值，最小值；3）基于RepPoints的均值和标准差进行计算。</p>
+<p>由于得到是分布于目标上的关键点，还是需要转换成bbox来表示最终的物体位置，同时RepPoints也是利用bbox计算定位损失函数的。转换成bbox的方法，论文中提到了三种方法：1）直接对x,y坐标取最大值最小值；2）取部分点对x，y坐标取最大值，最小值；3）基于RepPoints的均值和标准差进行计算。</p>
 <p>得到的bbox，论文中称之为伪框（pseudo box）。通过伪框来计算定位损失，计算伪框的左上角和右下角和gt的距离损失。</p>
 <p><img src="/img/RepPoints：用代表性点集进行目标检测/1569509738415.png" alt="1569509738415"></p>
 <h2 id="网络架构"><a href="#网络架构" class="headerlink" title="网络架构"></a>网络架构</h2><p><img src="/img/RepPoints：用代表性点集进行目标检测/1569509867224.png" alt="1569509867224"></p>
